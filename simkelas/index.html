@@ -3,24 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#042F2E" />
+  <meta name="theme-color" content="#063B12" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="description" content="Simulator dan Audit Selisih Biaya Naik Kelas Perawatan BPJS Kesehatan (JKN) berbasis PWA Offline." />
-  <title>SimKelas JKN — Simulator Biaya Naik Kelas Perawatan BPJS Kesehatan</title>
+  <title>SimKelas JKN — Simulator &amp; Audit Naik Kelas JKN</title>
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/png" href="./icon-192.png" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
-  <script>
-    const APP_ICON_FALLBACK_URI = "data:image/png;base64,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";
-  </script>
   <style>
     :root {
       --primary-dark: #042F2E;
+      --brand-green: #063B12;
       --primary: #0F766E;
       --primary-accent: #0D9488;
       --primary-soft: #CCFBF1;
@@ -46,6 +40,7 @@
       --radius-sm: 8px;
       --shadow-sm: 0 1px 3px rgba(4, 47, 46, 0.06), 0 1px 2px rgba(4, 47, 46, 0.04);
       --shadow-md: 0 8px 24px -4px rgba(4, 47, 46, 0.08);
+      --bottom-nav-height: 68px;
     }
 
     * {
@@ -55,186 +50,234 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background-color: var(--bg-canvas);
       color: var(--text-main);
-      line-height: 1.55;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
     .mono {
-      font-family: 'JetBrains Mono', 'Consolas', monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
       font-variant-numeric: tabular-nums;
     }
 
-    /* =========================================================
-       SPLASH SCREEN (DARK GREEN #042F2E, UPLOADED ICON ONLY, NO TITLE TEXT)
-    ========================================================== */
-    .splash-screen {
+    /* SPLASH SCREEN (HIJAU TUA SENADA LOGO, TANPA TEKS JUDUL) */
+    .app-splash {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background-color: #042F2E;
+      background-color: #063B12;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 24px;
+      opacity: 1;
+      visibility: visible;
       transition: opacity 0.35s ease, visibility 0.35s ease;
     }
 
-    .splash-screen.hidden {
+    .app-splash.is-hidden {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
 
-    .splash-logo-wrap {
-      width: min(230px, 60vw);
-      height: min(230px, 60vw);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: splashLogoIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .splash-logo-img {
-      width: 100%;
-      height: 100%;
+    .splash-logo {
+      width: min(260px, 68vw);
+      height: auto;
+      aspect-ratio: 1 / 1;
       object-fit: contain;
-      display: block;
+      border-radius: 20px;
       user-select: none;
       -webkit-user-drag: none;
     }
 
-    .splash-loader {
-      width: 128px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.14);
-      overflow: hidden;
-      margin-top: 22px;
-    }
-
-    .splash-loader-bar {
-      width: 45%;
-      height: 100%;
-      border-radius: 999px;
-      background: #A3E635;
-      animation: splashSlide 0.9s ease-in-out infinite alternate;
-    }
-
-    @keyframes splashLogoIn {
-      from {
-        opacity: 0;
-        transform: scale(0.92);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    @keyframes splashSlide {
-      from {
-        transform: translateX(-10%);
-      }
-      to {
-        transform: translateX(135%);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .splash-screen,
-      .splash-logo-wrap,
-      .splash-loader-bar {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-
-    /* TOP HEADER */
+    /* MINIMALIST STICKY HEADER */
     .topbar {
-      background: linear-gradient(135deg, #042F2E 0%, #064E3B 100%);
+      background: linear-gradient(135deg, #063B12 0%, #042F2E 100%);
       color: #FFFFFF;
-      padding: 16px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
       position: sticky;
       top: 0;
       z-index: 40;
     }
 
     .topbar-inner {
-      max-width: 1320px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
     }
 
-    .brand-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 11px;
-      background: #042F2E;
-      border: 1px solid rgba(94, 234, 212, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      padding: 2px;
-      flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
-    }
-
     .brand-logo-img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      object-fit: cover;
+      background-color: #063B12;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      flex-shrink: 0;
       display: block;
     }
 
-    .brand-title {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+    .brand-text {
+      min-width: 0;
     }
 
-    .brand-badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(94, 234, 212, 0.18);
-      color: #99F6E4;
-      border: 1px solid rgba(94, 234, 212, 0.35);
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #FFFFFF;
     }
 
     .brand-sub {
-      font-size: 12px;
-      color: #CBD5E1;
-      margin-top: 2px;
+      font-size: 11.5px;
+      color: #D1FAE5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
     }
 
-    .topbar-actions {
+    /* OFFLINE / ONLINE STATUS INDICATOR */
+    .net-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+      border: 1px solid;
+      transition: all 0.2s ease;
+    }
+
+    .net-indicator.is-online {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(110, 231, 183, 0.4);
+      color: #A7F3D0;
+    }
+
+    .net-indicator.is-offline {
+      background: rgba(245, 158, 11, 0.22);
+      border-color: rgba(253, 224, 71, 0.55);
+      color: #FDE68A;
+    }
+
+    .net-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* BOTTOM NAVIGATION */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 16px rgba(4, 47, 46, 0.06);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    }
+
+    .bottom-nav-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .bnav-item {
+      appearance: none;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      padding: 6px 4px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
     }
 
+    .bnav-item:hover {
+      background: var(--primary-tint);
+      color: var(--primary-dark);
+    }
+
+    .bnav-item.active {
+      color: var(--primary-dark);
+      background: var(--primary-tint);
+      font-weight: 700;
+    }
+
+    .bnav-item.active .bnav-icon {
+      color: var(--primary);
+    }
+
+    .bnav-icon {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+    }
+
+    .bnav-badge {
+      position: absolute;
+      top: 3px;
+      right: calc(50% - 20px);
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 5px;
+      border-radius: 999px;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 16px calc(var(--bottom-nav-height) + 32px + env(safe-area-inset-bottom));
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* BUTTONS */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -251,24 +294,9 @@
       text-decoration: none;
     }
 
-    .btn-ghost-light {
-      background: rgba(255, 255, 255, 0.1);
-      color: #FFFFFF;
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-ghost-light:hover {
-      background: rgba(255, 255, 255, 0.18);
-    }
-
-    .btn-accent {
-      background: #14B8A6;
-      color: #042F2E;
-      font-weight: 700;
-    }
-
-    .btn-accent:hover {
-      background: #2DD4BF;
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
     }
 
     .btn-primary {
@@ -276,8 +304,18 @@
       color: #FFFFFF;
     }
 
-    .btn-primary:hover {
+    .btn-primary:hover:not(:disabled) {
       background: var(--primary);
+    }
+
+    .btn-accent {
+      background: #0D9488;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background: #0F766E;
     }
 
     .btn-outline {
@@ -286,7 +324,7 @@
       border-color: var(--border-strong);
     }
 
-    .btn-outline:hover {
+    .btn-outline:hover:not(:disabled) {
       background: var(--primary-tint);
       border-color: var(--primary);
       color: var(--primary-dark);
@@ -298,7 +336,7 @@
       border-color: var(--danger-border);
     }
 
-    .btn-danger-outline:hover {
+    .btn-danger-outline:hover:not(:disabled) {
       background: var(--danger-bg);
     }
 
@@ -307,70 +345,55 @@
       font-size: 12px;
     }
 
-    /* NAV TABS */
-    .nav-bar {
+    /* PRESET BAR */
+    .preset-strip {
       background: #FFFFFF;
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-    }
-
-    .nav-inner {
-      max-width: 1320px;
-      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 16px;
       display: flex;
-      gap: 6px;
-      overflow-x: auto;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
     }
 
-    .nav-tab {
-      padding: 13px 16px;
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      background: transparent;
-      border: none;
-      border-bottom: 3px solid transparent;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s ease;
-    }
-
-    .nav-tab:hover {
-      color: var(--primary-dark);
-    }
-
-    .nav-tab.active {
-      color: var(--primary-dark);
-      border-bottom-color: var(--primary-accent);
+    .preset-label {
+      font-size: 12px;
       font-weight: 700;
+      color: var(--primary-dark);
     }
 
-    /* MAIN CONTAINER */
-    .container {
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 22px 24px 48px;
+    .preset-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
-    .tab-panel {
-      display: none;
-    }
-
-    .tab-panel.active {
-      display: block;
-    }
-
-    /* GRID WORKSPACE */
+    /* WORKSPACE GRID */
     .workspace-grid {
       display: grid;
-      grid-template-columns: 1.05fr 1.15fr;
-      gap: 20px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
       align-items: start;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 920px) {
       .workspace-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    .sticky-summary {
+      position: sticky;
+      top: 66px;
+    }
+
+    @media (max-width: 920px) {
+      .sticky-summary {
+        position: static;
       }
     }
 
@@ -379,7 +402,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px;
       box-shadow: var(--shadow-sm);
       margin-bottom: 16px;
     }
@@ -391,12 +414,12 @@
       justify-content: space-between;
       gap: 10px;
       padding-bottom: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border-bottom: 1px solid var(--border);
     }
 
     .card-title {
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 700;
       color: var(--primary-dark);
       display: flex;
@@ -415,6 +438,7 @@
       color: #FFFFFF;
       font-size: 11.5px;
       font-weight: 700;
+      flex-shrink: 0;
     }
 
     .legal-chip {
@@ -431,7 +455,7 @@
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 12px;
     }
 
     @media (max-width: 600px) {
@@ -441,7 +465,7 @@
     }
 
     .form-group {
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     }
 
     .form-group:last-child {
@@ -465,11 +489,12 @@
     }
 
     input[type="text"],
+    input[type="number"],
     input[type="search"],
     select,
     textarea {
       width: 100%;
-      padding: 10px 12px;
+      padding: 9px 12px;
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
       font-family: inherit;
@@ -481,11 +506,10 @@
 
     textarea {
       resize: vertical;
-      min-height: 90px;
+      min-height: 92px;
     }
 
-    input[type="text"]:focus,
-    input[type="search"]:focus,
+    input:focus,
     select:focus,
     textarea:focus {
       outline: none;
@@ -510,7 +534,7 @@
 
     .input-currency {
       padding-left: 38px !important;
-      font-family: 'JetBrains Mono', monospace !important;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
       font-weight: 600;
       font-size: 14px !important;
     }
@@ -531,7 +555,7 @@
     .scenario-option {
       border: 1.5px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 11px 12px;
+      padding: 10px 12px;
       cursor: pointer;
       transition: all 0.15s ease;
       background: #FFFFFF;
@@ -570,7 +594,7 @@
 
     /* ALERTS */
     .alert {
-      padding: 12px 14px;
+      padding: 11px 13px;
       border-radius: var(--radius-md);
       font-size: 12.5px;
       margin-top: 12px;
@@ -596,6 +620,12 @@
       color: #064E3B;
     }
 
+    .alert-info {
+      background: var(--primary-tint);
+      border-color: var(--primary-soft);
+      color: var(--primary-dark);
+    }
+
     .alert-title {
       font-weight: 700;
       display: block;
@@ -604,32 +634,32 @@
 
     /* HERO RESULT CARD */
     .hero-card {
-      background: linear-gradient(145deg, #042F2E 0%, #065F46 100%);
+      background: linear-gradient(145deg, #063B12 0%, #042F2E 52%, #065F46 100%);
       color: #FFFFFF;
       border-radius: var(--radius-lg);
-      padding: 22px;
+      padding: 20px;
       box-shadow: var(--shadow-md);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .hero-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .hero-label {
-      font-size: 12px;
+      font-size: 11.5px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: #99F6E4;
+      color: #A7F3D0;
       font-weight: 700;
     }
 
     .hero-status {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       padding: 4px 10px;
       border-radius: 999px;
@@ -645,24 +675,24 @@
     }
 
     .hero-amount {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 800;
-      margin: 10px 0 4px;
+      margin: 8px 0 4px;
       letter-spacing: -0.02em;
       color: #FFFFFF;
     }
 
     .hero-sub {
-      font-size: 12.5px;
-      color: #CBD5E1;
+      font-size: 12px;
+      color: #D1FAE5;
     }
 
     .kpi-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-      padding-top: 16px;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 14px;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
 
@@ -676,25 +706,25 @@
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius-sm);
-      padding: 10px 12px;
+      padding: 9px 11px;
     }
 
     .kpi-box-label {
-      font-size: 11px;
+      font-size: 10.5px;
       color: #A7F3D0;
       font-weight: 600;
     }
 
     .kpi-box-val {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      margin-top: 3px;
+      margin-top: 2px;
       color: #FFFFFF;
     }
 
     /* STACKED PROPORTION BAR */
     .bar-wrap {
-      margin: 12px 0 8px;
+      margin: 10px 0 6px;
     }
 
     .stacked-bar {
@@ -747,7 +777,59 @@
       display: inline-block;
     }
 
-    /* AUDIT TABLE */
+    /* AUDIT & DATA TABLES */
+    .audit-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .audit-toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 720px) {
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .meta-item {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+
+    .meta-k {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .meta-v {
+      font-size: 13px;
+      color: var(--text-main);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
     .audit-table {
       width: 100%;
       border-collapse: collapse;
@@ -763,7 +845,7 @@
     }
 
     .audit-table th {
-      font-size: 11.5px;
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--text-muted);
@@ -772,7 +854,7 @@
 
     .audit-table td.num {
       text-align: right;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-weight: 600;
       white-space: nowrap;
     }
@@ -795,7 +877,6 @@
       margin-top: 2px;
     }
 
-    /* REGULATION MATRIX & REPOSITORY */
     .reg-table {
       width: 100%;
       border-collapse: collapse;
@@ -805,13 +886,13 @@
     .reg-table th {
       background: var(--primary-dark);
       color: #FFFFFF;
-      padding: 11px 12px;
+      padding: 10px 12px;
       text-align: left;
       font-size: 12px;
     }
 
     .reg-table td {
-      padding: 11px 12px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
@@ -820,14 +901,13 @@
       background: #F8FAFC;
     }
 
+    /* REGULATION CARDS & EMPTY STATES */
     .empty-state {
       text-align: center;
-      padding: 32px 16px;
+      padding: 36px 18px;
       border: 1.5px dashed var(--border-strong);
       border-radius: var(--radius-md);
       background: #F8FAFC;
-      color: var(--text-secondary);
-      font-size: 13px;
     }
 
     .empty-state-title {
@@ -837,27 +917,139 @@
       margin-bottom: 6px;
     }
 
-    .reg-doc-list {
-      display: grid;
-      gap: 10px;
+    .empty-state-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 14px;
     }
 
-    .reg-doc-item {
+    .reg-card-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .reg-doc-card {
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 14px;
+      padding: 14px 16px;
       background: #FFFFFF;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-start;
+      gap: 12px;
+    }
+
+    .reg-doc-main {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .reg-doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+
+    .reg-doc-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .reg-doc-excerpt {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .reg-doc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      padding: 14px 18px;
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
+    }
+
+    .modal-head h3 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.14);
+      border: none;
+      color: #FFFFFF;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 18px;
+      overflow-y: auto;
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
+
+    .modal-foot {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+      background: #F8FAFC;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
     }
 
     /* TOAST */
     .toast {
       position: fixed;
-      bottom: 20px;
+      bottom: calc(var(--bottom-nav-height) + 14px + env(safe-area-inset-bottom));
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: #0F172A;
@@ -889,21 +1081,29 @@
       body {
         background: #FFFFFF;
       }
-      .splash-screen,
+      .app-splash,
       .topbar,
-      .nav-bar,
+      .bottom-nav,
       .no-print,
+      #tab-hitung,
+      #tab-regulasi,
+      #tab-riwayat,
+      .modal-backdrop,
       .toast {
         display: none !important;
+      }
+      #tab-audit {
+        display: block !important;
+      }
+      .container {
+        padding: 0;
+        max-width: 100%;
       }
       .print-header-only {
         display: block;
         border-bottom: 2px solid #042F2E;
         padding-bottom: 10px;
-        margin-bottom: 16px;
-      }
-      .workspace-grid {
-        grid-template-columns: 1fr;
+        margin-bottom: 14px;
       }
       .card,
       .hero-card {
@@ -921,75 +1121,69 @@
 </head>
 <body>
 
-  <!-- SPLASH SCREEN (DARK GREEN #042F2E, UPLOADED ICON ONLY, NO TITLE TEXT) -->
-  <div id="appSplashScreen" class="splash-screen" role="status" aria-label="Memuat aplikasi">
-    <div class="splash-logo-wrap">
-      <img
-        src="./icon-512.png"
-        alt="Logo Aplikasi"
-        class="splash-logo-img"
-        onerror="this.onerror=null;this.src=APP_ICON_FALLBACK_URI;"
-      />
-    </div>
-    <div class="splash-loader" aria-hidden="true">
-      <div class="splash-loader-bar"></div>
-    </div>
+  <!-- SPLASH SCREEN: LATAR HIJAU TUA SENADA LOGO, TANPA TEKS JUDUL -->
+  <div id="appSplashScreen" class="app-splash" role="status" aria-label="Memuat aplikasi">
+    <img
+      src="./icon-512.png"
+      alt="Logo Aplikasi"
+      class="splash-logo"
+      onerror="this.onerror=null;this.src='./icon-192.png';"
+    />
   </div>
 
-  <!-- TOP HEADER -->
+  <!-- MINIMALIST HEADER -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <div class="brand-logo">
-          <img
-            src="./icon-192.png"
-            alt="Logo SimKelas JKN"
-            class="brand-logo-img"
-            onerror="this.onerror=null;this.src=APP_ICON_FALLBACK_URI;"
-          />
-        </div>
-        <div>
-          <div class="brand-title">
-            SimKelas JKN
-            <span class="brand-badge">Permenkes 3/2023 &amp; Perpres 59/2024</span>
-          </div>
-          <div class="brand-sub">Simulator &amp; Audit Selisih Biaya Naik Kelas Perawatan BPJS Kesehatan</div>
+        <img
+          src="./icon-192.png"
+          alt="Ikon Aplikasi SimKelas JKN"
+          class="brand-logo-img"
+        />
+        <div class="brand-text">
+          <div class="brand-title">SimKelas JKN</div>
+          <div class="brand-sub">Simulator &amp; Audit Selisih Biaya Naik Kelas Perawatan</div>
         </div>
       </div>
-      <div class="topbar-actions">
-        <button type="button" class="btn btn-ghost-light" onclick="saveToHistory()">+ Simpan Riwayat</button>
-        <button type="button" class="btn btn-ghost-light" onclick="window.print()">Cetak Slip / PDF</button>
-        <button type="button" class="btn btn-accent" onclick="exportCurrentExcel()">Ekspor Excel (.xlsx)</button>
+      <div id="networkStatusBadge" class="net-indicator is-online" role="status" aria-live="polite">
+        <span class="net-dot" aria-hidden="true"></span>
+        <span id="networkStatusText">Online</span>
       </div>
     </div>
   </header>
-
-  <!-- NAVIGATION TABS -->
-  <nav class="nav-bar" aria-label="Navigasi Utama">
-    <div class="nav-inner">
-      <button type="button" class="nav-tab active" data-tab="calc" onclick="switchTab('calc', this)">Kalkulator Naik Kelas</button>
-      <button type="button" class="nav-tab" data-tab="reg" onclick="switchTab('reg', this)">Matriks Aturan &amp; Regulasi</button>
-      <button type="button" class="nav-tab" data-tab="hist" onclick="switchTab('hist', this)">Riwayat Simulasi (<span id="histCount">0</span>)</button>
-    </div>
-  </nav>
 
   <main class="container">
 
     <!-- PRINT HEADER -->
     <div class="print-header-only">
-      <h2 style="color:#042F2E; font-size:18px;">LEMBAR SIMULASI &amp; AUDIT SELISIH BIAYA NAIK KELAS PERAWATAN JKN</h2>
-      <p style="font-size:12px; color:#475569;">Dasar Hukum: Permenkes No. 3 Tahun 2023 Pasal 48 &amp; Perpres No. 59 Tahun 2024 Pasal 51 | Dicetak: <span id="printTimestamp"></span></p>
+      <h2 style="color:#042F2E; font-size:17px;">LEMBAR SIMULASI &amp; AUDIT SELISIH BIAYA NAIK KELAS PERAWATAN JKN</h2>
+      <p style="font-size:11.5px; color:#475569;">Acuan Perhitungan: Permenkes No. 3 Tahun 2023 Pasal 48 &amp; Perpres No. 59 Tahun 2024 Pasal 51 | Dicetak: <span id="printTimestamp"></span></p>
     </div>
 
     <div id="dbErrorBanner" style="display:none; margin-bottom:14px;"></div>
 
-    <!-- TAB 1: KALKULATOR -->
-    <section id="tab-calc" class="tab-panel active">
+    <!-- =========================================================
+         TAB 1: HITUNG
+    ========================================================== -->
+    <section id="tab-hitung" class="tab-panel active" role="tabpanel" aria-labelledby="nav-btn-hitung">
+
+      <!-- PRESET STRIP -->
+      <div class="preset-strip no-print">
+        <div class="preset-label">Simulasi Cepat Skenario:</div>
+        <div class="preset-buttons">
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k2_k1')">Kelas 2 &rarr; Kelas 1</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k1_vip_under')">Kelas 1 &rarr; VIP (&lt; Plafon 75%)</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k1_vip_cap')">Kelas 1 &rarr; VIP (Plafon 75%)</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k2_vip_cob')">Kelas 2 &rarr; VIP + COB</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('rajal_eks')">Poli Eksekutif</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="resetCalculatorForm()">Reset (0)</button>
+        </div>
+      </div>
 
       <div class="workspace-grid">
-        <!-- LEFT COLUMN: INPUTS -->
+        <!-- INPUT STEPS -->
         <div>
-          <!-- STEP 1: ELIGIBILITAS -->
+          <!-- STEP 1 -->
           <div class="card">
             <div class="card-header">
               <div class="card-title"><span class="step-pill">1</span> Identitas &amp; Eligibilitas Peserta</div>
@@ -998,11 +1192,11 @@
 
             <div class="form-grid">
               <div class="form-group">
-                <label for="patientName">Nama Pasien / Kode Kasus <span class="label-hint">Opsional (untuk slip cetak/Excel)</span></label>
-                <input type="text" id="patientName" placeholder="Masukkan nama pasien atau nomor SEP" oninput="recalculate()" />
+                <label for="patientName">Nama Pasien / Kode Kasus <span class="label-hint">Opsional (untuk catatan &amp; cetak)</span></label>
+                <input type="text" id="patientName" placeholder="Masukkan nama atau nomor SEP" oninput="recalculate()" />
               </div>
               <div class="form-group">
-                <label for="hospitalClass">Tipe / Kelas RS &amp; Regional <span class="label-hint">Keterangan referensi administrasi</span></label>
+                <label for="hospitalClass">Tipe / Kelas RS &amp; Regional <span class="label-hint">Opsional (keterangan administrasi)</span></label>
                 <input type="text" id="hospitalClass" placeholder="Contoh: RS Tipe B - Regional 1" oninput="recalculate()" />
               </div>
             </div>
@@ -1020,19 +1214,19 @@
               </select>
             </div>
 
-            <div class="form-group" id="groupUpgradeTrigger">
+            <div class="form-group">
               <label for="upgradeTrigger">Dasar Penempatan Kamar</label>
               <select id="upgradeTrigger" onchange="recalculate()">
                 <option value="aps">Atas Permintaan Sendiri (APS) — Pasien/Keluarga Memilih Naik Kelas</option>
-                <option value="full_room">Kamar Sesuai Hak Penuh (Dititipkan RS 1 Tingkat di Atasnya ≤ 3 Hari)</option>
+                <option value="full_room">Kamar Sesuai Hak Penuh (Dititipkan RS 1 Tingkat di Atasnya &le; 3 Hari)</option>
               </select>
             </div>
 
             <div id="eligibilityAlert"></div>
           </div>
 
-          <!-- STEP 2: SKENARIO NAIK KELAS -->
-          <div class="card" id="cardStep2">
+          <!-- STEP 2 -->
+          <div class="card">
             <div class="card-header">
               <div class="card-title"><span class="step-pill">2</span> Jenis Layanan &amp; Kenaikan Kelas</div>
               <span class="legal-chip">Permenkes 3/2023 Psl 48(3)</span>
@@ -1041,19 +1235,19 @@
             <div class="scenario-grid" id="scenarioCards">
               <label class="scenario-option" id="opt_k2_k1">
                 <input type="radio" name="scenario" value="k2_k1" onchange="onScenarioChange()" />
-                <span class="scenario-title">Kelas 2 → Kelas 1</span>
+                <span class="scenario-title">Kelas 2 &rarr; Kelas 1</span>
                 <span class="scenario-desc">Selisih tarif INA-CBG Kelas 1 dengan Kelas 2</span>
               </label>
 
               <label class="scenario-option selected" id="opt_k1_vip">
                 <input type="radio" name="scenario" value="k1_vip" checked onchange="onScenarioChange()" />
-                <span class="scenario-title">Kelas 1 → VIP / VVIP</span>
+                <span class="scenario-title">Kelas 1 &rarr; VIP / VVIP</span>
                 <span class="scenario-desc">Selisih riil, maksimal 75% INA-CBG Kelas 1</span>
               </label>
 
               <label class="scenario-option" id="opt_k2_vip">
                 <input type="radio" name="scenario" value="k2_vip" onchange="onScenarioChange()" />
-                <span class="scenario-title">Kelas 2 → VIP / VVIP</span>
+                <span class="scenario-title">Kelas 2 &rarr; VIP / VVIP</span>
                 <span class="scenario-desc">Selisih Kls 2–1 + maks 75% INA-CBG Kelas 1</span>
               </label>
 
@@ -1065,14 +1259,11 @@
             </div>
           </div>
 
-          <!-- STEP 3: INPUT TARIF -->
-          <div class="card" id="cardStep3">
+          <!-- STEP 3 -->
+          <div class="card">
             <div class="card-header">
               <div class="card-title"><span class="step-pill">3</span> Komponen Tarif INA-CBG &amp; Tarif Riil RS</div>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span class="legal-chip">Satuan Rupiah (IDR)</span>
-                <button type="button" class="btn btn-outline btn-sm" onclick="resetCalculatorForm()">Reset (0)</button>
-              </div>
+              <span class="legal-chip">Satuan Rupiah (IDR)</span>
             </div>
 
             <div id="inpatientInputs">
@@ -1119,8 +1310,8 @@
             </div>
           </div>
 
-          <!-- STEP 4: PENJAMIN TAMBAHAN (COB / PERUSAHAAN) -->
-          <div class="card" id="cardStep4">
+          <!-- STEP 4 -->
+          <div class="card">
             <div class="card-header">
               <div class="card-title"><span class="step-pill">4</span> Skema Pembayar Selisih / COB (Opsional)</div>
               <span class="legal-chip">Permenkes 3/2023 Psl 48(5)</span>
@@ -1136,7 +1327,7 @@
                 </select>
               </div>
               <div class="form-group" id="groupCobLimit" style="display:none;">
-                <label for="cobLimit">Plafon Tanggungan COB / Perusahaan <span class="label-hint">Isi batas jaminan selisih kelas</span></label>
+                <label for="cobLimit">Plafon Tanggungan COB / Perusahaan <span class="label-hint">Batas jaminan selisih kelas</span></label>
                 <div class="input-currency-wrap">
                   <span class="currency-prefix">Rp</span>
                   <input type="text" inputmode="numeric" id="cobLimit" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
@@ -1146,211 +1337,293 @@
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: RESULTS & AUDIT -->
-        <div>
-          <!-- HERO SUMMARY CARD -->
+        <!-- QUICK RESULT PANEL -->
+        <div class="sticky-summary">
           <div class="hero-card">
             <div class="hero-top">
               <div>
                 <div class="hero-label">Total Selisih Biaya Sah Wajib Dibayar</div>
-                <div class="hero-amount mono" id="resTotalLegalDiff">Rp 0</div>
-                <div class="hero-sub" id="resSubtitle">Skenario: Hak Kelas 1 naik ke VIP / Di Atas Kelas 1</div>
+                <div class="hero-amount mono" id="calcHeroTotal">Rp 0</div>
+                <div class="hero-sub" id="calcHeroSub">Skenario: Hak Kelas 1 naik ke VIP / Di Atas Kelas 1</div>
               </div>
-              <span class="hero-status" id="resStatusBadge">Menunggu Input Tarif</span>
+              <span class="hero-status" id="calcHeroBadge">Menunggu Input</span>
             </div>
 
             <div class="kpi-row">
               <div class="kpi-box">
                 <div class="kpi-box-label">Dijamin BPJS (INA-CBG)</div>
-                <div class="kpi-box-val mono" id="resBpjsCovered">Rp 0</div>
+                <div class="kpi-box-val mono" id="calcHeroBpjs">Rp 0</div>
               </div>
               <div class="kpi-box">
-                <div class="kpi-box-label">Ditanggung COB / Perusahaan</div>
-                <div class="kpi-box-val mono" id="resCobCovered">Rp 0</div>
+                <div class="kpi-box-label">Ditanggung COB / PT</div>
+                <div class="kpi-box-val mono" id="calcHeroCob">Rp 0</div>
               </div>
               <div class="kpi-box">
                 <div class="kpi-box-label">Neto Dibayar Pasien</div>
-                <div class="kpi-box-val mono" id="resPatientNet">Rp 0</div>
+                <div class="kpi-box-val mono" id="calcHeroPatient">Rp 0</div>
               </div>
             </div>
           </div>
 
-          <!-- PROPORTION BAR CARD -->
-          <div class="card" id="cardProportion">
-            <div class="card-header">
-              <div class="card-title">Struktur Pembiayaan Episode Perawatan</div>
-              <span class="legal-chip" id="resCapRatio">Batas Plafon Hukum: Rp 0</span>
-            </div>
-
-            <div class="bar-wrap">
-              <div class="stacked-bar">
-                <div class="bar-seg-bpjs" id="barBpjs" style="width: 0%;"></div>
-                <div class="bar-seg-cob" id="barCob" style="width: 0%;"></div>
-                <div class="bar-seg-patient" id="barPatient" style="width: 0%;"></div>
-                <div class="bar-seg-absorbed" id="barAbsorbed" style="width: 0%;"></div>
-              </div>
-              <div class="legend-list">
-                <span class="legend-item"><i class="dot" style="background:#0F766E;"></i> Jaminan BPJS</span>
-                <span class="legend-item"><i class="dot" style="background:#0284C7;"></i> COB / Perusahaan</span>
-                <span class="legend-item"><i class="dot" style="background:#D97706;"></i> Selisih Pasien</span>
-                <span class="legend-item"><i class="dot" style="background:#DC2626;"></i> Di Atas Plafon (Beban RS)</span>
-              </div>
-            </div>
-
-            <div id="overchargeAlert"></div>
-          </div>
-
-          <!-- STEP-BY-STEP LEGAL AUDIT -->
-          <div class="card" id="cardAuditFormula">
-            <div class="card-header">
-              <div class="card-title">Rincian Audit Rumus Perhitungan</div>
-              <span class="legal-chip">Audit Casemix &amp; Kasir</span>
-            </div>
-
-            <div style="overflow-x:auto;">
-              <table class="audit-table">
-                <thead>
-                  <tr>
-                    <th>Tahapan &amp; Dasar Pasal</th>
-                    <th style="text-align:right;">Nominal</th>
-                  </tr>
-                </thead>
-                <tbody id="auditTableBody"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- COMPLIANCE CHECKLIST -->
           <div class="card">
             <div class="card-header">
-              <div class="card-title">Catatan Kepatuhan &amp; Perlindungan Peserta</div>
+              <div class="card-title">Tindakan Perhitungan</div>
+              <span class="legal-chip" id="calcCapChip">Plafon: Rp 0</span>
             </div>
-            <ul style="padding-left:18px; font-size:12.5px; color:var(--text-secondary); display:grid; gap:7px;">
-              <li><strong>Kewajiban Informasi Awal:</strong> FKRTL wajib menginformasikan estimasi selisih biaya kepada peserta/keluarga sebelum pelayanan diberikan dan menuangkannya dalam surat persetujuan tertulis.</li>
-              <li><strong>Perlindungan Plafon 75%:</strong> Apabila selisih tarif riil VIP melebihi batas maksimal 75% tarif INA-CBG Kelas 1, kelebihan biaya di atas plafon tersebut <strong>tidak boleh dibebankan</strong> kepada peserta BPJS Kesehatan.</li>
-              <li><strong>Pengecualian Pasal 48 ayat (4):</strong> Jika total biaya pelayanan riil RS pada kelas lebih tinggi ternyata masih berada di bawah atau sama dengan tarif INA-CBG hak peserta, selisih biaya tidak diberlakukan (Rp 0).</li>
-            </ul>
+            <p style="font-size:12.5px; color:var(--text-secondary); margin-bottom:12px;">
+              Simpan hasil ke database lokal (IndexedDB) atau buka tab <strong>Audit</strong> untuk memeriksa rincian rumus pasal, cetak slip PDF, dan ekspor Excel.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button type="button" class="btn btn-primary" onclick="saveToHistory()">+ Simpan ke Riwayat</button>
+              <button type="button" class="btn btn-outline" onclick="switchTab('audit')">Lihat Rincian Audit &rarr;</button>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 2: MATRIKS REGULASI -->
-    <section id="tab-reg" class="tab-panel">
+    <!-- =========================================================
+         TAB 2: AUDIT
+    ========================================================== -->
+    <section id="tab-audit" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-audit">
+
+      <!-- EXPORT & PRINT TOOLBAR -->
+      <div class="audit-toolbar no-print">
+        <div>
+          <div style="font-size:14.5px; font-weight:800; color:var(--primary-dark);">Lembar Audit &amp; Kepatuhan Selisih Biaya</div>
+          <div style="font-size:12px; color:var(--text-secondary);">Cetak slip audit PDF atau unduh laporan Excel (.xlsx) secara offline</div>
+        </div>
+        <div class="audit-toolbar-actions">
+          <button type="button" class="btn btn-outline" onclick="printAuditSlip()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Cetak Slip / PDF
+          </button>
+          <button type="button" class="btn btn-accent" onclick="exportCurrentExcel()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Ekspor Excel (.xlsx)
+          </button>
+        </div>
+      </div>
+
+      <!-- CASE METADATA SUMMARY -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title">Matriks Rumus Resmi Selisih Biaya (Permenkes No. 3 Tahun 2023 Pasal 48)</div>
-          <span class="legal-chip">Berlaku Aktif</span>
+          <div class="card-title">Ringkasan Kasus &amp; Status Verifikasi</div>
+          <span class="legal-chip" id="auditStatusChip">Menunggu Input</span>
         </div>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <div class="meta-k">Pasien / Kode Kasus</div>
+            <div class="meta-v" id="auditMetaPatient">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Tipe RS / Regional</div>
+            <div class="meta-v" id="auditMetaHospital">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Segmen Kepesertaan</div>
+            <div class="meta-v" id="auditMetaSegment">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Dasar Penempatan Kamar</div>
+            <div class="meta-v" id="auditMetaTrigger">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Skenario Layanan</div>
+            <div class="meta-v" id="auditMetaScenario">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Total Selisih Sah / Neto Pasien</div>
+            <div class="meta-v mono" id="auditMetaAmounts">Rp 0 / Rp 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPORTION BAR CARD -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Struktur Pembiayaan Episode Perawatan</div>
+          <span class="legal-chip" id="resCapRatio">Batas Plafon Hukum: Rp 0</span>
+        </div>
+
+        <div class="bar-wrap">
+          <div class="stacked-bar">
+            <div class="bar-seg-bpjs" id="barBpjs" style="width: 0%;"></div>
+            <div class="bar-seg-cob" id="barCob" style="width: 0%;"></div>
+            <div class="bar-seg-patient" id="barPatient" style="width: 0%;"></div>
+            <div class="bar-seg-absorbed" id="barAbsorbed" style="width: 0%;"></div>
+          </div>
+          <div class="legend-list">
+            <span class="legend-item"><i class="dot" style="background:#0F766E;"></i> Jaminan BPJS (<span id="lblBpjs">Rp 0</span>)</span>
+            <span class="legend-item"><i class="dot" style="background:#0284C7;"></i> COB / Perusahaan (<span id="lblCob">Rp 0</span>)</span>
+            <span class="legend-item"><i class="dot" style="background:#D97706;"></i> Selisih Pasien (<span id="lblPatient">Rp 0</span>)</span>
+            <span class="legend-item"><i class="dot" style="background:#DC2626;"></i> Di Atas Plafon / Beban RS (<span id="lblAbsorbed">Rp 0</span>)</span>
+          </div>
+        </div>
+
+        <div id="overchargeAlert"></div>
+      </div>
+
+      <!-- STEP-BY-STEP LEGAL AUDIT TABLE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Rincian Audit Rumus Perhitungan</div>
+          <span class="legal-chip">Audit Casemix &amp; Kasir</span>
+        </div>
+
         <div style="overflow-x:auto;">
-          <table class="reg-table">
+          <table class="audit-table">
             <thead>
               <tr>
-                <th style="width:22%;">Jenis Peningkatan</th>
-                <th style="width:42%;">Rumus Perhitungan Hukum</th>
-                <th style="width:36%;">Batasan &amp; Catatan Penting</th>
+                <th>Tahapan &amp; Dasar Pasal</th>
+                <th style="text-align:right;">Nominal</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><strong>Hak Kelas 2 → Kelas 1</strong><br><span class="formula-note">Pasal 48 ayat (3) huruf b</span></td>
-                <td class="mono" style="font-size:12px;">Tarif INA-CBG Kelas 1 − Tarif INA-CBG Kelas 2</td>
-                <td>Tidak menggunakan persentase 75%; murni selisih paket INA-CBG Kelas 1 dan Kelas 2.</td>
-              </tr>
-              <tr>
-                <td><strong>Hak Kelas 1 → VIP / VVIP / Di Atas Kelas 1</strong><br><span class="formula-note">Pasal 48 ayat (3) huruf c</span></td>
-                <td class="mono" style="font-size:12px;">MIN(Tarif Riil VIP − INA-CBG Kelas 1,<br>75% × Tarif INA-CBG Kelas 1)</td>
-                <td>Maksimal 75% dari tarif INA-CBG Kelas 1. Jika biaya riil ≤ INA-CBG Kelas 1, selisih = Rp 0 (Pasal 48 ayat 4).</td>
-              </tr>
-              <tr>
-                <td><strong>Hak Kelas 2 → VIP / VVIP (Langsung)</strong><br><span class="formula-note">Pasal 48 ayat (3) huruf d</span></td>
-                <td class="mono" style="font-size:12px;">(INA-CBG Kelas 1 − INA-CBG Kelas 2) +<br>MIN(Riil VIP − INA-CBG Kelas 1, 75% × INA-CBG Kelas 1)</td>
-                <td>Total plafon maksimal adalah selisih Kelas 2 ke Kelas 1 ditambah paling banyak 75% INA-CBG Kelas 1.</td>
-              </tr>
-              <tr>
-                <td><strong>Rawat Jalan Eksekutif (Poli Eksekutif)</strong><br><span class="formula-note">Pasal 48 ayat (3) huruf a</span></td>
-                <td class="mono" style="font-size:12px;">MIN(Paket Poli Eksekutif − INA-CBG Rajal,<br>Rp400.000)</td>
-                <td>Paling banyak <strong>Rp400.000,00</strong> per episode rawat jalan eksekutif.</td>
-              </tr>
-            </tbody>
+            <tbody id="auditTableBody"></tbody>
           </table>
         </div>
       </div>
 
+      <!-- COMPLIANCE NOTES -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title">5 Kategori Peserta yang Dilarang Naik Kelas (Perpres No. 59 Tahun 2024 Pasal 51 ayat 3)</div>
-          <span class="legal-chip">Larangan Mutlak</span>
+          <div class="card-title">Catatan Kepatuhan &amp; Perlindungan Peserta</div>
         </div>
-        <ol style="padding-left:20px; font-size:13.5px; color:var(--text-main); display:grid; gap:8px;">
-          <li><strong>Peserta Penerima Bantuan Iuran (PBI)</strong> Jaminan Kesehatan.</li>
-          <li><strong>Peserta Pekerja Bukan Penerima Upah (PBPU / Mandiri)</strong> dengan manfaat pelayanan di ruang perawatan <strong>Kelas 3</strong>.</li>
-          <li><strong>Peserta Bukan Pekerja (BP)</strong> dengan manfaat pelayanan di ruang perawatan <strong>Kelas 3</strong>.</li>
-          <li><strong>Peserta PPU yang mengalami Pemutusan Hubungan Kerja (PHK) beserta anggota keluarganya</strong> (selama masa jaminan 6 bulan tanpa iuran).</li>
-          <li><strong>Peserta yang didaftarkan oleh Pemerintah Daerah</strong> (PBPU/BP Pemda).</li>
-        </ol>
-        <div class="alert alert-warning" style="margin-top:14px;">
-          <span class="alert-title">Catatan Implementasi KRIS (Perpres No. 59 Tahun 2024 &amp; Permenkes No. 6 Tahun 2026)</span>
-          Selama masa transisi menuju penetapan tarif tunggal berbasis Kelas Rawat Inap Standar (KRIS), rumah sakit dan BPJS Kesehatan masih menggunakan pengelompokan tarif INA-CBG Kelas 1, Kelas 2, dan Kelas 3 sebagai dasar klaim dan perhitungan selisih biaya naik kelas.
-        </div>
+        <ul style="padding-left:18px; font-size:12.5px; color:var(--text-secondary); display:grid; gap:7px;">
+          <li><strong>Kewajiban Informasi Awal:</strong> FKRTL wajib menginformasikan estimasi selisih biaya kepada peserta/keluarga sebelum pelayanan diberikan dan menuangkannya dalam surat persetujuan tertulis.</li>
+          <li><strong>Perlindungan Plafon 75%:</strong> Apabila selisih tarif riil VIP melebihi batas maksimal 75% tarif INA-CBG Kelas 1, kelebihan biaya di atas plafon tersebut <strong>tidak boleh dibebankan</strong> kepada peserta BPJS Kesehatan.</li>
+          <li><strong>Pengecualian Pasal 48 ayat (4):</strong> Jika total biaya pelayanan riil RS pada kelas lebih tinggi ternyata masih berada di bawah atau sama dengan tarif INA-CBG hak peserta, selisih biaya tidak diberlakukan (Rp 0).</li>
+        </ul>
       </div>
+    </section>
 
-      <!-- LOCAL OFFLINE REGULATION REPOSITORY (INDEXEDDB) -->
+    <!-- =========================================================
+         TAB 3: REGULASI
+    ========================================================== -->
+    <section id="tab-regulasi" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-regulasi">
+
+      <!-- LOCAL REGULATION REPOSITORY (INDEXEDDB) -->
       <div class="card">
         <div class="card-header">
-          <div class="card-title">Arsip Dokumen Regulasi Lokal (IndexedDB Offline)</div>
+          <div class="card-title">Repositori Sumber Regulasi Lokal (Offline)</div>
           <div style="display:flex; flex-wrap:wrap; gap:6px;">
-            <button type="button" class="btn btn-primary btn-sm" onclick="toggleRegForm(true)">+ Tambah Dokumen Regulasi</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="toggleRegForm(true)">+ Tambah Regulasi</button>
             <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('regImportInput').click()">Impor JSON</button>
             <button type="button" class="btn btn-outline btn-sm" onclick="exportRegulationsJson()">Ekspor JSON</button>
             <input type="file" id="regImportInput" accept=".json,application/json" style="display:none;" onchange="importRegulationsJson(event)" />
           </div>
         </div>
 
-        <div id="regFormBox" style="display:none; background:#F8FAFC; border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; margin-bottom:14px;">
+        <!-- ADD / EDIT REGULATION FORM -->
+        <div id="regFormContainer" style="display:none; background:#F8FAFC; border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; margin-bottom:16px;">
+          <div style="font-size:13.5px; font-weight:700; color:var(--primary-dark); margin-bottom:10px;" id="regFormHeading">Tambah Sumber Regulasi Valid</div>
           <input type="hidden" id="regEditId" value="" />
           <div class="form-grid">
             <div class="form-group">
               <label for="regNumber">Nomor &amp; Jenis Peraturan *</label>
-              <input type="text" id="regNumber" placeholder="Contoh: Permenkes No. 3 Tahun 2023" />
+              <input type="text" id="regNumber" placeholder="Contoh: Peraturan Menteri Kesehatan Nomor ..." />
             </div>
             <div class="form-group">
-              <label for="regYear">Tahun / Status *</label>
+              <label for="regYear">Tahun &amp; Status Berlaku *</label>
               <input type="text" id="regYear" placeholder="Contoh: 2023 — Berlaku" />
             </div>
           </div>
-          <div class="form-group">
-            <label for="regTitle">Judul Peraturan *</label>
-            <input type="text" id="regTitle" placeholder="Masukkan judul resmi peraturan" />
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="regTitle">Judul / Tentang Peraturan *</label>
+              <input type="text" id="regTitle" placeholder="Masukkan judul resmi peraturan" />
+            </div>
+            <div class="form-group">
+              <label for="regArticles">Pasal / Ayat Terkait</label>
+              <input type="text" id="regArticles" placeholder="Contoh: Pasal 48 ayat (1) s.d. (5)" />
+            </div>
           </div>
           <div class="form-group">
-            <label for="regContent">Bunyi Pasal / Ringkasan Resmi *</label>
-            <textarea id="regContent" placeholder="Salin isi pasal atau ketentuan resmi..."></textarea>
+            <label for="regContent">Isi Ketentuan / Ringkasan Resmi *</label>
+            <textarea id="regContent" placeholder="Salin bunyi pasal atau ringkasan terverifikasi dari dokumen resmi..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="regSourceNote">Keterangan Sumber Dokumen (Opsional)</label>
+            <input type="text" id="regSourceNote" placeholder="Contoh: Salinan Lembaran Negara / JDIH Kemenkes" />
           </div>
           <div style="display:flex; gap:8px; justify-content:flex-end;">
             <button type="button" class="btn btn-outline btn-sm" onclick="toggleRegForm(false)">Batal</button>
-            <button type="button" class="btn btn-primary btn-sm" onclick="saveRegulationItem()">Simpan ke Lokal</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="submitRegulationForm()">Simpan Regulasi ke Lokal</button>
           </div>
         </div>
 
-        <div class="form-group" style="margin-bottom:12px;">
-          <input type="search" id="regSearchInput" placeholder="Cari dokumen regulasi tersimpan..." oninput="renderRegulations()" />
+        <!-- FILTER & SEARCH -->
+        <div class="form-group" style="margin-bottom:14px;">
+          <input type="search" id="regSearchInput" placeholder="Cari nomor peraturan, tahun, pasal, atau kata kunci isi regulasi..." oninput="renderRegulations()" />
         </div>
 
+        <!-- LIST OR EMPTY STATE -->
         <div id="regListContainer"></div>
+      </div>
+
+      <!-- SYSTEM CALCULATION FORMULA MATRIX -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Acuan Rumus Mesin Hitung Sistem (Referensi Teknis Aplikasi)</div>
+          <span class="legal-chip">Logika Bawaan Sistem</span>
+        </div>
+        <p style="font-size:12.5px; color:var(--text-secondary); margin-bottom:12px;">
+          Matriks berikut merupakan parameter rumus yang digunakan secara internal oleh kalkulator aplikasi ini berdasarkan acuan regulasi yang telah ditetapkan pada sistem awal:
+        </p>
+        <div style="overflow-x:auto;">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th style="width:24%;">Jenis Peningkatan</th>
+                <th style="width:42%;">Rumus Perhitungan Sistem</th>
+                <th style="width:34%;">Ketentuan Batas &amp; Pengecualian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Hak Kelas 2 &rarr; Kelas 1</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(b)</span></td>
+                <td class="mono" style="font-size:12px;">Tarif INA-CBG Kelas 1 &minus; Tarif INA-CBG Kelas 2</td>
+                <td>Selisih langsung antar paket INA-CBG Kelas 1 dan Kelas 2 tanpa plafon persentase 75%.</td>
+              </tr>
+              <tr>
+                <td><strong>Hak Kelas 1 &rarr; VIP / Di Atas Kelas 1</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(c)</span></td>
+                <td class="mono" style="font-size:12px;">MIN(Tarif Riil VIP &minus; INA-CBG Kelas 1, 75% &times; INA-CBG Kelas 1)</td>
+                <td>Maksimal 75% dari tarif INA-CBG Kelas 1. Jika tarif riil &le; INA-CBG Kelas 1, selisih = Rp 0 (Pasal 48 ayat 4).</td>
+              </tr>
+              <tr>
+                <td><strong>Hak Kelas 2 &rarr; VIP / Di Atas Kelas 1</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(d)</span></td>
+                <td class="mono" style="font-size:12px;">(INA-CBG Kls 1 &minus; INA-CBG Kls 2) + MIN(Riil VIP &minus; INA-CBG Kls 1, 75% &times; INA-CBG Kls 1)</td>
+                <td>Gabungan selisih Kelas 2 ke Kelas 1 ditambah maksimal 75% tarif INA-CBG Kelas 1.</td>
+              </tr>
+              <tr>
+                <td><strong>Rawat Jalan Eksekutif</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(a)</span></td>
+                <td class="mono" style="font-size:12px;">MIN(Paket Poli Eksekutif &minus; INA-CBG Rajal, Rp400.000)</td>
+                <td>Maksimal Rp400.000,00 per episode rawat jalan eksekutif.</td>
+              </tr>
+              <tr>
+                <td><strong>Peserta Dilarang Naik Kelas</strong><br><span class="formula-note">Perpres 59/2024 Psl 51(3)</span></td>
+                <td class="mono" style="font-size:12px;">Tidak diperkenankan naik kelas JKN</td>
+                <td>Berlaku untuk: (1) PBI, (2) PBPU Kelas 3, (3) BP Kelas 3, (4) PPU PHK &amp; keluarga (jaminan 6 bulan), dan (5) Peserta didaftarkan Pemda.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <!-- TAB 3: RIWAYAT SIMULASI -->
-    <section id="tab-hist" class="tab-panel">
+    <!-- =========================================================
+         TAB 4: RIWAYAT
+    ========================================================== -->
+    <section id="tab-riwayat" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-riwayat">
       <div class="card">
         <div class="card-header">
           <div class="card-title">Riwayat Perhitungan Tersimpan (IndexedDB Lokal)</div>
-          <div style="display:flex; flex-wrap:wrap; gap:8px;">
-            <button type="button" class="btn btn-outline btn-sm" onclick="exportAllHistoryExcel()">Ekspor Semua Riwayat (.xlsx)</button>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="exportAllHistoryExcel()">Ekspor Semua (.xlsx)</button>
             <button type="button" class="btn btn-danger-outline btn-sm" onclick="clearHistory()">Hapus Semua</button>
           </div>
         </div>
+
         <div class="form-grid" style="margin-bottom:14px;">
           <div class="form-group" style="margin-bottom:0;">
             <input type="search" id="histSearchInput" placeholder="Cari nama pasien, kode kasus, atau RS..." oninput="renderHistory()" />
@@ -1358,47 +1631,85 @@
           <div class="form-group" style="margin-bottom:0;">
             <select id="histScenarioFilter" onchange="renderHistory()">
               <option value="all">Semua Skenario Layanan</option>
-              <option value="k2_k1">Kelas 2 → Kelas 1</option>
-              <option value="k1_vip">Kelas 1 → VIP / VVIP</option>
-              <option value="k2_vip">Kelas 2 → VIP / VVIP</option>
+              <option value="k2_k1">Kelas 2 &rarr; Kelas 1</option>
+              <option value="k1_vip">Kelas 1 &rarr; VIP / VVIP</option>
+              <option value="k2_vip">Kelas 2 &rarr; VIP / VVIP</option>
               <option value="rajal">Rawat Jalan Eksekutif</option>
             </select>
           </div>
         </div>
+
         <div id="historyContainer"></div>
       </div>
     </section>
 
   </main>
 
+  <!-- BOTTOM NAVIGATION BAR (4 TABS) -->
+  <nav class="bottom-nav no-print" role="tablist" aria-label="Navigasi Utama Aplikasi">
+    <div class="bottom-nav-inner">
+      <button type="button" id="nav-btn-hitung" class="bnav-item active" role="tab" aria-selected="true" aria-controls="tab-hitung" data-tab="hitung" onclick="switchTab('hitung')">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+          <line x1="8" y1="6" x2="16" y2="6" />
+          <line x1="8" y1="10" x2="10" y2="10" />
+          <line x1="14" y1="10" x2="16" y2="10" />
+          <line x1="8" y1="14" x2="10" y2="14" />
+          <line x1="14" y1="14" x2="16" y2="14" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
+        <span>Hitung</span>
+      </button>
+
+      <button type="button" id="nav-btn-audit" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-audit" data-tab="audit" onclick="switchTab('audit')">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M9 11l3 3L22 4" />
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </svg>
+        <span>Audit</span>
+      </button>
+
+      <button type="button" id="nav-btn-regulasi" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-regulasi" data-tab="regulasi" onclick="switchTab('regulasi')">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span>Regulasi</span>
+      </button>
+
+      <button type="button" id="nav-btn-riwayat" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-riwayat" data-tab="riwayat" onclick="switchTab('riwayat')">
+        <span class="bnav-badge" id="histCount">0</span>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span>Riwayat</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- REGULATION DETAIL MODAL -->
+  <div id="regDetailModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="regModalTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="regModalTitle">Detail Regulasi</h3>
+        <button type="button" class="modal-close" aria-label="Tutup modal" onclick="closeRegDetailModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="regModalBody"></div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeRegDetailModal()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
   <div id="toastNotice" class="toast" role="status" aria-live="polite"></div>
 
   <script>
     "use strict";
 
     /* =========================================================================
-       1. SPLASH SCREEN CONTROLLER (AUTO-HIDE AFTER INITIAL LOAD)
-    ========================================================================= */
-    (function initSplashScreen() {
-      const splash = document.getElementById("appSplashScreen");
-      if (!splash) return;
-      const dismissSplash = () => {
-        splash.classList.add("hidden");
-        splash.setAttribute("aria-hidden", "true");
-      };
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        dismissSplash();
-        return;
-      }
-      window.addEventListener("load", () => {
-        setTimeout(dismissSplash, 850);
-      });
-      // Pengaman maksimal 2.5 detik jika event load tertunda
-      setTimeout(dismissSplash, 2500);
-    })();
-
-    /* =========================================================================
-       2. UTILITIES & SANITIZATION
+       1. UTILITIES & SANITIZATION
     ========================================================================= */
     function escapeHtml(str) {
       return String(str == null ? "" : str)
@@ -1436,11 +1747,64 @@
     }
 
     /* =========================================================================
-       3. INDEXEDDB DATABASE ENGINE & SAFE MIGRATION FROM LOCALSTORAGE
+       2. SPLASH SCREEN CONTROLLER
+    ========================================================================= */
+    let splashDismissed = false;
+    function hideSplashScreen() {
+      if (splashDismissed) return;
+      splashDismissed = true;
+      const splash = document.getElementById("appSplashScreen");
+      if (!splash) return;
+      splash.classList.add("is-hidden");
+      splash.setAttribute("aria-hidden", "true");
+      setTimeout(() => {
+        if (splash.parentNode) {
+          splash.style.display = "none";
+        }
+      }, 400);
+    }
+
+    // Pengaman batas waktu maksimum agar aplikasi tidak pernah tertahan di splash screen
+    setTimeout(hideSplashScreen, 2000);
+
+    /* =========================================================================
+       3. NETWORK MONITOR (OFFLINE / ONLINE INDICATOR)
+    ========================================================================= */
+    function updateNetworkIndicator() {
+      const badge = document.getElementById("networkStatusBadge");
+      const text = document.getElementById("networkStatusText");
+      if (!badge || !text) return;
+
+      const online = navigator.onLine;
+      if (online) {
+        badge.classList.remove("is-offline");
+        badge.classList.add("is-online");
+        text.textContent = "Online";
+        badge.title = "Perangkat terhubung ke jaringan. Database lokal tetap aktif.";
+      } else {
+        badge.classList.remove("is-online");
+        badge.classList.add("is-offline");
+        text.textContent = "Offline";
+        badge.title = "Mode Offline aktif. Seluruh perhitungan dan penyimpanan lokal berjalan mandiri.";
+      }
+    }
+
+    window.addEventListener("online", () => {
+      updateNetworkIndicator();
+      showToast("Koneksi jaringan kembali online.");
+    });
+
+    window.addEventListener("offline", () => {
+      updateNetworkIndicator();
+      showToast("Mode Offline aktif — aplikasi tetap berjalan penuh secara lokal.");
+    });
+
+    /* =========================================================================
+       4. INDEXEDDB DATABASE ENGINE & SAFE MIGRATION
     ========================================================================= */
     const DB_NAME = "SimKelasJKN_DB";
     const DB_VERSION = 1;
-    const LEGACY_STORAGE_KEY = "simkelas_jkn_history_v1";
+    const LEGACY_LS_KEY = "simkelas_jkn_history_v1";
 
     const DBManager = {
       db: null,
@@ -1515,10 +1879,10 @@
 
       async migrateLegacyLocalStorage() {
         try {
-          const migrated = await this.getMeta("legacy_ls_v1_migrated");
-          if (migrated) return;
+          const alreadyMigrated = await this.getMeta("legacy_ls_v1_migrated");
+          if (alreadyMigrated) return;
 
-          const raw = localStorage.getItem(LEGACY_STORAGE_KEY);
+          const raw = localStorage.getItem(LEGACY_LS_KEY);
           if (raw) {
             const parsed = JSON.parse(raw);
             if (Array.isArray(parsed) && parsed.length > 0) {
@@ -1538,7 +1902,7 @@
                 tx.onerror = () => reject(tx.error);
               });
             }
-            localStorage.removeItem(LEGACY_STORAGE_KEY);
+            localStorage.removeItem(LEGACY_LS_KEY);
           }
           await this.setMeta("legacy_ls_v1_migrated", true);
         } catch (err) {
@@ -1565,7 +1929,7 @@
           const tx = db.transaction(storeName, "readonly");
           const req = tx.objectStore(storeName).getAll();
           req.onsuccess = () => resolve(Array.isArray(req.result) ? req.result : []);
-          req.onerror = () => reject(req.error || new Error("Gagal membaca data lokal."));
+          req.onerror = () => reject(req.error || new Error("Gagal membaca data dari database lokal."));
         });
       },
 
@@ -1601,7 +1965,7 @@
     };
 
     /* =========================================================================
-       4. PURE LOCAL OFFLINE .XLSX GENERATOR (ZERO CDN DEPENDENCY FALLBACK)
+       5. PURE LOCAL OFFLINE .XLSX (OPENXML) GENERATOR (ZERO CDN DEPENDENCY)
     ========================================================================= */
     const OfflineXlsxBuilder = (() => {
       const crcTable = new Uint32Array(256);
@@ -1791,45 +2155,37 @@
     })();
 
     /* =========================================================================
-       5. NAVIGATION & CALCULATOR ENGINE
+       6. NAVIGATION & TAB MANAGEMENT
     ========================================================================= */
     let lastCalculation = null;
 
-    function switchTab(tabId, btn) {
-      document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
-      document.querySelectorAll(".nav-tab").forEach((t) => t.classList.remove("active"));
+    function switchTab(tabId) {
+      const validTabs = ["hitung", "audit", "regulasi", "riwayat"];
+      if (!validTabs.includes(tabId)) return;
+
+      document.querySelectorAll(".tab-panel").forEach((panel) => {
+        panel.classList.remove("active");
+      });
+      document.querySelectorAll(".bnav-item").forEach((btn) => {
+        const isActive = btn.dataset.tab === tabId;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
       const targetPanel = document.getElementById("tab-" + tabId);
       if (targetPanel) targetPanel.classList.add("active");
-      if (btn) {
-        btn.classList.add("active");
-      } else {
-        const navBtn = document.querySelector(`.nav-tab[data-tab="${tabId}"]`);
-        if (navBtn) navBtn.classList.add("active");
-      }
-      if (tabId === "hist") renderHistory();
-      if (tabId === "reg") renderRegulations();
+
+      if (tabId === "riwayat") renderHistory();
+      if (tabId === "regulasi") renderRegulations();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    /* =========================================================================
+       7. CALCULATOR & AUDIT ENGINE
+    ========================================================================= */
     function getSelectedScenario() {
       const checked = document.querySelector('input[name="scenario"]:checked');
       return checked ? checked.value : "k1_vip";
-    }
-
-    function setUpgradeCardsVisibility(isAllowed) {
-      ["cardStep2", "cardStep3", "cardStep4", "cardProportion", "cardAuditFormula"].forEach((id) => {
-        const card = document.getElementById(id);
-        if (!card) return;
-        card.style.display = isAllowed ? "" : "none";
-        card.setAttribute("aria-hidden", isAllowed ? "false" : "true");
-        card.querySelectorAll("input, select, button").forEach((ctrl) => {
-          ctrl.disabled = !isAllowed;
-        });
-      });
-
-      const triggerGroup = document.getElementById("groupUpgradeTrigger");
-      const triggerSelect = document.getElementById("upgradeTrigger");
-      if (triggerGroup) triggerGroup.style.display = isAllowed ? "" : "none";
-      if (triggerSelect) triggerSelect.disabled = !isAllowed;
     }
 
     function onScenarioChange() {
@@ -1875,28 +2231,58 @@
       showToast("Formulir kalkulator diatur ulang ke 0.");
     }
 
+    function applyPreset(key) {
+      document.getElementById("memberSegment").value = "allowed_ppu";
+      document.getElementById("upgradeTrigger").value = "aps";
+      document.getElementById("payerType").value = "self";
+      document.getElementById("cobLimit").value = "0";
+
+      if (key === "k2_k1") {
+        document.getElementById("patientName").value = "Skenario Uji — Hak Kelas 2 ke Kelas 1";
+        document.querySelector('input[value="k2_k1"]').checked = true;
+        document.getElementById("inaK2").value = "4.800.000";
+        document.getElementById("inaK1").value = "6.100.000";
+      } else if (key === "k1_vip_under") {
+        document.getElementById("patientName").value = "Skenario Uji — Kelas 1 ke VIP (< Plafon 75%)";
+        document.querySelector('input[value="k1_vip"]').checked = true;
+        document.getElementById("inaK1").value = "6.000.000";
+        document.getElementById("realVip").value = "9.200.000";
+      } else if (key === "k1_vip_cap") {
+        document.getElementById("patientName").value = "Skenario Uji — Kelas 1 ke VIP (Plafon 75%)";
+        document.querySelector('input[value="k1_vip"]').checked = true;
+        document.getElementById("inaK1").value = "6.000.000";
+        document.getElementById("realVip").value = "12.500.000";
+      } else if (key === "k2_vip_cob") {
+        document.getElementById("patientName").value = "Skenario Uji — Kelas 2 ke VIP + COB";
+        document.querySelector('input[value="k2_vip"]').checked = true;
+        document.getElementById("inaK2").value = "5.000.000";
+        document.getElementById("inaK1").value = "6.500.000";
+        document.getElementById("realVip").value = "11.000.000";
+        document.getElementById("payerType").value = "cob";
+        document.getElementById("cobLimit").value = "4.000.000";
+      } else if (key === "rajal_eks") {
+        document.getElementById("patientName").value = "Skenario Uji — Poli Rawat Jalan Eksekutif";
+        document.querySelector('input[value="rajal"]').checked = true;
+        document.getElementById("inaRajal").value = "320.000";
+        document.getElementById("realRajal").value = "850.000";
+      }
+
+      onScenarioChange();
+    }
+
     function recalculate() {
-      const segmentSelect = document.getElementById("memberSegment");
-      const segment = segmentSelect.value;
-      const selectedOptionText = segmentSelect.selectedOptions[0]
-        ? segmentSelect.selectedOptions[0].text
-        : "";
+      const segment = document.getElementById("memberSegment").value;
       const trigger = document.getElementById("upgradeTrigger").value;
       const scenario = getSelectedScenario();
       const payerType = document.getElementById("payerType").value;
 
-      const isBlockedSegment =
-        segment.startsWith("blocked_") ||
-        selectedOptionText.toLowerCase().includes("dilarang naik kelas");
-
-      setUpgradeCardsVisibility(!isBlockedSegment);
-
       document.getElementById("groupCobLimit").style.display =
-        (!isBlockedSegment && (payerType === "cob" || payerType === "employer")) ? "block" : "none";
+        (payerType === "cob" || payerType === "employer") ? "block" : "none";
 
+      const isBlockedSegment = segment.startsWith("blocked_");
       const isFullRoom = trigger === "full_room";
-      const eligAlert = document.getElementById("eligibilityAlert");
 
+      const eligAlert = document.getElementById("eligibilityAlert");
       if (isBlockedSegment) {
         const reasonMap = {
           blocked_pbi: "Peserta PBI Jaminan Kesehatan dilarang naik kelas perawatan (Pasal 51 ayat 3 huruf a Perpres 59/2024).",
@@ -1907,7 +2293,7 @@
         eligAlert.innerHTML = `
           <div class="alert alert-danger">
             <span class="alert-title">TIDAK DIPERKENANKAN NAIK KELAS PERAWATAN</span>
-            ${escapeHtml(reasonMap[segment] || "Segmen kepesertaan ini dilarang naik kelas perawatan.")} Jika tetap memilih kamar lebih tinggi, seluruh biaya perawatan gugur dari penjaminan JKN dan menjadi tagihan pasien umum penuh.
+            ${reasonMap[segment]} Jika tetap memilih kamar lebih tinggi, seluruh biaya perawatan gugur dari penjaminan JKN dan menjadi tagihan pasien umum penuh.
           </div>`;
       } else if (isFullRoom) {
         eligAlert.innerHTML = `
@@ -1924,7 +2310,7 @@
       const realVip = parseRupiah(document.getElementById("realVip").value);
       const inaRajal = parseRupiah(document.getElementById("inaRajal").value);
       const realRajal = parseRupiah(document.getElementById("realRajal").value);
-      const cobLimit = (!isBlockedSegment && (payerType === "cob" || payerType === "employer"))
+      const cobLimit = (payerType === "cob" || payerType === "employer")
         ? parseRupiah(document.getElementById("cobLimit").value)
         : 0;
 
@@ -2058,11 +2444,8 @@
       }
 
       if (isBlockedSegment) {
-        bpjsCovered = 0;
-        legalMaxCap = 0;
         legalDiff = 0;
         absorbedByHospital = 0;
-        scenarioLabel = "Tidak Berlaku — Segmen Dilarang Naik Kelas (Perpres 59/2024)";
         statusText = "Dilarang Naik Kelas (Perpres 59/2024)";
         statusBlocked = true;
       } else if (isFullRoom) {
@@ -2074,16 +2457,37 @@
       const cobCovered = (!isBlockedSegment && !isFullRoom) ? Math.min(legalDiff, cobLimit) : 0;
       const patientNet = Math.max(0, legalDiff - cobCovered);
 
-      document.getElementById("resTotalLegalDiff").textContent = isBlockedSegment ? "Tidak Berlaku (Non-JKN)" : formatRupiah(legalDiff);
-      document.getElementById("resSubtitle").textContent = "Skenario: " + scenarioLabel;
-      const badge = document.getElementById("resStatusBadge");
+      document.getElementById("calcHeroTotal").textContent = isBlockedSegment ? "Tidak Berlaku (Non-JKN)" : formatRupiah(legalDiff);
+      document.getElementById("calcHeroSub").textContent = "Skenario: " + scenarioLabel;
+      const badge = document.getElementById("calcHeroBadge");
       badge.textContent = statusText;
       badge.className = "hero-status" + (statusBlocked ? " blocked" : "");
 
-      document.getElementById("resBpjsCovered").textContent = isBlockedSegment ? "Gugur (Bila Naik)" : formatRupiah(bpjsCovered);
-      document.getElementById("resCobCovered").textContent = isBlockedSegment ? "-" : formatRupiah(cobCovered);
-      document.getElementById("resPatientNet").textContent = isBlockedSegment ? "Pasien Umum" : formatRupiah(patientNet);
+      document.getElementById("calcHeroBpjs").textContent = formatRupiah(bpjsCovered);
+      document.getElementById("calcHeroCob").textContent = formatRupiah(cobCovered);
+      document.getElementById("calcHeroPatient").textContent = isBlockedSegment ? "Pasien Umum" : formatRupiah(patientNet);
+      document.getElementById("calcCapChip").textContent = "Plafon: " + formatRupiah(legalMaxCap);
+
+      const patientNameVal = document.getElementById("patientName").value.trim() || "Belum diisi";
+      const hospitalClassVal = document.getElementById("hospitalClass").value.trim() || "-";
+      const segmentTextVal = document.getElementById("memberSegment").selectedOptions[0].text;
+      const triggerTextVal = document.getElementById("upgradeTrigger").selectedOptions[0].text;
+
+      document.getElementById("auditStatusChip").textContent = statusText;
+      document.getElementById("auditMetaPatient").textContent = patientNameVal;
+      document.getElementById("auditMetaHospital").textContent = hospitalClassVal;
+      document.getElementById("auditMetaSegment").textContent = segmentTextVal;
+      document.getElementById("auditMetaTrigger").textContent = triggerTextVal;
+      document.getElementById("auditMetaScenario").textContent = scenarioLabel;
+      document.getElementById("auditMetaAmounts").textContent = isBlockedSegment
+        ? "Non-JKN / Pasien Umum"
+        : `${formatRupiah(legalDiff)} / ${formatRupiah(patientNet)}`;
+
       document.getElementById("resCapRatio").textContent = "Batas Plafon Hukum: " + formatRupiah(legalMaxCap);
+      document.getElementById("lblBpjs").textContent = formatRupiah(bpjsCovered);
+      document.getElementById("lblCob").textContent = formatRupiah(cobCovered);
+      document.getElementById("lblPatient").textContent = isBlockedSegment ? "Pasien Umum" : formatRupiah(patientNet);
+      document.getElementById("lblAbsorbed").textContent = formatRupiah(absorbedByHospital);
 
       const rawEpisode = bpjsCovered + cobCovered + patientNet + absorbedByHospital;
       if (rawEpisode <= 0) {
@@ -2124,12 +2528,12 @@
         patientName: document.getElementById("patientName").value.trim() || "Peserta JKN",
         hospitalClass: document.getElementById("hospitalClass").value.trim() || "-",
         segment,
-        segmentText: selectedOptionText,
+        segmentText: segmentTextVal,
         trigger,
-        triggerText: isBlockedSegment ? "Tidak Berlaku" : document.getElementById("upgradeTrigger").selectedOptions[0].text,
+        triggerText: triggerTextVal,
         payerType,
         inputs: { inaK2, inaK1, realVip, inaRajal, realRajal, cobLimit },
-        scenario: isBlockedSegment ? "blocked" : scenario,
+        scenario,
         scenarioLabel,
         bpjsCovered,
         legalMaxCap,
@@ -2138,13 +2542,17 @@
         patientNet,
         absorbedByHospital,
         statusText,
-        hasAnyTariff,
-        isBlockedSegment
+        hasAnyTariff
       };
     }
 
+    function printAuditSlip() {
+      document.getElementById("printTimestamp").textContent = new Date().toLocaleString("id-ID");
+      window.print();
+    }
+
     /* =========================================================================
-       6. HISTORY MANAGEMENT (INDEXEDDB)
+       8. HISTORY MANAGEMENT (INDEXEDDB)
     ========================================================================= */
     async function updateHistoryCount() {
       try {
@@ -2157,10 +2565,11 @@
 
     async function saveToHistory() {
       if (!lastCalculation) return;
-      if (!lastCalculation.hasAnyTariff && !lastCalculation.isBlockedSegment) {
+      if (!lastCalculation.hasAnyTariff && !lastCalculation.segment.startsWith("blocked_")) {
         showToast("Masukkan nominal tarif terlebih dahulu sebelum menyimpan ke riwayat.");
         return;
       }
+
       try {
         const record = {
           ...lastCalculation,
@@ -2184,23 +2593,29 @@
         let list = await DBManager.getAll("calculations");
         list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
+        const filtered = list.filter((item) => {
+          const matchScenario = filterSc === "all" || item.scenario === filterSc;
+          const hay = `${item.patientName || ""} ${item.hospitalClass || ""} ${item.scenarioLabel || ""}`.toLowerCase();
+          const matchQuery = !query || hay.includes(query);
+          return matchScenario && matchQuery;
+        });
+
         if (!list.length) {
           box.innerHTML = `
             <div class="empty-state">
-              <div class="empty-state-title">Belum Ada Riwayat Perhitungan Tersimpan</div>
-              <p>Database lokal masih kosong. Klik <strong>"+ Simpan Riwayat"</strong> pada bilah atas setelah melakukan perhitungan.</p>
+              <div class="empty-state-title">Belum Ada Data Riwayat Simulasi</div>
+              <p class="empty-state-desc">Database lokal masih kosong. Lakukan perhitungan pada tab Hitung lalu tekan <strong>"+ Simpan ke Riwayat"</strong> untuk menyimpan arsip secara offline.</p>
+              <button type="button" class="btn btn-primary btn-sm" onclick="switchTab('hitung')">Mulai Hitung Sekarang</button>
             </div>`;
           return;
         }
 
-        const filtered = list.filter((item) => {
-          const matchScenario = filterSc === "all" || item.scenario === filterSc;
-          const hay = `${item.patientName || ""} ${item.hospitalClass || ""} ${item.scenarioLabel || ""}`.toLowerCase();
-          return matchScenario && (!query || hay.includes(query));
-        });
-
         if (!filtered.length) {
-          box.innerHTML = `<div class="empty-state"><div class="empty-state-title">Tidak Ada Riwayat yang Cocok</div><p>Ubah kata kunci pencarian atau filter skenario.</p></div>`;
+          box.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-title">Tidak Ada Riwayat yang Cocok</div>
+              <p class="empty-state-desc">Ubah kata kunci pencarian atau filter skenario untuk menampilkan riwayat tersimpan.</p>
+            </div>`;
           return;
         }
 
@@ -2215,23 +2630,22 @@
                   <th>Jaminan BPJS</th>
                   <th>Selisih Sah</th>
                   <th>Neto Pasien</th>
-                  <th>Status</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 ${filtered.map((item) => `
                   <tr>
-                    <td style="font-size:12px;">${escapeHtml(item.timestamp)}</td>
+                    <td style="font-size:12px; white-space:nowrap;">${escapeHtml(item.timestamp)}</td>
                     <td><strong>${escapeHtml(item.patientName)}</strong><br><span class="formula-note">${escapeHtml(item.hospitalClass)}</span></td>
-                    <td style="font-size:12px;">${escapeHtml(item.scenarioLabel)}</td>
-                    <td class="mono" style="font-size:12px;">${formatRupiah(item.bpjsCovered)}</td>
-                    <td class="mono" style="font-size:12px; font-weight:700; color:#042F2E;">${formatRupiah(item.legalDiff)}</td>
-                    <td class="mono" style="font-size:12px;">${formatRupiah(item.patientNet)}</td>
-                    <td><span class="legal-chip">${escapeHtml(item.statusText)}</span></td>
+                    <td style="font-size:12px;">${escapeHtml(item.scenarioLabel)}<br><span class="legal-chip" style="margin-top:3px; display:inline-block;">${escapeHtml(item.statusText)}</span></td>
+                    <td class="mono" style="font-size:12px; white-space:nowrap;">${formatRupiah(item.bpjsCovered)}</td>
+                    <td class="mono" style="font-size:12px; font-weight:700; color:#042F2E; white-space:nowrap;">${formatRupiah(item.legalDiff)}</td>
+                    <td class="mono" style="font-size:12px; white-space:nowrap;">${formatRupiah(item.patientNet)}</td>
                     <td style="white-space:nowrap;">
                       <div style="display:flex; gap:5px;">
-                        <button type="button" class="btn btn-outline btn-sm" onclick="loadHistoryItem('${escapeHtml(item.id)}')">Muat</button>
+                        <button type="button" class="btn btn-outline btn-sm" onclick="loadHistoryItem('${escapeHtml(item.id)}', 'hitung')">Muat</button>
+                        <button type="button" class="btn btn-outline btn-sm" onclick="loadHistoryItem('${escapeHtml(item.id)}', 'audit')">Audit</button>
                         <button type="button" class="btn btn-danger-outline btn-sm" onclick="deleteHistoryItem('${escapeHtml(item.id)}')">Hapus</button>
                       </div>
                     </td>
@@ -2245,10 +2659,13 @@
       }
     }
 
-    async function loadHistoryItem(id) {
+    async function loadHistoryItem(id, targetTab) {
       try {
         const item = await DBManager.getById("calculations", id);
-        if (!item) return;
+        if (!item) {
+          showToast("Data riwayat tidak ditemukan.");
+          return;
+        }
         document.getElementById("patientName").value = item.patientName === "Peserta JKN" ? "" : (item.patientName || "");
         document.getElementById("hospitalClass").value = item.hospitalClass === "-" ? "" : (item.hospitalClass || "");
         if (item.segment) document.getElementById("memberSegment").value = item.segment;
@@ -2264,14 +2681,12 @@
           document.getElementById("cobLimit").value = (item.inputs.cobLimit || 0).toLocaleString("id-ID");
         }
 
-        if (item.scenario && item.scenario !== "blocked") {
-          const radio = document.querySelector(`input[name="scenario"][value="${item.scenario}"]`);
-          if (radio) radio.checked = true;
-        }
+        const radio = document.querySelector(`input[name="scenario"][value="${item.scenario}"]`);
+        if (radio) radio.checked = true;
 
         onScenarioChange();
-        switchTab("calc");
-        showToast("Data riwayat berhasil dimuat ke kalkulator.");
+        switchTab(targetTab || "hitung");
+        showToast("Data simulasi dimuat kembali.");
       } catch (err) {
         showToast("Gagal memuat item riwayat.");
       }
@@ -2294,7 +2709,7 @@
         showToast("Riwayat sudah kosong.");
         return;
       }
-      if (!confirm("Hapus seluruh riwayat simulasi tersimpan?")) return;
+      if (!confirm("Hapus seluruh riwayat simulasi tersimpan dari database lokal?")) return;
       try {
         await DBManager.clearStore("calculations");
         await updateHistoryCount();
@@ -2306,179 +2721,10 @@
     }
 
     /* =========================================================================
-       7. LOCAL REGULATION REPOSITORY (INDEXEDDB)
-    ========================================================================= */
-    function toggleRegForm(show, reset = true) {
-      const box = document.getElementById("regFormBox");
-      box.style.display = show ? "block" : "none";
-      if (reset) {
-        document.getElementById("regEditId").value = "";
-        document.getElementById("regNumber").value = "";
-        document.getElementById("regYear").value = "";
-        document.getElementById("regTitle").value = "";
-        document.getElementById("regContent").value = "";
-      }
-    }
-
-    async function saveRegulationItem() {
-      const editId = document.getElementById("regEditId").value.trim();
-      const regNumber = document.getElementById("regNumber").value.trim();
-      const regYear = document.getElementById("regYear").value.trim();
-      const regTitle = document.getElementById("regTitle").value.trim();
-      const regContent = document.getElementById("regContent").value.trim();
-
-      if (!regNumber || !regYear || !regTitle || !regContent) {
-        showToast("Harap isi Nomor Peraturan, Tahun/Status, Judul, dan Isi Ketentuan.");
-        return;
-      }
-
-      try {
-        const existing = editId ? await DBManager.getById("regulations", editId) : null;
-        await DBManager.putItem("regulations", {
-          id: editId || ("reg_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6)),
-          regNumber,
-          regYear,
-          regTitle,
-          regContent,
-          createdAt: existing ? existing.createdAt : Date.now(),
-          updatedAt: Date.now()
-        });
-        toggleRegForm(false, true);
-        await renderRegulations();
-        showToast("Dokumen regulasi berhasil disimpan ke database lokal.");
-      } catch (err) {
-        showToast("Gagal menyimpan dokumen regulasi.");
-      }
-    }
-
-    async function editRegulationItem(id) {
-      const reg = await DBManager.getById("regulations", id);
-      if (!reg) return;
-      toggleRegForm(true, false);
-      document.getElementById("regEditId").value = reg.id;
-      document.getElementById("regNumber").value = reg.regNumber || "";
-      document.getElementById("regYear").value = reg.regYear || "";
-      document.getElementById("regTitle").value = reg.regTitle || "";
-      document.getElementById("regContent").value = reg.regContent || "";
-    }
-
-    async function deleteRegulationItem(id) {
-      if (!confirm("Hapus dokumen regulasi ini dari penyimpanan lokal?")) return;
-      await DBManager.deleteById("regulations", id);
-      await renderRegulations();
-      showToast("Dokumen regulasi dihapus.");
-    }
-
-    async function renderRegulations() {
-      const box = document.getElementById("regListContainer");
-      const query = (document.getElementById("regSearchInput").value || "").trim().toLowerCase();
-      try {
-        let list = await DBManager.getAll("regulations");
-        list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-
-        if (!list.length) {
-          box.innerHTML = `
-            <div class="empty-state">
-              <div class="empty-state-title">Belum Ada Arsip Dokumen Regulasi Tambahan</div>
-              <p>Penyimpanan regulasi lokal masih kosong. Klik <strong>"+ Tambah Dokumen Regulasi"</strong> untuk menyimpan salinan regulasi resmi Anda secara offline.</p>
-            </div>`;
-          return;
-        }
-
-        const filtered = list.filter((r) => {
-          const hay = `${r.regNumber} ${r.regYear} ${r.regTitle} ${r.regContent}`.toLowerCase();
-          return !query || hay.includes(query);
-        });
-
-        if (!filtered.length) {
-          box.innerHTML = `<div class="empty-state"><div class="empty-state-title">Dokumen Tidak Ditemukan</div><p>Ubah kata kunci pencarian.</p></div>`;
-          return;
-        }
-
-        box.innerHTML = `<div class="reg-doc-list">` + filtered.map((r) => `
-          <div class="reg-doc-item">
-            <div style="flex:1; min-width:240px;">
-              <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
-                <span class="legal-chip">${escapeHtml(r.regNumber)}</span>
-                <span class="legal-chip">${escapeHtml(r.regYear)}</span>
-              </div>
-              <div style="font-weight:700; color:var(--primary-dark); margin-bottom:4px;">${escapeHtml(r.regTitle)}</div>
-              <div style="font-size:12.5px; color:var(--text-secondary); white-space:pre-wrap;">${escapeHtml(r.regContent)}</div>
-            </div>
-            <div style="display:flex; gap:6px;">
-              <button type="button" class="btn btn-outline btn-sm" onclick="editRegulationItem('${escapeHtml(r.id)}')">Edit</button>
-              <button type="button" class="btn btn-danger-outline btn-sm" onclick="deleteRegulationItem('${escapeHtml(r.id)}')">Hapus</button>
-            </div>
-          </div>
-        `).join("") + `</div>`;
-      } catch (err) {
-        box.innerHTML = `<div class="alert alert-danger">Gagal membaca regulasi dari IndexedDB: ${escapeHtml(err.message)}</div>`;
-      }
-    }
-
-    async function exportRegulationsJson() {
-      const list = await DBManager.getAll("regulations");
-      if (!list.length) {
-        showToast("Belum ada arsip regulasi lokal untuk diekspor.");
-        return;
-      }
-      const blob = new Blob([JSON.stringify({ app: "SimKelas JKN", exportedAt: new Date().toISOString(), regulations: list }, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Regulasi_SimKelas_JKN_${Date.now()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 1500);
-      showToast("Berkas JSON regulasi berhasil diunduh.");
-    }
-
-    async function importRegulationsJson(event) {
-      const file = event.target.files && event.target.files[0];
-      event.target.value = "";
-      if (!file) return;
-      try {
-        const parsed = JSON.parse(await file.text());
-        const items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed.regulations) ? parsed.regulations : null);
-        if (!items || !items.length) {
-          showToast("Format file JSON regulasi tidak valid.");
-          return;
-        }
-        let count = 0;
-        for (const raw of items) {
-          if (!raw || !raw.regNumber || !raw.regTitle || !raw.regContent) continue;
-          await DBManager.putItem("regulations", {
-            id: raw.id ? String(raw.id) : ("reg_imp_" + Date.now() + "_" + count),
-            regNumber: String(raw.regNumber).trim(),
-            regYear: String(raw.regYear || "-").trim(),
-            regTitle: String(raw.regTitle).trim(),
-            regContent: String(raw.regContent).trim(),
-            createdAt: Number(raw.createdAt) || Date.now(),
-            updatedAt: Date.now()
-          });
-          count++;
-        }
-        await renderRegulations();
-        showToast(`${count} dokumen regulasi berhasil diimpor.`);
-      } catch (e) {
-        showToast("Gagal membaca berkas JSON.");
-      }
-    }
-
-    /* =========================================================================
-       8. EXCEL EXPORT (ONLINE SHEETJS OR OFFLINE LOCAL OPENXML)
+       9. EXCEL EXPORT (100% OFFLINE LOCAL BUILDER)
     ========================================================================= */
     function writeExcelWorkbook(aoaRows, sheetName, fileName) {
-      if (typeof window.XLSX !== "undefined" && window.XLSX.utils) {
-        const ws = window.XLSX.utils.aoa_to_sheet(aoaRows);
-        ws["!cols"] = [{ wch: 46 }, { wch: 36 }];
-        const wb = window.XLSX.utils.book_new();
-        window.XLSX.utils.book_append_sheet(wb, ws, sheetName);
-        window.XLSX.writeFile(wb, fileName);
-      } else {
-        OfflineXlsxBuilder.downloadAoA(aoaRows, sheetName, fileName);
-      }
+      OfflineXlsxBuilder.downloadAoA(aoaRows, sheetName, fileName);
     }
 
     function exportCurrentExcel() {
@@ -2486,7 +2732,7 @@
       const c = lastCalculation;
       const rows = [
         ["SIMULASI & AUDIT SELISIH BIAYA NAIK KELAS PERAWATAN JKN"],
-        ["Dasar Hukum", "Permenkes No. 3 Tahun 2023 Pasal 48 & Perpres No. 59 Tahun 2024 Pasal 51"],
+        ["Acuan Sistem", "Permenkes No. 3 Tahun 2023 Pasal 48 & Perpres No. 59 Tahun 2024 Pasal 51"],
         ["Waktu Cetak", c.timestamp],
         [],
         ["IDENTITAS & KEPESERTAAN", "KETERANGAN"],
@@ -2511,40 +2757,299 @@
     }
 
     async function exportAllHistoryExcel() {
-      const list = await DBManager.getAll("calculations");
-      if (!list.length) {
-        showToast("Belum ada riwayat simulasi untuk diekspor.");
-        return;
+      try {
+        const list = await DBManager.getAll("calculations");
+        if (!list.length) {
+          showToast("Belum ada riwayat simulasi untuk diekspor.");
+          return;
+        }
+        list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const header = [
+          "Waktu", "Nama Pasien/Kasus", "RS/Regional", "Skenario",
+          "Jaminan BPJS (IDR)", "Plafon Hukum (IDR)", "Selisih Sah (IDR)",
+          "Tanggungan COB/Perusahaan (IDR)", "Neto Pasien (IDR)", "Beban RS di Atas Plafon (IDR)", "Status"
+        ];
+        const data = list.map((i) => [
+          i.timestamp, i.patientName, i.hospitalClass, i.scenarioLabel,
+          i.bpjsCovered, i.legalMaxCap, i.legalDiff, i.cobCovered, i.patientNet, i.absorbedByHospital, i.statusText
+        ]);
+
+        writeExcelWorkbook([header, ...data], "Riwayat_SimKelas_JKN", `Riwayat_SimKelas_JKN_${Date.now()}.xlsx`);
+        showToast("Seluruh riwayat berhasil diekspor ke Excel (.xlsx).");
+      } catch (err) {
+        showToast("Gagal mengekspor riwayat ke Excel.");
       }
-      list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-      const header = [
-        "Waktu", "Nama Pasien/Kasus", "RS/Regional", "Skenario",
-        "Jaminan BPJS (IDR)", "Plafon Hukum (IDR)", "Selisih Sah (IDR)",
-        "Tanggungan COB/Perusahaan (IDR)", "Neto Pasien (IDR)", "Beban RS di Atas Plafon (IDR)", "Status"
-      ];
-      const data = list.map((i) => [
-        i.timestamp, i.patientName, i.hospitalClass, i.scenarioLabel,
-        i.bpjsCovered, i.legalMaxCap, i.legalDiff, i.cobCovered, i.patientNet, i.absorbedByHospital, i.statusText
-      ]);
-      writeExcelWorkbook([header, ...data], "Riwayat_SimKelas_JKN", `Riwayat_SimKelas_JKN_${Date.now()}.xlsx`);
-      showToast("Seluruh riwayat berhasil diekspor ke Excel (.xlsx).");
     }
 
     /* =========================================================================
-       9. SERVICE WORKER & APP INITIALIZATION
+       10. LOCAL REGULATION REPOSITORY (INDEXEDDB — NO FABRICATED REGULATIONS)
+    ========================================================================= */
+    function toggleRegForm(show, reset = true) {
+      const box = document.getElementById("regFormContainer");
+      box.style.display = show ? "block" : "none";
+      if (reset) {
+        document.getElementById("regEditId").value = "";
+        document.getElementById("regFormHeading").textContent = "Tambah Sumber Regulasi Valid";
+        document.getElementById("regNumber").value = "";
+        document.getElementById("regYear").value = "";
+        document.getElementById("regTitle").value = "";
+        document.getElementById("regArticles").value = "";
+        document.getElementById("regContent").value = "";
+        document.getElementById("regSourceNote").value = "";
+      }
+    }
+
+    async function submitRegulationForm() {
+      const editId = document.getElementById("regEditId").value.trim();
+      const regNumber = document.getElementById("regNumber").value.trim();
+      const regYear = document.getElementById("regYear").value.trim();
+      const regTitle = document.getElementById("regTitle").value.trim();
+      const regArticles = document.getElementById("regArticles").value.trim();
+      const regContent = document.getElementById("regContent").value.trim();
+      const regSourceNote = document.getElementById("regSourceNote").value.trim();
+
+      if (!regNumber || !regYear || !regTitle || !regContent) {
+        showToast("Harap isi Nomor Peraturan, Tahun/Status, Judul, dan Isi Ketentuan.");
+        return;
+      }
+
+      try {
+        const existing = editId ? await DBManager.getById("regulations", editId) : null;
+        const record = {
+          id: editId || ("reg_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6)),
+          regNumber,
+          regYear,
+          regTitle,
+          regArticles,
+          regContent,
+          regSourceNote,
+          createdAt: existing ? existing.createdAt : Date.now(),
+          updatedAt: Date.now()
+        };
+
+        await DBManager.putItem("regulations", record);
+        toggleRegForm(false, true);
+        await renderRegulations();
+        showToast(editId ? "Regulasi lokal diperbarui." : "Sumber regulasi disimpan ke penyimpanan lokal.");
+      } catch (err) {
+        showToast("Gagal menyimpan regulasi: " + (err.message || "Kesalahan database."));
+      }
+    }
+
+    async function editRegulationItem(id) {
+      try {
+        const reg = await DBManager.getById("regulations", id);
+        if (!reg) return;
+        toggleRegForm(true, false);
+        document.getElementById("regEditId").value = reg.id;
+        document.getElementById("regFormHeading").textContent = "Perbarui Sumber Regulasi Lokal";
+        document.getElementById("regNumber").value = reg.regNumber || "";
+        document.getElementById("regYear").value = reg.regYear || "";
+        document.getElementById("regTitle").value = reg.regTitle || "";
+        document.getElementById("regArticles").value = reg.regArticles || "";
+        document.getElementById("regContent").value = reg.regContent || "";
+        document.getElementById("regSourceNote").value = reg.regSourceNote || "";
+        document.getElementById("regFormContainer").scrollIntoView({ behavior: "smooth" });
+      } catch (err) {
+        showToast("Gagal membuka form edit regulasi.");
+      }
+    }
+
+    async function deleteRegulationItem(id) {
+      if (!confirm("Hapus sumber regulasi ini dari penyimpanan lokal?")) return;
+      try {
+        await DBManager.deleteById("regulations", id);
+        await renderRegulations();
+        showToast("Sumber regulasi dihapus.");
+      } catch (err) {
+        showToast("Gagal menghapus regulasi.");
+      }
+    }
+
+    async function openRegDetailModal(id) {
+      try {
+        const reg = await DBManager.getById("regulations", id);
+        if (!reg) return;
+
+        document.getElementById("regModalTitle").textContent = reg.regNumber;
+        document.getElementById("regModalBody").innerHTML = `
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+            <span class="legal-chip">${escapeHtml(reg.regYear)}</span>
+            ${reg.regArticles ? `<span class="legal-chip">${escapeHtml(reg.regArticles)}</span>` : ""}
+          </div>
+          <h4 style="font-size:15px; color:var(--primary-dark); margin-bottom:10px;">${escapeHtml(reg.regTitle)}</h4>
+          <div style="background:#F8FAFC; border:1px solid var(--border); border-radius:8px; padding:12px; white-space:pre-wrap; font-size:13px; color:var(--text-main);">${escapeHtml(reg.regContent)}</div>
+          ${reg.regSourceNote ? `<p style="margin-top:10px; font-size:12px; color:var(--text-muted);"><strong>Sumber Dokumen:</strong> ${escapeHtml(reg.regSourceNote)}</p>` : ""}
+          <p style="margin-top:6px; font-size:11.5px; color:var(--text-muted);">Terakhir diperbarui lokal: ${new Date(reg.updatedAt || Date.now()).toLocaleString("id-ID")}</p>
+        `;
+        document.getElementById("regDetailModal").classList.add("open");
+      } catch (err) {
+        showToast("Gagal menampilkan detail regulasi.");
+      }
+    }
+
+    function closeRegDetailModal() {
+      document.getElementById("regDetailModal").classList.remove("open");
+    }
+
+    async function renderRegulations() {
+      const box = document.getElementById("regListContainer");
+      const query = (document.getElementById("regSearchInput").value || "").trim().toLowerCase();
+
+      try {
+        let list = await DBManager.getAll("regulations");
+        list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+
+        if (!list.length) {
+          box.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-title">Belum Ada Sumber Regulasi Tersimpan</div>
+              <p class="empty-state-desc">
+                Repositori regulasi lokal saat ini kosong karena belum ada dokumen regulasi valid yang diinput atau diimpor. Aplikasi tidak mengisi nomor peraturan atau isi pasal secara otomatis tanpa sumber terverifikasi.
+              </p>
+              <button type="button" class="btn btn-primary btn-sm" onclick="toggleRegForm(true)">+ Tambah Sumber Regulasi Pertama</button>
+            </div>`;
+          return;
+        }
+
+        const filtered = list.filter((r) => {
+          const hay = `${r.regNumber} ${r.regYear} ${r.regTitle} ${r.regArticles || ""} ${r.regContent}`.toLowerCase();
+          return !query || hay.includes(query);
+        });
+
+        if (!filtered.length) {
+          box.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-title">Regulasi Tidak Ditemukan</div>
+              <p class="empty-state-desc">Tidak ada regulasi lokal yang sesuai dengan kata kunci pencarian Anda.</p>
+            </div>`;
+          return;
+        }
+
+        box.innerHTML = `<div class="reg-card-list">` + filtered.map((r) => `
+          <article class="reg-doc-card">
+            <div class="reg-doc-main">
+              <div class="reg-doc-meta">
+                <span class="legal-chip">${escapeHtml(r.regNumber)}</span>
+                <span class="legal-chip">${escapeHtml(r.regYear)}</span>
+                ${r.regArticles ? `<span class="legal-chip">${escapeHtml(r.regArticles)}</span>` : ""}
+              </div>
+              <div class="reg-doc-title">${escapeHtml(r.regTitle)}</div>
+              <div class="reg-doc-excerpt">${escapeHtml(r.regContent)}</div>
+            </div>
+            <div class="reg-doc-actions">
+              <button type="button" class="btn btn-primary btn-sm" onclick="openRegDetailModal('${escapeHtml(r.id)}')">Detail</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="editRegulationItem('${escapeHtml(r.id)}')">Edit</button>
+              <button type="button" class="btn btn-danger-outline btn-sm" onclick="deleteRegulationItem('${escapeHtml(r.id)}')">Hapus</button>
+            </div>
+          </article>
+        `).join("") + `</div>`;
+      } catch (err) {
+        box.innerHTML = `<div class="alert alert-danger">Gagal memuat regulasi dari IndexedDB: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function exportRegulationsJson() {
+      try {
+        const list = await DBManager.getAll("regulations");
+        if (!list.length) {
+          showToast("Belum ada sumber regulasi lokal untuk diekspor.");
+          return;
+        }
+        const payload = {
+          app: "SimKelas JKN",
+          exportedAt: new Date().toISOString(),
+          regulations: list
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Regulasi_SimKelas_JKN_${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        showToast("Cadangan regulasi JSON berhasil diunduh.");
+      } catch (err) {
+        showToast("Gagal mengekspor regulasi JSON.");
+      }
+    }
+
+    async function importRegulationsJson(event) {
+      const file = event.target.files && event.target.files[0];
+      event.target.value = "";
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        const items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed.regulations) ? parsed.regulations : null);
+        if (!items || !items.length) {
+          showToast("Format file JSON tidak berisi daftar regulasi yang valid.");
+          return;
+        }
+
+        let importedCount = 0;
+        for (const raw of items) {
+          if (!raw || !raw.regNumber || !raw.regTitle || !raw.regContent) continue;
+          const record = {
+            id: raw.id ? String(raw.id) : ("reg_imp_" + Date.now() + "_" + importedCount),
+            regNumber: String(raw.regNumber).trim(),
+            regYear: String(raw.regYear || "-").trim(),
+            regTitle: String(raw.regTitle).trim(),
+            regArticles: String(raw.regArticles || "").trim(),
+            regContent: String(raw.regContent).trim(),
+            regSourceNote: String(raw.regSourceNote || "").trim(),
+            createdAt: Number(raw.createdAt) || Date.now(),
+            updatedAt: Date.now()
+          };
+          await DBManager.putItem("regulations", record);
+          importedCount++;
+        }
+
+        await renderRegulations();
+        showToast(`${importedCount} sumber regulasi berhasil diimpor ke penyimpanan lokal.`);
+      } catch (err) {
+        showToast("Gagal membaca berkas JSON regulasi.");
+      }
+    }
+
+    /* =========================================================================
+       11. SERVICE WORKER REGISTRATION & APP INITIALIZATION
     ========================================================================= */
     window.addEventListener("beforeprint", () => {
       document.getElementById("printTimestamp").textContent = new Date().toLocaleString("id-ID");
     });
 
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").catch(() => {});
+    function registerServiceWorker() {
+      if (!("serviceWorker" in navigator)) return;
+      window.addEventListener("load", async () => {
+        try {
+          const registration = await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+          registration.addEventListener("updatefound", () => {
+            const newWorker = registration.installing;
+            if (!newWorker) return;
+            newWorker.addEventListener("statechange", () => {
+              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                newWorker.postMessage({ type: "SKIP_WAITING" });
+              }
+            });
+          });
+        } catch (err) {
+          console.warn("Registrasi Service Worker tidak aktif:", err);
+        }
       });
     }
 
+    registerServiceWorker();
+
     (async function initApp() {
+      const splashStart = Date.now();
+      updateNetworkIndicator();
       onScenarioChange();
+
       try {
         await DBManager.open();
         await DBManager.migrateLegacyLocalStorage();
@@ -2556,8 +3061,13 @@
         banner.innerHTML = `
           <div class="alert alert-warning" style="margin-top:0;">
             <span class="alert-title">Peringatan Penyimpanan Lokal (IndexedDB)</span>
-            Browser membatasi akses IndexedDB (${escapeHtml(err.message)}). Fitur perhitungan, cetak, dan ekspor tetap berjalan normal.
+            Browser membatasi akses IndexedDB (${escapeHtml(err.message)}). Fitur perhitungan dan ekspor tetap berjalan normal selama sesi aktif.
           </div>`;
+      } finally {
+        const elapsed = Date.now() - splashStart;
+        const minDisplayMs = 650;
+        const remaining = Math.max(0, minDisplayMs - elapsed);
+        setTimeout(hideSplashScreen, remaining);
       }
     })();
   </script>
