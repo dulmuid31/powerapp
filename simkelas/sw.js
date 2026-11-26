@@ -1,7 +1,7 @@
 "use strict";
 
-const CACHE_VERSION = "simkelas-jkn-static-v2.0.0";
-const RUNTIME_CACHE = "simkelas-jkn-runtime-v2.0.0";
+const CACHE_VERSION = "simkelas-jkn-static-v2.1.0";
+const RUNTIME_CACHE = "simkelas-jkn-runtime-v2.1.0";
 
 const CORE_PRECACHE_ASSETS = [
   "./SimhitungBPJS.html",
