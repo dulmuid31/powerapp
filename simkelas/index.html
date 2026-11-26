@@ -1,0 +1,3004 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#042F2E" />
+  <meta name="description" content="Simulator dan Audit Selisih Biaya Naik Kelas Perawatan BPJS Kesehatan (JKN) berbasis PWA Offline." />
+  <title>SimKelas JKN — Simulator &amp; Audit Naik Kelas JKN</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/png" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+  <style>
+    :root {
+      --primary-dark: #042F2E;
+      --primary: #0F766E;
+      --primary-accent: #0D9488;
+      --primary-soft: #CCFBF1;
+      --primary-tint: #F0FDFA;
+      --bg-canvas: #F2F5F4;
+      --bg-card: #FFFFFF;
+      --border: #D8E2DF;
+      --border-strong: #B8C9C4;
+      --text-main: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --danger: #B91C1C;
+      --danger-bg: #FEF2F2;
+      --danger-border: #FECACA;
+      --warning: #B45309;
+      --warning-bg: #FFFBEB;
+      --warning-border: #FDE68A;
+      --success: #047857;
+      --success-bg: #ECFDF5;
+      --success-border: #A7F3D0;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 3px rgba(4, 47, 46, 0.06), 0 1px 2px rgba(4, 47, 46, 0.04);
+      --shadow-md: 0 8px 24px -4px rgba(4, 47, 46, 0.08);
+      --bottom-nav-height: 68px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* MINIMALIST STICKY HEADER */
+    .topbar {
+      background: linear-gradient(135deg, #042F2E 0%, #064E3B 100%);
+      color: #FFFFFF;
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+      color: #5EEAD4;
+      letter-spacing: -0.4px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: #FFFFFF;
+    }
+
+    .brand-sub {
+      font-size: 11.5px;
+      color: #CBD5E1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+
+    /* OFFLINE / ONLINE STATUS INDICATOR */
+    .net-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+      border: 1px solid;
+      transition: all 0.2s ease;
+    }
+
+    .net-indicator.is-online {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(110, 231, 183, 0.4);
+      color: #A7F3D0;
+    }
+
+    .net-indicator.is-offline {
+      background: rgba(245, 158, 11, 0.22);
+      border-color: rgba(253, 224, 71, 0.55);
+      color: #FDE68A;
+    }
+
+    .net-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* BOTTOM NAVIGATION */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: #FFFFFF;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 16px rgba(4, 47, 46, 0.06);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+    }
+
+    .bottom-nav-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .bnav-item {
+      appearance: none;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      padding: 6px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    .bnav-item:hover {
+      background: var(--primary-tint);
+      color: var(--primary-dark);
+    }
+
+    .bnav-item.active {
+      color: var(--primary-dark);
+      background: var(--primary-tint);
+      font-weight: 700;
+    }
+
+    .bnav-item.active .bnav-icon {
+      color: var(--primary);
+    }
+
+    .bnav-icon {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+    }
+
+    .bnav-badge {
+      position: absolute;
+      top: 3px;
+      right: calc(50% - 20px);
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 5px;
+      border-radius: 999px;
+      min-width: 16px;
+      text-align: center;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 16px calc(var(--bottom-nav-height) + 32px + env(safe-area-inset-bottom));
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--primary-dark);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary);
+    }
+
+    .btn-accent {
+      background: #0D9488;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background: #0F766E;
+    }
+
+    .btn-outline {
+      background: #FFFFFF;
+      color: var(--text-main);
+      border-color: var(--border-strong);
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background: var(--primary-tint);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .btn-danger-outline {
+      background: #FFFFFF;
+      color: var(--danger);
+      border-color: var(--danger-border);
+    }
+
+    .btn-danger-outline:hover:not(:disabled) {
+      background: var(--danger-bg);
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    /* PRESET BAR */
+    .preset-strip {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .preset-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .preset-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* WORKSPACE GRID */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 920px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sticky-summary {
+      position: sticky;
+      top: 66px;
+    }
+
+    @media (max-width: 920px) {
+      .sticky-summary {
+        position: static;
+      }
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 16px;
+    }
+
+    .card-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      font-size: 11.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .legal-chip {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-tint);
+      border: 1px solid var(--primary-soft);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* FORM ELEMENTS */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 13px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .label-hint {
+      font-weight: 500;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      display: block;
+      margin-top: 2px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="search"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 13.5px;
+      color: var(--text-main);
+      background: #FFFFFF;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 92px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary-accent);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .input-currency-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .currency-prefix {
+      position: absolute;
+      left: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .input-currency {
+      padding-left: 38px !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      font-weight: 600;
+      font-size: 14px !important;
+    }
+
+    /* SCENARIO RADIO CARDS */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .scenario-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .scenario-option {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: #FFFFFF;
+      position: relative;
+    }
+
+    .scenario-option:hover {
+      border-color: var(--primary-accent);
+      background: var(--primary-tint);
+    }
+
+    .scenario-option.selected {
+      border-color: var(--primary-dark);
+      background: var(--primary-tint);
+      box-shadow: 0 0 0 1px var(--primary-dark);
+    }
+
+    .scenario-option input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .scenario-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: block;
+    }
+
+    .scenario-desc {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* ALERTS */
+    .alert {
+      padding: 11px 13px;
+      border-radius: var(--radius-md);
+      font-size: 12.5px;
+      margin-top: 12px;
+      border: 1px solid;
+      line-height: 1.5;
+    }
+
+    .alert-danger {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: #7F1D1D;
+    }
+
+    .alert-warning {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: #78350F;
+    }
+
+    .alert-success {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: #064E3B;
+    }
+
+    .alert-info {
+      background: var(--primary-tint);
+      border-color: var(--primary-soft);
+      color: var(--primary-dark);
+    }
+
+    .alert-title {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* HERO RESULT CARD */
+    .hero-card {
+      background: linear-gradient(145deg, #042F2E 0%, #065F46 100%);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 14px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-label {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #99F6E4;
+      font-weight: 700;
+    }
+
+    .hero-status {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .hero-status.blocked {
+      background: #991B1B;
+      border-color: #FCA5A5;
+      color: #FEE2E2;
+    }
+
+    .hero-amount {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 8px 0 4px;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+
+    .hero-sub {
+      font-size: 12px;
+      color: #CBD5E1;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    @media (max-width: 560px) {
+      .kpi-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kpi-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-sm);
+      padding: 9px 11px;
+    }
+
+    .kpi-box-label {
+      font-size: 10.5px;
+      color: #A7F3D0;
+      font-weight: 600;
+    }
+
+    .kpi-box-val {
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 2px;
+      color: #FFFFFF;
+    }
+
+    /* STACKED PROPORTION BAR */
+    .bar-wrap {
+      margin: 10px 0 6px;
+    }
+
+    .stacked-bar {
+      height: 14px;
+      border-radius: 999px;
+      background: #E2E8F0;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .bar-seg-bpjs {
+      background: #0F766E;
+      transition: width 0.25s ease;
+    }
+
+    .bar-seg-cob {
+      background: #0284C7;
+      transition: width 0.25s ease;
+    }
+
+    .bar-seg-patient {
+      background: #D97706;
+      transition: width 0.25s ease;
+    }
+
+    .bar-seg-absorbed {
+      background: #DC2626;
+      transition: width 0.25s ease;
+    }
+
+    .legend-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    /* AUDIT & DATA TABLES */
+    .audit-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .audit-toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 720px) {
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .meta-item {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+
+    .meta-k {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .meta-v {
+      font-size: 13px;
+      color: var(--text-main);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .audit-table th,
+    .audit-table td {
+      padding: 10px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .audit-table th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      background: #F8FAFC;
+    }
+
+    .audit-table td.num {
+      text-align: right;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .audit-table tr.highlight-row {
+      background: var(--primary-tint);
+      font-weight: 700;
+    }
+
+    .audit-table tr.warn-row {
+      background: var(--danger-bg);
+      color: #991B1B;
+    }
+
+    .formula-note {
+      display: block;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .reg-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .reg-table th {
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    .reg-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .reg-table tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+
+    /* REGULATION CARDS & EMPTY STATES */
+    .empty-state {
+      text-align: center;
+      padding: 36px 18px;
+      border: 1.5px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      background: #F8FAFC;
+    }
+
+    .empty-state-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .empty-state-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 14px;
+    }
+
+    .reg-card-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .reg-doc-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      background: #FFFFFF;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .reg-doc-main {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .reg-doc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+
+    .reg-doc-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .reg-doc-excerpt {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .reg-doc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      padding: 14px 18px;
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .modal-head h3 {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: rgba(255, 255, 255, 0.14);
+      border: none;
+      color: #FFFFFF;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 18px;
+      overflow-y: auto;
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
+
+    .modal-foot {
+      padding: 12px 18px;
+      border-top: 1px solid var(--border);
+      background: #F8FAFC;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: calc(var(--bottom-nav-height) + 14px + env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #0F172A;
+      color: #FFFFFF;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 90;
+      max-width: 92vw;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* PRINT STYLES */
+    .print-header-only {
+      display: none;
+    }
+
+    @media print {
+      body {
+        background: #FFFFFF;
+      }
+      .topbar,
+      .bottom-nav,
+      .no-print,
+      #tab-hitung,
+      #tab-regulasi,
+      #tab-riwayat,
+      .modal-backdrop,
+      .toast {
+        display: none !important;
+      }
+      #tab-audit {
+        display: block !important;
+      }
+      .container {
+        padding: 0;
+        max-width: 100%;
+      }
+      .print-header-only {
+        display: block;
+        border-bottom: 2px solid #042F2E;
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+      }
+      .card,
+      .hero-card {
+        box-shadow: none;
+        border: 1px solid #CBD5E1;
+        break-inside: avoid;
+      }
+      .hero-card {
+        background: #042F2E !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MINIMALIST HEADER -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">JKN</div>
+        <div class="brand-text">
+          <div class="brand-title">SimKelas JKN</div>
+          <div class="brand-sub">Simulator &amp; Audit Selisih Biaya Naik Kelas Perawatan</div>
+        </div>
+      </div>
+      <div id="networkStatusBadge" class="net-indicator is-online" role="status" aria-live="polite">
+        <span class="net-dot" aria-hidden="true"></span>
+        <span id="networkStatusText">Online</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- PRINT HEADER -->
+    <div class="print-header-only">
+      <h2 style="color:#042F2E; font-size:17px;">LEMBAR SIMULASI &amp; AUDIT SELISIH BIAYA NAIK KELAS PERAWATAN JKN</h2>
+      <p style="font-size:11.5px; color:#475569;">Acuan Perhitungan: Permenkes No. 3 Tahun 2023 Pasal 48 &amp; Perpres No. 59 Tahun 2024 Pasal 51 | Dicetak: <span id="printTimestamp"></span></p>
+    </div>
+
+    <div id="dbErrorBanner" style="display:none; margin-bottom:14px;"></div>
+
+    <!-- =========================================================
+         TAB 1: HITUNG
+    ========================================================== -->
+    <section id="tab-hitung" class="tab-panel active" role="tabpanel" aria-labelledby="nav-btn-hitung">
+
+      <!-- PRESET STRIP -->
+      <div class="preset-strip no-print">
+        <div class="preset-label">Simulasi Cepat Skenario:</div>
+        <div class="preset-buttons">
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k2_k1')">Kelas 2 → Kelas 1</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k1_vip_under')">Kelas 1 → VIP (&lt; Plafon 75%)</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k1_vip_cap')">Kelas 1 → VIP (Plafon 75%)</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k2_vip_cob')">Kelas 2 → VIP + COB</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('rajal_eks')">Poli Eksekutif</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="resetCalculatorForm()">Reset (0)</button>
+        </div>
+      </div>
+
+      <div class="workspace-grid">
+        <!-- INPUT STEPS -->
+        <div>
+          <!-- STEP 1 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span class="step-pill">1</span> Identitas &amp; Eligibilitas Peserta</div>
+              <span class="legal-chip">Perpres 59/2024 Psl 51</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="patientName">Nama Pasien / Kode Kasus <span class="label-hint">Opsional (untuk catatan &amp; cetak)</span></label>
+                <input type="text" id="patientName" placeholder="Masukkan nama atau nomor SEP" oninput="recalculate()" />
+              </div>
+              <div class="form-group">
+                <label for="hospitalClass">Tipe / Kelas RS &amp; Regional <span class="label-hint">Opsional (keterangan administrasi)</span></label>
+                <input type="text" id="hospitalClass" placeholder="Contoh: RS Tipe B - Regional 1" oninput="recalculate()" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="memberSegment">Segmen &amp; Status Kepesertaan BPJS Kesehatan</label>
+              <select id="memberSegment" onchange="recalculate()">
+                <option value="allowed_ppu">PPU Aktif (Pegawai Swasta / ASN / TNI / Polri / BUMN) — Hak Kelas 1 atau 2</option>
+                <option value="allowed_pbpu">PBPU Mandiri Aktif (Iuran Sendiri) — Hak Kelas 1 atau 2</option>
+                <option value="allowed_bp">BP Bukan Pekerja (Pensiunan / Veteran / Investor) — Hak Kelas 1 atau 2</option>
+                <option value="blocked_pbi">PBI Jaminan Kesehatan (Bantuan Iuran Pemerintah) — Dilarang Naik Kelas</option>
+                <option value="blocked_k3">PBPU / BP dengan Hak Manfaat Ruang Kelas 3 — Dilarang Naik Kelas</option>
+                <option value="blocked_phk">PPU Terdampak PHK &amp; Keluarga (Masa Jaminan 6 Bulan) — Dilarang Naik Kelas</option>
+                <option value="blocked_pemda">Peserta yang Didaftarkan Pemerintah Daerah (PBPU/BP Pemda) — Dilarang Naik Kelas</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="upgradeTrigger">Dasar Penempatan Kamar</label>
+              <select id="upgradeTrigger" onchange="recalculate()">
+                <option value="aps">Atas Permintaan Sendiri (APS) — Pasien/Keluarga Memilih Naik Kelas</option>
+                <option value="full_room">Kamar Sesuai Hak Penuh (Dititipkan RS 1 Tingkat di Atasnya ≤ 3 Hari)</option>
+              </select>
+            </div>
+
+            <div id="eligibilityAlert"></div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span class="step-pill">2</span> Jenis Layanan &amp; Kenaikan Kelas</div>
+              <span class="legal-chip">Permenkes 3/2023 Psl 48(3)</span>
+            </div>
+
+            <div class="scenario-grid" id="scenarioCards">
+              <label class="scenario-option" id="opt_k2_k1">
+                <input type="radio" name="scenario" value="k2_k1" onchange="onScenarioChange()" />
+                <span class="scenario-title">Kelas 2 → Kelas 1</span>
+                <span class="scenario-desc">Selisih tarif INA-CBG Kelas 1 dengan Kelas 2</span>
+              </label>
+
+              <label class="scenario-option selected" id="opt_k1_vip">
+                <input type="radio" name="scenario" value="k1_vip" checked onchange="onScenarioChange()" />
+                <span class="scenario-title">Kelas 1 → VIP / VVIP</span>
+                <span class="scenario-desc">Selisih riil, maksimal 75% INA-CBG Kelas 1</span>
+              </label>
+
+              <label class="scenario-option" id="opt_k2_vip">
+                <input type="radio" name="scenario" value="k2_vip" onchange="onScenarioChange()" />
+                <span class="scenario-title">Kelas 2 → VIP / VVIP</span>
+                <span class="scenario-desc">Selisih Kls 2–1 + maks 75% INA-CBG Kelas 1</span>
+              </label>
+
+              <label class="scenario-option" id="opt_rajal">
+                <input type="radio" name="scenario" value="rajal" onchange="onScenarioChange()" />
+                <span class="scenario-title">Rawat Jalan Eksekutif</span>
+                <span class="scenario-desc">Selisih paket poli, maks Rp400.000/episode</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span class="step-pill">3</span> Komponen Tarif INA-CBG &amp; Tarif Riil RS</div>
+              <span class="legal-chip">Satuan Rupiah (IDR)</span>
+            </div>
+
+            <div id="inpatientInputs">
+              <div class="form-group" id="groupInaK2" style="display:none;">
+                <label for="inaK2">Tarif Paket INA-CBG Kelas 2 (Hak Peserta)</label>
+                <div class="input-currency-wrap">
+                  <span class="currency-prefix">Rp</span>
+                  <input type="text" inputmode="numeric" id="inaK2" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
+                </div>
+              </div>
+
+              <div class="form-group" id="groupInaK1">
+                <label for="inaK1">Tarif Paket INA-CBG Kelas 1 <span class="label-hint">Dasar acuan perhitungan &amp; plafon 75%</span></label>
+                <div class="input-currency-wrap">
+                  <span class="currency-prefix">Rp</span>
+                  <input type="text" inputmode="numeric" id="inaK1" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
+                </div>
+              </div>
+
+              <div class="form-group" id="groupRealVip">
+                <label for="realVip">Total Tarif Riil RS (Kelas VIP / VVIP / Tujuan) <span class="label-hint">Total tagihan seluruh episode rawat inap di kamar tujuan</span></label>
+                <div class="input-currency-wrap">
+                  <span class="currency-prefix">Rp</span>
+                  <input type="text" inputmode="numeric" id="realVip" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
+                </div>
+              </div>
+            </div>
+
+            <div id="outpatientInputs" style="display:none;">
+              <div class="form-group">
+                <label for="inaRajal">Tarif Paket INA-CBG Rawat Jalan Reguler <span class="label-hint">Porsi yang dijamin BPJS Kesehatan</span></label>
+                <div class="input-currency-wrap">
+                  <span class="currency-prefix">Rp</span>
+                  <input type="text" inputmode="numeric" id="inaRajal" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="realRajal">Total Tarif Paket Poli Eksekutif RS <span class="label-hint">Total tagihan paket rawat jalan eksekutif sebelum dikurangi INA-CBG</span></label>
+                <div class="input-currency-wrap">
+                  <span class="currency-prefix">Rp</span>
+                  <input type="text" inputmode="numeric" id="realRajal" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4 -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><span class="step-pill">4</span> Skema Pembayar Selisih / COB (Opsional)</div>
+              <span class="legal-chip">Permenkes 3/2023 Psl 48(5)</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="payerType">Pihak Penanggung Selisih</label>
+                <select id="payerType" onchange="recalculate()">
+                  <option value="self">Peserta Sendiri / Keluarga (100% Mandiri)</option>
+                  <option value="cob">Asuransi Kesehatan Tambahan (COB)</option>
+                  <option value="employer">Pemberi Kerja / Perusahaan</option>
+                </select>
+              </div>
+              <div class="form-group" id="groupCobLimit" style="display:none;">
+                <label for="cobLimit">Plafon Tanggungan COB / Perusahaan <span class="label-hint">Batas jaminan selisih kelas</span></label>
+                <div class="input-currency-wrap">
+                  <span class="currency-prefix">Rp</span>
+                  <input type="text" inputmode="numeric" id="cobLimit" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK RESULT PANEL -->
+        <div class="sticky-summary">
+          <div class="hero-card">
+            <div class="hero-top">
+              <div>
+                <div class="hero-label">Total Selisih Biaya Sah Wajib Dibayar</div>
+                <div class="hero-amount mono" id="calcHeroTotal">Rp 0</div>
+                <div class="hero-sub" id="calcHeroSub">Skenario: Hak Kelas 1 naik ke VIP / Di Atas Kelas 1</div>
+              </div>
+              <span class="hero-status" id="calcHeroBadge">Menunggu Input</span>
+            </div>
+
+            <div class="kpi-row">
+              <div class="kpi-box">
+                <div class="kpi-box-label">Dijamin BPJS (INA-CBG)</div>
+                <div class="kpi-box-val mono" id="calcHeroBpjs">Rp 0</div>
+              </div>
+              <div class="kpi-box">
+                <div class="kpi-box-label">Ditanggung COB / PT</div>
+                <div class="kpi-box-val mono" id="calcHeroCob">Rp 0</div>
+              </div>
+              <div class="kpi-box">
+                <div class="kpi-box-label">Neto Dibayar Pasien</div>
+                <div class="kpi-box-val mono" id="calcHeroPatient">Rp 0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Tindakan Perhitungan</div>
+              <span class="legal-chip" id="calcCapChip">Plafon: Rp 0</span>
+            </div>
+            <p style="font-size:12.5px; color:var(--text-secondary); margin-bottom:12px;">
+              Simpan hasil ke database lokal (IndexedDB) atau buka tab <strong>Audit</strong> untuk memeriksa rincian rumus pasal, cetak slip PDF, dan ekspor Excel.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <button type="button" class="btn btn-primary" onclick="saveToHistory()">+ Simpan ke Riwayat</button>
+              <button type="button" class="btn btn-outline" onclick="switchTab('audit')">Lihat Rincian Audit &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 2: AUDIT
+    ========================================================== -->
+    <section id="tab-audit" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-audit">
+
+      <!-- EXPORT & PRINT TOOLBAR (MOVED FROM HEADER) -->
+      <div class="audit-toolbar no-print">
+        <div>
+          <div style="font-size:14.5px; font-weight:800; color:var(--primary-dark);">Lembar Audit &amp; Kepatuhan Selisih Biaya</div>
+          <div style="font-size:12px; color:var(--text-secondary);">Cetak slip audit PDF atau unduh laporan Excel (.xlsx) secara offline</div>
+        </div>
+        <div class="audit-toolbar-actions">
+          <button type="button" class="btn btn-outline" onclick="printAuditSlip()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Cetak Slip / PDF
+          </button>
+          <button type="button" class="btn btn-accent" onclick="exportCurrentExcel()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Ekspor Excel (.xlsx)
+          </button>
+        </div>
+      </div>
+
+      <!-- CASE METADATA SUMMARY -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Ringkasan Kasus &amp; Status Verifikasi</div>
+          <span class="legal-chip" id="auditStatusChip">Menunggu Input</span>
+        </div>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <div class="meta-k">Pasien / Kode Kasus</div>
+            <div class="meta-v" id="auditMetaPatient">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Tipe RS / Regional</div>
+            <div class="meta-v" id="auditMetaHospital">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Segmen Kepesertaan</div>
+            <div class="meta-v" id="auditMetaSegment">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Dasar Penempatan Kamar</div>
+            <div class="meta-v" id="auditMetaTrigger">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Skenario Layanan</div>
+            <div class="meta-v" id="auditMetaScenario">-</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-k">Total Selisih Sah / Neto Pasien</div>
+            <div class="meta-v mono" id="auditMetaAmounts">Rp 0 / Rp 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPORTION BAR CARD -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Struktur Pembiayaan Episode Perawatan</div>
+          <span class="legal-chip" id="resCapRatio">Batas Plafon Hukum: Rp 0</span>
+        </div>
+
+        <div class="bar-wrap">
+          <div class="stacked-bar">
+            <div class="bar-seg-bpjs" id="barBpjs" style="width: 0%;"></div>
+            <div class="bar-seg-cob" id="barCob" style="width: 0%;"></div>
+            <div class="bar-seg-patient" id="barPatient" style="width: 0%;"></div>
+            <div class="bar-seg-absorbed" id="barAbsorbed" style="width: 0%;"></div>
+          </div>
+          <div class="legend-list">
+            <span class="legend-item"><i class="dot" style="background:#0F766E;"></i> Jaminan BPJS (<span id="lblBpjs">Rp 0</span>)</span>
+            <span class="legend-item"><i class="dot" style="background:#0284C7;"></i> COB / Perusahaan (<span id="lblCob">Rp 0</span>)</span>
+            <span class="legend-item"><i class="dot" style="background:#D97706;"></i> Selisih Pasien (<span id="lblPatient">Rp 0</span>)</span>
+            <span class="legend-item"><i class="dot" style="background:#DC2626;"></i> Di Atas Plafon / Beban RS (<span id="lblAbsorbed">Rp 0</span>)</span>
+          </div>
+        </div>
+
+        <div id="overchargeAlert"></div>
+      </div>
+
+      <!-- STEP-BY-STEP LEGAL AUDIT TABLE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Rincian Audit Rumus Perhitungan</div>
+          <span class="legal-chip">Audit Casemix &amp; Kasir</span>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Tahapan &amp; Dasar Pasal</th>
+                <th style="text-align:right;">Nominal</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- COMPLIANCE NOTES -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Catatan Kepatuhan &amp; Perlindungan Peserta</div>
+        </div>
+        <ul style="padding-left:18px; font-size:12.5px; color:var(--text-secondary); display:grid; gap:7px;">
+          <li><strong>Kewajiban Informasi Awal:</strong> FKRTL wajib menginformasikan estimasi selisih biaya kepada peserta/keluarga sebelum pelayanan diberikan dan menuangkannya dalam surat persetujuan tertulis.</li>
+          <li><strong>Perlindungan Plafon 75%:</strong> Apabila selisih tarif riil VIP melebihi batas maksimal 75% tarif INA-CBG Kelas 1, kelebihan biaya di atas plafon tersebut <strong>tidak boleh dibebankan</strong> kepada peserta BPJS Kesehatan.</li>
+          <li><strong>Pengecualian Pasal 48 ayat (4):</strong> Jika total biaya pelayanan riil RS pada kelas lebih tinggi ternyata masih berada di bawah atau sama dengan tarif INA-CBG hak peserta, selisih biaya tidak diberlakukan (Rp 0).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 3: REGULASI
+    ========================================================== -->
+    <section id="tab-regulasi" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-regulasi">
+
+      <!-- LOCAL REGULATION REPOSITORY (INDEXEDDB) -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Repositori Sumber Regulasi Lokal (Offline)</div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <button type="button" class="btn btn-primary btn-sm" onclick="toggleRegForm(true)">+ Tambah Regulasi</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="document.getElementById('regImportInput').click()">Impor JSON</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="exportRegulationsJson()">Ekspor JSON</button>
+            <input type="file" id="regImportInput" accept=".json,application/json" style="display:none;" onchange="importRegulationsJson(event)" />
+          </div>
+        </div>
+
+        <!-- ADD / EDIT REGULATION FORM -->
+        <div id="regFormContainer" style="display:none; background:#F8FAFC; border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; margin-bottom:16px;">
+          <div style="font-size:13.5px; font-weight:700; color:var(--primary-dark); margin-bottom:10px;" id="regFormHeading">Tambah Sumber Regulasi Valid</div>
+          <input type="hidden" id="regEditId" value="" />
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="regNumber">Nomor &amp; Jenis Peraturan *</label>
+              <input type="text" id="regNumber" placeholder="Contoh: Peraturan Menteri Kesehatan Nomor ..." />
+            </div>
+            <div class="form-group">
+              <label for="regYear">Tahun &amp; Status Berlaku *</label>
+              <input type="text" id="regYear" placeholder="Contoh: 2023 — Berlaku" />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="regTitle">Judul / Tentang Peraturan *</label>
+              <input type="text" id="regTitle" placeholder="Masukkan judul resmi peraturan" />
+            </div>
+            <div class="form-group">
+              <label for="regArticles">Pasal / Ayat Terkait</label>
+              <input type="text" id="regArticles" placeholder="Contoh: Pasal 48 ayat (1) s.d. (5)" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regContent">Isi Ketentuan / Ringkasan Resmi *</label>
+            <textarea id="regContent" placeholder="Salin bunyi pasal atau ringkasan terverifikasi dari dokumen resmi..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="regSourceNote">Keterangan Sumber Dokumen (Opsional)</label>
+            <input type="text" id="regSourceNote" placeholder="Contoh: Salinan Lembaran Negara / JDIH Kemenkes" />
+          </div>
+          <div style="display:flex; gap:8px; justify-content:flex-end;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="toggleRegForm(false)">Batal</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="submitRegulationForm()">Simpan Regulasi ke Lokal</button>
+          </div>
+        </div>
+
+        <!-- FILTER & SEARCH -->
+        <div class="form-group" style="margin-bottom:14px;">
+          <input type="search" id="regSearchInput" placeholder="Cari nomor peraturan, tahun, pasal, atau kata kunci isi regulasi..." oninput="renderRegulations()" />
+        </div>
+
+        <!-- LIST OR EMPTY STATE -->
+        <div id="regListContainer"></div>
+      </div>
+
+      <!-- SYSTEM CALCULATION FORMULA MATRIX (EXISTING ENGINE REFERENCE) -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Acuan Rumus Mesin Hitung Sistem (Referensi Teknis Aplikasi)</div>
+          <span class="legal-chip">Logika Bawaan Sistem</span>
+        </div>
+        <p style="font-size:12.5px; color:var(--text-secondary); margin-bottom:12px;">
+          Matriks berikut merupakan parameter rumus yang digunakan secara internal oleh kalkulator aplikasi ini berdasarkan acuan regulasi yang telah ditetapkan pada sistem awal:
+        </p>
+        <div style="overflow-x:auto;">
+          <table class="reg-table">
+            <thead>
+              <tr>
+                <th style="width:24%;">Jenis Peningkatan</th>
+                <th style="width:42%;">Rumus Perhitungan Sistem</th>
+                <th style="width:34%;">Ketentuan Batas &amp; Pengecualian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Hak Kelas 2 → Kelas 1</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(b)</span></td>
+                <td class="mono" style="font-size:12px;">Tarif INA-CBG Kelas 1 − Tarif INA-CBG Kelas 2</td>
+                <td>Selisih langsung antar paket INA-CBG Kelas 1 dan Kelas 2 tanpa plafon persentase 75%.</td>
+              </tr>
+              <tr>
+                <td><strong>Hak Kelas 1 → VIP / Di Atas Kelas 1</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(c)</span></td>
+                <td class="mono" style="font-size:12px;">MIN(Tarif Riil VIP − INA-CBG Kelas 1, 75% × INA-CBG Kelas 1)</td>
+                <td>Maksimal 75% dari tarif INA-CBG Kelas 1. Jika tarif riil &le; INA-CBG Kelas 1, selisih = Rp 0 (Pasal 48 ayat 4).</td>
+              </tr>
+              <tr>
+                <td><strong>Hak Kelas 2 → VIP / Di Atas Kelas 1</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(d)</span></td>
+                <td class="mono" style="font-size:12px;">(INA-CBG Kls 1 − INA-CBG Kls 2) + MIN(Riil VIP − INA-CBG Kls 1, 75% × INA-CBG Kls 1)</td>
+                <td>Gabungan selisih Kelas 2 ke Kelas 1 ditambah maksimal 75% tarif INA-CBG Kelas 1.</td>
+              </tr>
+              <tr>
+                <td><strong>Rawat Jalan Eksekutif</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(a)</span></td>
+                <td class="mono" style="font-size:12px;">MIN(Paket Poli Eksekutif − INA-CBG Rajal, Rp400.000)</td>
+                <td>Maksimal Rp400.000,00 per episode rawat jalan eksekutif.</td>
+              </tr>
+              <tr>
+                <td><strong>Peserta Dilarang Naik Kelas</strong><br><span class="formula-note">Perpres 59/2024 Psl 51(3)</span></td>
+                <td class="mono" style="font-size:12px;">Tidak diperkenankan naik kelas JKN</td>
+                <td>Berlaku untuk: (1) PBI, (2) PBPU Kelas 3, (3) BP Kelas 3, (4) PPU PHK &amp; keluarga (jaminan 6 bulan), dan (5) Peserta didaftarkan Pemda.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TAB 4: RIWAYAT
+    ========================================================== -->
+    <section id="tab-riwayat" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-riwayat">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Riwayat Perhitungan Tersimpan (IndexedDB Lokal)</div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="exportAllHistoryExcel()">Ekspor Semua (.xlsx)</button>
+            <button type="button" class="btn btn-danger-outline btn-sm" onclick="clearHistory()">Hapus Semua</button>
+          </div>
+        </div>
+
+        <div class="form-grid" style="margin-bottom:14px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <input type="search" id="histSearchInput" placeholder="Cari nama pasien, kode kasus, atau RS..." oninput="renderHistory()" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <select id="histScenarioFilter" onchange="renderHistory()">
+              <option value="all">Semua Skenario Layanan</option>
+              <option value="k2_k1">Kelas 2 → Kelas 1</option>
+              <option value="k1_vip">Kelas 1 → VIP / VVIP</option>
+              <option value="k2_vip">Kelas 2 → VIP / VVIP</option>
+              <option value="rajal">Rawat Jalan Eksekutif</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="historyContainer"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAVIGATION BAR (4 TABS) -->
+  <nav class="bottom-nav no-print" role="tablist" aria-label="Navigasi Utama Aplikasi">
+    <div class="bottom-nav-inner">
+      <button type="button" id="nav-btn-hitung" class="bnav-item active" role="tab" aria-selected="true" aria-controls="tab-hitung" data-tab="hitung" onclick="switchTab('hitung')">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+          <line x1="8" y1="6" x2="16" y2="6" />
+          <line x1="8" y1="10" x2="10" y2="10" />
+          <line x1="14" y1="10" x2="16" y2="10" />
+          <line x1="8" y1="14" x2="10" y2="14" />
+          <line x1="14" y1="14" x2="16" y2="14" />
+          <line x1="8" y1="18" x2="16" y2="18" />
+        </svg>
+        <span>Hitung</span>
+      </button>
+
+      <button type="button" id="nav-btn-audit" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-audit" data-tab="audit" onclick="switchTab('audit')">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M9 11l3 3L22 4" />
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </svg>
+        <span>Audit</span>
+      </button>
+
+      <button type="button" id="nav-btn-regulasi" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-regulasi" data-tab="regulasi" onclick="switchTab('regulasi')">
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        </svg>
+        <span>Regulasi</span>
+      </button>
+
+      <button type="button" id="nav-btn-riwayat" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-riwayat" data-tab="riwayat" onclick="switchTab('riwayat')">
+        <span class="bnav-badge" id="histCount">0</span>
+        <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        <span>Riwayat</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- REGULATION DETAIL MODAL -->
+  <div id="regDetailModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="regModalTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="regModalTitle">Detail Regulasi</h3>
+        <button type="button" class="modal-close" aria-label="Tutup modal" onclick="closeRegDetailModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="regModalBody"></div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeRegDetailModal()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotice" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    /* =========================================================================
+       1. UTILITIES & SANITIZATION
+    ========================================================================= */
+    function escapeHtml(str) {
+      return String(str == null ? "" : str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatRupiah(num) {
+      const clean = Math.round(Number(num) || 0);
+      return "Rp " + clean.toLocaleString("id-ID");
+    }
+
+    function parseRupiah(str) {
+      if (typeof str === "number") return Math.max(0, Math.round(str));
+      const digits = String(str || "").replace(/[^\d]/g, "");
+      return digits ? parseInt(digits, 10) : 0;
+    }
+
+    function formatCurrencyInput(el) {
+      const val = parseRupiah(el.value);
+      el.value = val ? val.toLocaleString("id-ID") : "0";
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const el = document.getElementById("toastNotice");
+      if (!el) return;
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 3000);
+    }
+
+    /* =========================================================================
+       2. NETWORK MONITOR (OFFLINE / ONLINE INDICATOR)
+    ========================================================================= */
+    function updateNetworkIndicator() {
+      const badge = document.getElementById("networkStatusBadge");
+      const text = document.getElementById("networkStatusText");
+      if (!badge || !text) return;
+
+      const online = navigator.onLine;
+      if (online) {
+        badge.classList.remove("is-offline");
+        badge.classList.add("is-online");
+        text.textContent = "Online";
+        badge.title = "Perangkat terhubung ke jaringan. Database lokal tetap aktif.";
+      } else {
+        badge.classList.remove("is-online");
+        badge.classList.add("is-offline");
+        text.textContent = "Offline";
+        badge.title = "Mode Offline aktif. Seluruh perhitungan dan penyimpanan lokal berjalan mandiri.";
+      }
+    }
+
+    window.addEventListener("online", () => {
+      updateNetworkIndicator();
+      showToast("Koneksi jaringan kembali online.");
+    });
+
+    window.addEventListener("offline", () => {
+      updateNetworkIndicator();
+      showToast("Mode Offline aktif — aplikasi tetap berjalan penuh secara lokal.");
+    });
+
+    /* =========================================================================
+       3. INDEXEDDB DATABASE ENGINE & SAFE MIGRATION
+    ========================================================================= */
+    const DB_NAME = "SimKelasJKN_DB";
+    const DB_VERSION = 1;
+    const LEGACY_LS_KEY = "simkelas_jkn_history_v1";
+
+    const DBManager = {
+      db: null,
+
+      open() {
+        return new Promise((resolve, reject) => {
+          if (this.db) {
+            resolve(this.db);
+            return;
+          }
+          if (!("indexedDB" in window)) {
+            reject(new Error("Browser tidak mendukung IndexedDB."));
+            return;
+          }
+          const req = indexedDB.open(DB_NAME, DB_VERSION);
+
+          req.onupgradeneeded = (event) => {
+            const db = event.target.result;
+
+            if (!db.objectStoreNames.contains("calculations")) {
+              const calcStore = db.createObjectStore("calculations", { keyPath: "id" });
+              calcStore.createIndex("by_createdAt", "createdAt", { unique: false });
+              calcStore.createIndex("by_scenario", "scenario", { unique: false });
+              calcStore.createIndex("by_patientName", "patientName", { unique: false });
+            }
+
+            if (!db.objectStoreNames.contains("regulations")) {
+              const regStore = db.createObjectStore("regulations", { keyPath: "id" });
+              regStore.createIndex("by_updatedAt", "updatedAt", { unique: false });
+              regStore.createIndex("by_number", "regNumber", { unique: false });
+            }
+
+            if (!db.objectStoreNames.contains("app_meta")) {
+              db.createObjectStore("app_meta", { keyPath: "key" });
+            }
+          };
+
+          req.onsuccess = (event) => {
+            this.db = event.target.result;
+            this.db.onversionchange = () => {
+              this.db.close();
+              this.db = null;
+            };
+            resolve(this.db);
+          };
+
+          req.onerror = () => {
+            reject(req.error || new Error("Gagal membuka database lokal IndexedDB."));
+          };
+        });
+      },
+
+      async getMeta(key) {
+        const db = await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction("app_meta", "readonly");
+          const req = tx.objectStore("app_meta").get(key);
+          req.onsuccess = () => resolve(req.result ? req.result.value : null);
+          req.onerror = () => reject(req.error);
+        });
+      },
+
+      async setMeta(key, value) {
+        const db = await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction("app_meta", "readwrite");
+          tx.objectStore("app_meta").put({ key, value, updatedAt: Date.now() });
+          tx.oncomplete = () => resolve(true);
+          tx.onerror = () => reject(tx.error);
+        });
+      },
+
+      async migrateLegacyLocalStorage() {
+        try {
+          const alreadyMigrated = await this.getMeta("legacy_ls_v1_migrated");
+          if (alreadyMigrated) return;
+
+          const raw = localStorage.getItem(LEGACY_LS_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              const db = await this.open();
+              await new Promise((resolve, reject) => {
+                const tx = db.transaction("calculations", "readwrite");
+                const store = tx.objectStore("calculations");
+                parsed.forEach((item, idx) => {
+                  const id = item.id ? "calc_" + String(item.id) : "calc_mig_" + Date.now() + "_" + idx;
+                  store.put({
+                    ...item,
+                    id,
+                    createdAt: typeof item.id === "number" ? item.id : Date.now() - idx * 1000
+                  });
+                });
+                tx.oncomplete = () => resolve(true);
+                tx.onerror = () => reject(tx.error);
+              });
+            }
+            localStorage.removeItem(LEGACY_LS_KEY);
+          }
+          await this.setMeta("legacy_ls_v1_migrated", true);
+        } catch (err) {
+          console.warn("Migrasi riwayat lama dilewati:", err);
+        }
+      },
+
+      async putItem(storeName, record) {
+        if (!record || !record.id) {
+          throw new Error("Data tidak valid: ID wajib tersedia.");
+        }
+        const db = await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(storeName, "readwrite");
+          tx.objectStore(storeName).put(record);
+          tx.oncomplete = () => resolve(record);
+          tx.onerror = () => reject(tx.error || new Error("Transaksi penyimpanan gagal."));
+        });
+      },
+
+      async getAll(storeName) {
+        const db = await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(storeName, "readonly");
+          const req = tx.objectStore(storeName).getAll();
+          req.onsuccess = () => resolve(Array.isArray(req.result) ? req.result : []);
+          req.onerror = () => reject(req.error || new Error("Gagal membaca data dari database lokal."));
+        });
+      },
+
+      async getById(storeName, id) {
+        const db = await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(storeName, "readonly");
+          const req = tx.objectStore(storeName).get(id);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => reject(req.error);
+        });
+      },
+
+      async deleteById(storeName, id) {
+        const db = await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(storeName, "readwrite");
+          tx.objectStore(storeName).delete(id);
+          tx.oncomplete = () => resolve(true);
+          tx.onerror = () => reject(tx.error);
+        });
+      },
+
+      async clearStore(storeName) {
+        const db = await this.open();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(storeName, "readwrite");
+          tx.objectStore(storeName).clear();
+          tx.oncomplete = () => resolve(true);
+          tx.onerror = () => reject(tx.error);
+        });
+      }
+    };
+
+    /* =========================================================================
+       4. PURE LOCAL OFFLINE .XLSX (OPENXML) GENERATOR (ZERO CDN DEPENDENCY)
+    ========================================================================= */
+    const OfflineXlsxBuilder = (() => {
+      const crcTable = new Uint32Array(256);
+      for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let k = 0; k < 8; k++) {
+          c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        }
+        crcTable[i] = c >>> 0;
+      }
+
+      function crc32(bytes) {
+        let crc = 0xFFFFFFFF;
+        for (let i = 0; i < bytes.length; i++) {
+          crc = crcTable[(crc ^ bytes[i]) & 0xFF] ^ (crc >>> 8);
+        }
+        return (crc ^ 0xFFFFFFFF) >>> 0;
+      }
+
+      function xmlEscape(val) {
+        return String(val == null ? "" : val)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&apos;");
+      }
+
+      function colLetter(idx) {
+        let s = "";
+        let n = idx + 1;
+        while (n > 0) {
+          const rem = (n - 1) % 26;
+          s = String.fromCharCode(65 + rem) + s;
+          n = Math.floor((n - 1) / 26);
+        }
+        return s;
+      }
+
+      function buildSheetXml(rows) {
+        let body = "";
+        rows.forEach((row, rIdx) => {
+          const rowNum = rIdx + 1;
+          if (!row || row.length === 0) {
+            body += `<row r="${rowNum}"/>`;
+            return;
+          }
+          let cells = "";
+          row.forEach((val, cIdx) => {
+            if (val === null || val === undefined || val === "") return;
+            const ref = colLetter(cIdx) + rowNum;
+            if (typeof val === "number" && Number.isFinite(val)) {
+              cells += `<c r="${ref}" t="n"><v>${val}</v></c>`;
+            } else {
+              cells += `<c r="${ref}" t="inlineStr"><is><t>${xmlEscape(val)}</t></is></c>`;
+            }
+          });
+          body += `<row r="${rowNum}">${cells}</row>`;
+        });
+        return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
+          `<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>${body}</sheetData></worksheet>`;
+      }
+
+      function createZipBlob(files) {
+        const encoder = new TextEncoder();
+        const localParts = [];
+        const centralParts = [];
+        let offset = 0;
+
+        files.forEach((f) => {
+          const nameBytes = encoder.encode(f.name);
+          const dataBytes = encoder.encode(f.content);
+          const crc = crc32(dataBytes);
+          const size = dataBytes.length;
+
+          const localHeader = new Uint8Array(30 + nameBytes.length);
+          const lv = new DataView(localHeader.buffer);
+          lv.setUint32(0, 0x04034B50, true);
+          lv.setUint16(4, 20, true);
+          lv.setUint16(6, 0x0800, true);
+          lv.setUint16(8, 0, true);
+          lv.setUint16(10, 0, true);
+          lv.setUint16(12, 0x0021, true);
+          lv.setUint32(14, crc, true);
+          lv.setUint32(18, size, true);
+          lv.setUint32(22, size, true);
+          lv.setUint16(26, nameBytes.length, true);
+          lv.setUint16(28, 0, true);
+          localHeader.set(nameBytes, 30);
+
+          localParts.push(localHeader, dataBytes);
+
+          const centralHeader = new Uint8Array(46 + nameBytes.length);
+          const cv = new DataView(centralHeader.buffer);
+          cv.setUint32(0, 0x02014B50, true);
+          cv.setUint16(4, 20, true);
+          cv.setUint16(6, 20, true);
+          cv.setUint16(8, 0x0800, true);
+          cv.setUint16(10, 0, true);
+          cv.setUint16(12, 0, true);
+          cv.setUint16(14, 0x0021, true);
+          cv.setUint32(16, crc, true);
+          cv.setUint32(20, size, true);
+          cv.setUint32(24, size, true);
+          cv.setUint16(28, nameBytes.length, true);
+          cv.setUint16(30, 0, true);
+          cv.setUint16(32, 0, true);
+          cv.setUint16(34, 0, true);
+          cv.setUint16(36, 0, true);
+          cv.setUint32(38, 0, true);
+          cv.setUint32(42, offset, true);
+          centralHeader.set(nameBytes, 46);
+
+          centralParts.push(centralHeader);
+          offset += localHeader.length + dataBytes.length;
+        });
+
+        const centralSize = centralParts.reduce((acc, p) => acc + p.length, 0);
+        const eocd = new Uint8Array(22);
+        const ev = new DataView(eocd.buffer);
+        ev.setUint32(0, 0x06054B50, true);
+        ev.setUint16(4, 0, true);
+        ev.setUint16(6, 0, true);
+        ev.setUint16(8, files.length, true);
+        ev.setUint16(10, files.length, true);
+        ev.setUint32(12, centralSize, true);
+        ev.setUint32(16, offset, true);
+        ev.setUint16(20, 0, true);
+
+        return new Blob([...localParts, ...centralParts, eocd], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        });
+      }
+
+      function downloadAoA(rows, sheetName, filename) {
+        const safeSheet = String(sheetName || "Sheet1").replace(/[\\/?*[\]:]/g, "_").slice(0, 31);
+        const files = [
+          {
+            name: "[Content_Types].xml",
+            content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
+              `<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">` +
+              `<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>` +
+              `<Default Extension="xml" ContentType="application/xml"/>` +
+              `<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>` +
+              `<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>` +
+              `</Types>`
+          },
+          {
+            name: "_rels/.rels",
+            content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
+              `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">` +
+              `<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>` +
+              `</Relationships>`
+          },
+          {
+            name: "xl/workbook.xml",
+            content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
+              `<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">` +
+              `<sheets><sheet name="${xmlEscape(safeSheet)}" sheetId="1" r:id="rId1"/></sheets>` +
+              `</workbook>`
+          },
+          {
+            name: "xl/_rels/workbook.xml.rels",
+            content: `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
+              `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">` +
+              `<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>` +
+              `</Relationships>`
+          },
+          {
+            name: "xl/worksheets/sheet1.xml",
+            content: buildSheetXml(rows)
+          }
+        ];
+
+        const blob = createZipBlob(files);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+      }
+
+      return { downloadAoA };
+    })();
+
+    /* =========================================================================
+       5. NAVIGATION & TAB MANAGEMENT
+    ========================================================================= */
+    let lastCalculation = null;
+
+    function switchTab(tabId) {
+      const validTabs = ["hitung", "audit", "regulasi", "riwayat"];
+      if (!validTabs.includes(tabId)) return;
+
+      document.querySelectorAll(".tab-panel").forEach((panel) => {
+        panel.classList.remove("active");
+      });
+      document.querySelectorAll(".bnav-item").forEach((btn) => {
+        const isActive = btn.dataset.tab === tabId;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      const targetPanel = document.getElementById("tab-" + tabId);
+      if (targetPanel) targetPanel.classList.add("active");
+
+      if (tabId === "riwayat") renderHistory();
+      if (tabId === "regulasi") renderRegulations();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    /* =========================================================================
+       6. CALCULATOR & AUDIT ENGINE (BUSINESS LOGIC PRESERVED)
+    ========================================================================= */
+    function getSelectedScenario() {
+      const checked = document.querySelector('input[name="scenario"]:checked');
+      return checked ? checked.value : "k1_vip";
+    }
+
+    function onScenarioChange() {
+      const sc = getSelectedScenario();
+      document.querySelectorAll(".scenario-option").forEach((el) => el.classList.remove("selected"));
+      const activeCard = document.getElementById("opt_" + sc);
+      if (activeCard) activeCard.classList.add("selected");
+
+      const inpatientInputs = document.getElementById("inpatientInputs");
+      const outpatientInputs = document.getElementById("outpatientInputs");
+      const groupInaK2 = document.getElementById("groupInaK2");
+      const groupInaK1 = document.getElementById("groupInaK1");
+      const groupRealVip = document.getElementById("groupRealVip");
+
+      if (sc === "rajal") {
+        inpatientInputs.style.display = "none";
+        outpatientInputs.style.display = "block";
+      } else {
+        inpatientInputs.style.display = "block";
+        outpatientInputs.style.display = "none";
+        groupInaK2.style.display = (sc === "k2_k1" || sc === "k2_vip") ? "block" : "none";
+        groupInaK1.style.display = "block";
+        groupRealVip.style.display = (sc === "k1_vip" || sc === "k2_vip") ? "block" : "none";
+      }
+
+      recalculate();
+    }
+
+    function resetCalculatorForm() {
+      document.getElementById("patientName").value = "";
+      document.getElementById("hospitalClass").value = "";
+      document.getElementById("memberSegment").value = "allowed_ppu";
+      document.getElementById("upgradeTrigger").value = "aps";
+      document.getElementById("payerType").value = "self";
+      document.getElementById("inaK2").value = "0";
+      document.getElementById("inaK1").value = "0";
+      document.getElementById("realVip").value = "0";
+      document.getElementById("inaRajal").value = "0";
+      document.getElementById("realRajal").value = "0";
+      document.getElementById("cobLimit").value = "0";
+      document.querySelector('input[name="scenario"][value="k1_vip"]').checked = true;
+      onScenarioChange();
+      showToast("Formulir kalkulator diatur ulang ke 0.");
+    }
+
+    function applyPreset(key) {
+      document.getElementById("memberSegment").value = "allowed_ppu";
+      document.getElementById("upgradeTrigger").value = "aps";
+      document.getElementById("payerType").value = "self";
+      document.getElementById("cobLimit").value = "0";
+
+      if (key === "k2_k1") {
+        document.getElementById("patientName").value = "Skenario Uji — Hak Kelas 2 ke Kelas 1";
+        document.querySelector('input[value="k2_k1"]').checked = true;
+        document.getElementById("inaK2").value = "4.800.000";
+        document.getElementById("inaK1").value = "6.100.000";
+      } else if (key === "k1_vip_under") {
+        document.getElementById("patientName").value = "Skenario Uji — Kelas 1 ke VIP (< Plafon 75%)";
+        document.querySelector('input[value="k1_vip"]').checked = true;
+        document.getElementById("inaK1").value = "6.000.000";
+        document.getElementById("realVip").value = "9.200.000";
+      } else if (key === "k1_vip_cap") {
+        document.getElementById("patientName").value = "Skenario Uji — Kelas 1 ke VIP (Plafon 75%)";
+        document.querySelector('input[value="k1_vip"]').checked = true;
+        document.getElementById("inaK1").value = "6.000.000";
+        document.getElementById("realVip").value = "12.500.000";
+      } else if (key === "k2_vip_cob") {
+        document.getElementById("patientName").value = "Skenario Uji — Kelas 2 ke VIP + COB";
+        document.querySelector('input[value="k2_vip"]').checked = true;
+        document.getElementById("inaK2").value = "5.000.000";
+        document.getElementById("inaK1").value = "6.500.000";
+        document.getElementById("realVip").value = "11.000.000";
+        document.getElementById("payerType").value = "cob";
+        document.getElementById("cobLimit").value = "4.000.000";
+      } else if (key === "rajal_eks") {
+        document.getElementById("patientName").value = "Skenario Uji — Poli Rawat Jalan Eksekutif";
+        document.querySelector('input[value="rajal"]').checked = true;
+        document.getElementById("inaRajal").value = "320.000";
+        document.getElementById("realRajal").value = "850.000";
+      }
+
+      onScenarioChange();
+    }
+
+    function recalculate() {
+      const segment = document.getElementById("memberSegment").value;
+      const trigger = document.getElementById("upgradeTrigger").value;
+      const scenario = getSelectedScenario();
+      const payerType = document.getElementById("payerType").value;
+
+      document.getElementById("groupCobLimit").style.display =
+        (payerType === "cob" || payerType === "employer") ? "block" : "none";
+
+      const isBlockedSegment = segment.startsWith("blocked_");
+      const isFullRoom = trigger === "full_room";
+
+      const eligAlert = document.getElementById("eligibilityAlert");
+      if (isBlockedSegment) {
+        const reasonMap = {
+          blocked_pbi: "Peserta PBI Jaminan Kesehatan dilarang naik kelas perawatan (Pasal 51 ayat 3 huruf a Perpres 59/2024).",
+          blocked_k3: "Peserta PBPU (Mandiri) dan BP dengan hak Kelas 3 tidak diperkenankan naik kelas perawatan (Pasal 51 ayat 3 huruf b & c Perpres 59/2024).",
+          blocked_phk: "Peserta PPU terdampak PHK beserta keluarga (jaminan 6 bulan) tidak diperkenankan naik kelas perawatan (Pasal 51 ayat 3 huruf d Perpres 59/2024).",
+          blocked_pemda: "Peserta yang didaftarkan oleh Pemerintah Daerah tidak diperkenankan naik kelas perawatan (Pasal 51 ayat 3 huruf e Perpres 59/2024)."
+        };
+        eligAlert.innerHTML = `
+          <div class="alert alert-danger">
+            <span class="alert-title">TIDAK DIPERKENANKAN NAIK KELAS PERAWATAN</span>
+            ${reasonMap[segment]} Jika tetap memilih kamar lebih tinggi, seluruh biaya perawatan gugur dari penjaminan JKN dan menjadi tagihan pasien umum penuh.
+          </div>`;
+      } else if (isFullRoom) {
+        eligAlert.innerHTML = `
+          <div class="alert alert-success">
+            <span class="alert-title">BEBAS SELISIH BIAYA (KAMAR SESUAI HAK PENUH)</span>
+            Apabila ruang perawatan sesuai hak peserta penuh dan RS menitipkan pasien di kelas satu tingkat lebih tinggi (maksimal 3 hari), peserta <strong>tidak dikenakan selisih biaya</strong>.
+          </div>`;
+      } else {
+        eligAlert.innerHTML = "";
+      }
+
+      const inaK2 = parseRupiah(document.getElementById("inaK2").value);
+      const inaK1 = parseRupiah(document.getElementById("inaK1").value);
+      const realVip = parseRupiah(document.getElementById("realVip").value);
+      const inaRajal = parseRupiah(document.getElementById("inaRajal").value);
+      const realRajal = parseRupiah(document.getElementById("realRajal").value);
+      const cobLimit = (payerType === "cob" || payerType === "employer")
+        ? parseRupiah(document.getElementById("cobLimit").value)
+        : 0;
+
+      let bpjsCovered = 0;
+      let rawDiff = 0;
+      let legalMaxCap = 0;
+      let legalDiff = 0;
+      let absorbedByHospital = 0;
+      let scenarioLabel = "";
+      let statusText = "Menunggu Input Tarif";
+      let statusBlocked = false;
+      let auditRows = [];
+
+      const hasAnyTariff = (scenario === "rajal")
+        ? (inaRajal > 0 || realRajal > 0)
+        : (inaK2 > 0 || inaK1 > 0 || realVip > 0);
+
+      if (hasAnyTariff) {
+        statusText = "Sesuai Selisih Riil";
+      }
+
+      if (scenario === "k2_k1") {
+        scenarioLabel = "Hak Kelas 2 naik ke Kelas 1 (Pasal 48 ayat 3 huruf b)";
+        bpjsCovered = inaK2;
+        rawDiff = Math.max(0, inaK1 - inaK2);
+        legalMaxCap = rawDiff;
+        legalDiff = rawDiff;
+
+        auditRows = [
+          { label: "Tarif Paket INA-CBG Kelas 2 (Hak Peserta)", note: "Porsi jaminan dibayarkan BPJS Kesehatan", val: inaK2 },
+          { label: "Tarif Paket INA-CBG Kelas 1 (Kelas Tujuan)", note: "Acuan tarif kelas perawatan tujuan", val: inaK1 },
+          { label: "Selisih INA-CBG Kelas 1 − Kelas 2", note: "Rumus Pasal 48 ayat (3) huruf b Permenkes 3/2023", val: legalDiff, highlight: true }
+        ];
+      } else if (scenario === "k1_vip") {
+        scenarioLabel = "Hak Kelas 1 naik ke VIP / Di Atas Kelas 1 (Pasal 48 ayat 3 huruf c)";
+        bpjsCovered = inaK1;
+        const cap75 = Math.round(0.75 * inaK1);
+        legalMaxCap = cap75;
+
+        if (realVip <= inaK1) {
+          rawDiff = 0;
+          legalDiff = 0;
+          if (hasAnyTariff) statusText = "Bebas Biaya — Pasal 48(4)";
+        } else {
+          rawDiff = realVip - inaK1;
+          legalDiff = Math.min(rawDiff, cap75);
+          absorbedByHospital = Math.max(0, rawDiff - legalDiff);
+          if (rawDiff > cap75) {
+            statusText = "Terkunci Plafon Maks 75%";
+          }
+        }
+
+        auditRows = [
+          { label: "Tarif Paket INA-CBG Kelas 1 (Hak Peserta)", note: "Porsi jaminan dibayarkan BPJS Kesehatan", val: inaK1 },
+          { label: "Total Tarif Riil RS di Kelas VIP / Tujuan", note: "Total tagihan episode perawatan RS", val: realVip },
+          { label: "Selisih Riil (Tarif Riil RS − INA-CBG Kelas 1)", note: realVip <= inaK1 ? "Tarif riil ≤ INA-CBG hak; selisih gugur (Pasal 48 ayat 4)" : "Selisih aktual antara tagihan RS dan paket JKN", val: rawDiff },
+          { label: "Batas Plafon Maksimal (75% × INA-CBG Kelas 1)", note: "Plafon tertinggi yang diizinkan Pasal 48 ayat (3) huruf c", val: cap75 },
+          { label: "Selisih Biaya Sah Wajib Dibayar", note: "MIN(Selisih Riil, Plafon 75% INA-CBG Kelas 1)", val: legalDiff, highlight: true }
+        ];
+        if (absorbedByHospital > 0) {
+          auditRows.push({
+            label: "Kelebihan di Atas Plafon 75% (Tidak Boleh Ditagih)",
+            note: "Menjadi efisiensi RS; dilarang dibebankan ke pasien JKN",
+            val: absorbedByHospital,
+            warn: true
+          });
+        }
+      } else if (scenario === "k2_vip") {
+        scenarioLabel = "Hak Kelas 2 naik langsung ke VIP / Di Atas Kelas 1 (Pasal 48 ayat 3 huruf d)";
+        bpjsCovered = inaK2;
+        const diffK2K1 = Math.max(0, inaK1 - inaK2);
+        const cap75 = Math.round(0.75 * inaK1);
+        legalMaxCap = diffK2K1 + cap75;
+
+        if (realVip <= inaK2) {
+          rawDiff = 0;
+          legalDiff = 0;
+          if (hasAnyTariff) statusText = "Bebas Biaya — Pasal 48(4)";
+        } else {
+          rawDiff = realVip - inaK2;
+          legalDiff = Math.min(rawDiff, legalMaxCap);
+          absorbedByHospital = Math.max(0, rawDiff - legalDiff);
+          if (rawDiff > legalMaxCap) {
+            statusText = "Terkunci Plafon Total";
+          }
+        }
+
+        auditRows = [
+          { label: "Tarif Paket INA-CBG Kelas 2 (Hak Peserta)", note: "Porsi jaminan dibayarkan BPJS Kesehatan", val: inaK2 },
+          { label: "Komponen A: Selisih INA-CBG Kelas 1 − Kelas 2", note: "Tahap kenaikan dari Kelas 2 ke Kelas 1", val: diffK2K1 },
+          { label: "Komponen B: Plafon Maksimal 75% × INA-CBG Kelas 1", note: "Tahap kenaikan dari Kelas 1 ke VIP/VVIP", val: cap75 },
+          { label: "Total Plafon Maksimal Hukum (Komponen A + B)", note: "Batas tertinggi Pasal 48 ayat (3) huruf d", val: legalMaxCap },
+          { label: "Selisih Riil (Tarif Riil VIP − INA-CBG Kelas 2)", note: realVip <= inaK2 ? "Tarif riil ≤ INA-CBG hak; selisih gugur (Pasal 48 ayat 4)" : "Selisih aktual tagihan VIP terhadap hak Kelas 2", val: rawDiff },
+          { label: "Selisih Biaya Sah Wajib Dibayar", note: "MIN(Selisih Riil, Total Plafon Maksimal Hukum)", val: legalDiff, highlight: true }
+        ];
+        if (absorbedByHospital > 0) {
+          auditRows.push({
+            label: "Kelebihan di Atas Plafon Hukum (Tidak Boleh Ditagih)",
+            note: "Menjadi efisiensi RS; dilarang dibebankan ke pasien JKN",
+            val: absorbedByHospital,
+            warn: true
+          });
+        }
+      } else if (scenario === "rajal") {
+        scenarioLabel = "Pelayanan Rawat Jalan Eksekutif (Pasal 48 ayat 3 huruf a)";
+        bpjsCovered = inaRajal;
+        const maxRajalCap = 400000;
+        legalMaxCap = maxRajalCap;
+        rawDiff = Math.max(0, realRajal - inaRajal);
+        legalDiff = Math.min(rawDiff, maxRajalCap);
+        absorbedByHospital = Math.max(0, rawDiff - legalDiff);
+        if (rawDiff > maxRajalCap) {
+          statusText = "Terkunci Maks Rp400.000";
+        }
+
+        auditRows = [
+          { label: "Tarif INA-CBG Rawat Jalan Reguler", note: "Porsi jaminan BPJS Kesehatan", val: inaRajal },
+          { label: "Tarif Paket Poli Eksekutif RS", note: "Tarif layanan poli eksekutif sebelum dikurangi INA-CBG", val: realRajal },
+          { label: "Selisih Aktual Paket Poli Eksekutif", note: "Tarif Poli Eksekutif − INA-CBG Rawat Jalan", val: rawDiff },
+          { label: "Batas Plafon Maksimal Hukum per Episode", note: "Pasal 48 ayat (3) huruf a Permenkes 3/2023", val: maxRajalCap },
+          { label: "Selisih Biaya Sah Wajib Dibayar", note: "MIN(Selisih Aktual, Rp400.000)", val: legalDiff, highlight: true }
+        ];
+        if (absorbedByHospital > 0) {
+          auditRows.push({
+            label: "Kelebihan di Atas Plafon Rp400.000 (Tidak Boleh Ditagih)",
+            note: "Dilarang dibebankan kepada peserta JKN",
+            val: absorbedByHospital,
+            warn: true
+          });
+        }
+      }
+
+      if (isBlockedSegment) {
+        legalDiff = 0;
+        absorbedByHospital = 0;
+        statusText = "Dilarang Naik Kelas (Perpres 59/2024)";
+        statusBlocked = true;
+      } else if (isFullRoom) {
+        legalDiff = 0;
+        absorbedByHospital = 0;
+        statusText = "Bebas Biaya (Kamar Hak Penuh)";
+      }
+
+      const cobCovered = (!isBlockedSegment && !isFullRoom) ? Math.min(legalDiff, cobLimit) : 0;
+      const patientNet = Math.max(0, legalDiff - cobCovered);
+
+      // Update Tab Hitung Hero Summary
+      document.getElementById("calcHeroTotal").textContent = isBlockedSegment ? "Tidak Berlaku (Non-JKN)" : formatRupiah(legalDiff);
+      document.getElementById("calcHeroSub").textContent = "Skenario: " + scenarioLabel;
+      const badge = document.getElementById("calcHeroBadge");
+      badge.textContent = statusText;
+      badge.className = "hero-status" + (statusBlocked ? " blocked" : "");
+
+      document.getElementById("calcHeroBpjs").textContent = formatRupiah(bpjsCovered);
+      document.getElementById("calcHeroCob").textContent = formatRupiah(cobCovered);
+      document.getElementById("calcHeroPatient").textContent = isBlockedSegment ? "Pasien Umum" : formatRupiah(patientNet);
+      document.getElementById("calcCapChip").textContent = "Plafon: " + formatRupiah(legalMaxCap);
+
+      // Update Tab Audit Elements
+      const patientNameVal = document.getElementById("patientName").value.trim() || "Belum diisi";
+      const hospitalClassVal = document.getElementById("hospitalClass").value.trim() || "-";
+      const segmentTextVal = document.getElementById("memberSegment").selectedOptions[0].text;
+      const triggerTextVal = document.getElementById("upgradeTrigger").selectedOptions[0].text;
+
+      document.getElementById("auditStatusChip").textContent = statusText;
+      document.getElementById("auditMetaPatient").textContent = patientNameVal;
+      document.getElementById("auditMetaHospital").textContent = hospitalClassVal;
+      document.getElementById("auditMetaSegment").textContent = segmentTextVal;
+      document.getElementById("auditMetaTrigger").textContent = triggerTextVal;
+      document.getElementById("auditMetaScenario").textContent = scenarioLabel;
+      document.getElementById("auditMetaAmounts").textContent = isBlockedSegment
+        ? "Non-JKN / Pasien Umum"
+        : `${formatRupiah(legalDiff)} / ${formatRupiah(patientNet)}`;
+
+      document.getElementById("resCapRatio").textContent = "Batas Plafon Hukum: " + formatRupiah(legalMaxCap);
+      document.getElementById("lblBpjs").textContent = formatRupiah(bpjsCovered);
+      document.getElementById("lblCob").textContent = formatRupiah(cobCovered);
+      document.getElementById("lblPatient").textContent = isBlockedSegment ? "Pasien Umum" : formatRupiah(patientNet);
+      document.getElementById("lblAbsorbed").textContent = formatRupiah(absorbedByHospital);
+
+      const rawEpisode = bpjsCovered + cobCovered + patientNet + absorbedByHospital;
+      if (rawEpisode <= 0) {
+        document.getElementById("barBpjs").style.width = "0%";
+        document.getElementById("barCob").style.width = "0%";
+        document.getElementById("barPatient").style.width = "0%";
+        document.getElementById("barAbsorbed").style.width = "0%";
+      } else {
+        document.getElementById("barBpjs").style.width = ((bpjsCovered / rawEpisode) * 100).toFixed(1) + "%";
+        document.getElementById("barCob").style.width = ((cobCovered / rawEpisode) * 100).toFixed(1) + "%";
+        document.getElementById("barPatient").style.width = ((patientNet / rawEpisode) * 100).toFixed(1) + "%";
+        document.getElementById("barAbsorbed").style.width = ((absorbedByHospital / rawEpisode) * 100).toFixed(1) + "%";
+      }
+
+      const overAlert = document.getElementById("overchargeAlert");
+      if (!isBlockedSegment && !isFullRoom && absorbedByHospital > 0) {
+        overAlert.innerHTML = `
+          <div class="alert alert-warning">
+            <span class="alert-title">Deteksi Selisih di Atas Plafon Hukum: ${formatRupiah(absorbedByHospital)}</span>
+            Tagihan riil RS melampaui batas maksimal yang diizinkan Permenkes No. 3/2023 (${formatRupiah(legalMaxCap)}). Bagian kasir RS hanya boleh menagihkan <strong>${formatRupiah(legalDiff)}</strong> kepada peserta/penjamin.
+          </div>`;
+      } else {
+        overAlert.innerHTML = "";
+      }
+
+      const tbody = document.getElementById("auditTableBody");
+      tbody.innerHTML = auditRows.map((r) => {
+        const cls = r.highlight ? "highlight-row" : (r.warn ? "warn-row" : "");
+        return `
+          <tr class="${cls}">
+            <td>${escapeHtml(r.label)}<span class="formula-note">${escapeHtml(r.note)}</span></td>
+            <td class="num">${formatRupiah(r.val)}</td>
+          </tr>`;
+      }).join("");
+
+      lastCalculation = {
+        timestamp: new Date().toLocaleString("id-ID"),
+        patientName: document.getElementById("patientName").value.trim() || "Peserta JKN",
+        hospitalClass: document.getElementById("hospitalClass").value.trim() || "-",
+        segment,
+        segmentText: segmentTextVal,
+        trigger,
+        triggerText: triggerTextVal,
+        payerType,
+        inputs: { inaK2, inaK1, realVip, inaRajal, realRajal, cobLimit },
+        scenario,
+        scenarioLabel,
+        bpjsCovered,
+        legalMaxCap,
+        legalDiff,
+        cobCovered,
+        patientNet,
+        absorbedByHospital,
+        statusText,
+        hasAnyTariff
+      };
+    }
+
+    function printAuditSlip() {
+      document.getElementById("printTimestamp").textContent = new Date().toLocaleString("id-ID");
+      window.print();
+    }
+
+    /* =========================================================================
+       7. HISTORY MANAGEMENT (INDEXEDDB)
+    ========================================================================= */
+    async function updateHistoryCount() {
+      try {
+        const list = await DBManager.getAll("calculations");
+        document.getElementById("histCount").textContent = list.length;
+      } catch (e) {
+        document.getElementById("histCount").textContent = "0";
+      }
+    }
+
+    async function saveToHistory() {
+      if (!lastCalculation) return;
+      if (!lastCalculation.hasAnyTariff && !lastCalculation.segment.startsWith("blocked_")) {
+        showToast("Masukkan nominal tarif terlebih dahulu sebelum menyimpan ke riwayat.");
+        return;
+      }
+
+      try {
+        const record = {
+          ...lastCalculation,
+          id: "calc_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6),
+          createdAt: Date.now()
+        };
+        await DBManager.putItem("calculations", record);
+        await updateHistoryCount();
+        showToast("Simulasi berhasil disimpan ke database lokal (IndexedDB).");
+      } catch (err) {
+        showToast("Gagal menyimpan riwayat: " + (err.message || "Kesalahan database."));
+      }
+    }
+
+    async function renderHistory() {
+      const box = document.getElementById("historyContainer");
+      const query = (document.getElementById("histSearchInput").value || "").trim().toLowerCase();
+      const filterSc = document.getElementById("histScenarioFilter").value;
+
+      try {
+        let list = await DBManager.getAll("calculations");
+        list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const filtered = list.filter((item) => {
+          const matchScenario = filterSc === "all" || item.scenario === filterSc;
+          const hay = `${item.patientName || ""} ${item.hospitalClass || ""} ${item.scenarioLabel || ""}`.toLowerCase();
+          const matchQuery = !query || hay.includes(query);
+          return matchScenario && matchQuery;
+        });
+
+        if (!list.length) {
+          box.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-title">Belum Ada Data Riwayat Simulasi</div>
+              <p class="empty-state-desc">Database lokal masih kosong. Lakukan perhitungan pada tab Hitung lalu tekan <strong>"+ Simpan ke Riwayat"</strong> untuk menyimpan arsip secara offline.</p>
+              <button type="button" class="btn btn-primary btn-sm" onclick="switchTab('hitung')">Mulai Hitung Sekarang</button>
+            </div>`;
+          return;
+        }
+
+        if (!filtered.length) {
+          box.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-title">Tidak Ada Riwayat yang Cocok</div>
+              <p class="empty-state-desc">Ubah kata kunci pencarian atau filter skenario untuk menampilkan riwayat tersimpan.</p>
+            </div>`;
+          return;
+        }
+
+        box.innerHTML = `
+          <div style="overflow-x:auto;">
+            <table class="reg-table">
+              <thead>
+                <tr>
+                  <th>Waktu</th>
+                  <th>Pasien / Kasus</th>
+                  <th>Skenario</th>
+                  <th>Jaminan BPJS</th>
+                  <th>Selisih Sah</th>
+                  <th>Neto Pasien</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${filtered.map((item) => `
+                  <tr>
+                    <td style="font-size:12px; white-space:nowrap;">${escapeHtml(item.timestamp)}</td>
+                    <td><strong>${escapeHtml(item.patientName)}</strong><br><span class="formula-note">${escapeHtml(item.hospitalClass)}</span></td>
+                    <td style="font-size:12px;">${escapeHtml(item.scenarioLabel)}<br><span class="legal-chip" style="margin-top:3px; display:inline-block;">${escapeHtml(item.statusText)}</span></td>
+                    <td class="mono" style="font-size:12px; white-space:nowrap;">${formatRupiah(item.bpjsCovered)}</td>
+                    <td class="mono" style="font-size:12px; font-weight:700; color:#042F2E; white-space:nowrap;">${formatRupiah(item.legalDiff)}</td>
+                    <td class="mono" style="font-size:12px; white-space:nowrap;">${formatRupiah(item.patientNet)}</td>
+                    <td style="white-space:nowrap;">
+                      <div style="display:flex; gap:5px;">
+                        <button type="button" class="btn btn-outline btn-sm" onclick="loadHistoryItem('${escapeHtml(item.id)}', 'hitung')">Muat</button>
+                        <button type="button" class="btn btn-outline btn-sm" onclick="loadHistoryItem('${escapeHtml(item.id)}', 'audit')">Audit</button>
+                        <button type="button" class="btn btn-danger-outline btn-sm" onclick="deleteHistoryItem('${escapeHtml(item.id)}')">Hapus</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>`;
+      } catch (err) {
+        box.innerHTML = `<div class="alert alert-danger">Gagal memuat riwayat dari IndexedDB: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function loadHistoryItem(id, targetTab) {
+      try {
+        const item = await DBManager.getById("calculations", id);
+        if (!item) {
+          showToast("Data riwayat tidak ditemukan.");
+          return;
+        }
+        document.getElementById("patientName").value = item.patientName === "Peserta JKN" ? "" : (item.patientName || "");
+        document.getElementById("hospitalClass").value = item.hospitalClass === "-" ? "" : (item.hospitalClass || "");
+        if (item.segment) document.getElementById("memberSegment").value = item.segment;
+        if (item.trigger) document.getElementById("upgradeTrigger").value = item.trigger;
+        if (item.payerType) document.getElementById("payerType").value = item.payerType;
+
+        if (item.inputs) {
+          document.getElementById("inaK2").value = (item.inputs.inaK2 || 0).toLocaleString("id-ID");
+          document.getElementById("inaK1").value = (item.inputs.inaK1 || 0).toLocaleString("id-ID");
+          document.getElementById("realVip").value = (item.inputs.realVip || 0).toLocaleString("id-ID");
+          document.getElementById("inaRajal").value = (item.inputs.inaRajal || 0).toLocaleString("id-ID");
+          document.getElementById("realRajal").value = (item.inputs.realRajal || 0).toLocaleString("id-ID");
+          document.getElementById("cobLimit").value = (item.inputs.cobLimit || 0).toLocaleString("id-ID");
+        }
+
+        const radio = document.querySelector(`input[name="scenario"][value="${item.scenario}"]`);
+        if (radio) radio.checked = true;
+
+        onScenarioChange();
+        switchTab(targetTab || "hitung");
+        showToast("Data simulasi dimuat kembali.");
+      } catch (err) {
+        showToast("Gagal memuat item riwayat.");
+      }
+    }
+
+    async function deleteHistoryItem(id) {
+      try {
+        await DBManager.deleteById("calculations", id);
+        await updateHistoryCount();
+        await renderHistory();
+        showToast("Item riwayat dihapus.");
+      } catch (err) {
+        showToast("Gagal menghapus item riwayat.");
+      }
+    }
+
+    async function clearHistory() {
+      const list = await DBManager.getAll("calculations");
+      if (!list.length) {
+        showToast("Riwayat sudah kosong.");
+        return;
+      }
+      if (!confirm("Hapus seluruh riwayat simulasi tersimpan dari database lokal?")) return;
+      try {
+        await DBManager.clearStore("calculations");
+        await updateHistoryCount();
+        await renderHistory();
+        showToast("Seluruh riwayat berhasil dihapus.");
+      } catch (err) {
+        showToast("Gagal menghapus riwayat.");
+      }
+    }
+
+    /* =========================================================================
+       8. EXCEL EXPORT (ONLINE CDN OR OFFLINE LOCAL BUILDER)
+    ========================================================================= */
+    function writeExcelWorkbook(aoaRows, sheetName, fileName) {
+      if (typeof window.XLSX !== "undefined" && window.XLSX.utils) {
+        const ws = window.XLSX.utils.aoa_to_sheet(aoaRows);
+        ws["!cols"] = [{ wch: 46 }, { wch: 36 }];
+        const wb = window.XLSX.utils.book_new();
+        window.XLSX.utils.book_append_sheet(wb, ws, sheetName);
+        window.XLSX.writeFile(wb, fileName);
+      } else {
+        OfflineXlsxBuilder.downloadAoA(aoaRows, sheetName, fileName);
+      }
+    }
+
+    function exportCurrentExcel() {
+      if (!lastCalculation) return;
+      const c = lastCalculation;
+      const rows = [
+        ["SIMULASI & AUDIT SELISIH BIAYA NAIK KELAS PERAWATAN JKN"],
+        ["Acuan Sistem", "Permenkes No. 3 Tahun 2023 Pasal 48 & Perpres No. 59 Tahun 2024 Pasal 51"],
+        ["Waktu Cetak", c.timestamp],
+        [],
+        ["IDENTITAS & KEPESERTAAN", "KETERANGAN"],
+        ["Nama Pasien / Kode Kasus", c.patientName],
+        ["Keterangan RS / Regional", c.hospitalClass],
+        ["Segmen Kepesertaan JKN", c.segmentText],
+        ["Dasar Penempatan Kamar", c.triggerText],
+        ["Skenario Layanan", c.scenarioLabel],
+        ["Status Kepatuhan", c.statusText],
+        [],
+        ["RINCIAN KOMPONEN BIAYA", "NOMINAL (IDR)"],
+        ["Dijamin BPJS Kesehatan (INA-CBG Hak)", c.bpjsCovered],
+        ["Batas Plafon Maksimal Hukum", c.legalMaxCap],
+        ["Total Selisih Biaya Sah Wajib Dibayar", c.legalDiff],
+        ["Ditanggung Asuransi Tambahan (COB) / Perusahaan", c.cobCovered],
+        ["Neto Dibayar Mandiri oleh Pasien / Keluarga", c.patientNet],
+        ["Kelebihan di Atas Plafon Hukum (Beban Efisiensi RS)", c.absorbedByHospital]
+      ];
+
+      writeExcelWorkbook(rows, "Audit_Naik_Kelas_JKN", `SimKelas_JKN_${Date.now()}.xlsx`);
+      showToast("Berkas Excel (.xlsx) berhasil diunduh.");
+    }
+
+    async function exportAllHistoryExcel() {
+      try {
+        const list = await DBManager.getAll("calculations");
+        if (!list.length) {
+          showToast("Belum ada riwayat simulasi untuk diekspor.");
+          return;
+        }
+        list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+        const header = [
+          "Waktu", "Nama Pasien/Kasus", "RS/Regional", "Skenario",
+          "Jaminan BPJS (IDR)", "Plafon Hukum (IDR)", "Selisih Sah (IDR)",
+          "Tanggungan COB/Perusahaan (IDR)", "Neto Pasien (IDR)", "Beban RS di Atas Plafon (IDR)", "Status"
+        ];
+        const data = list.map((i) => [
+          i.timestamp, i.patientName, i.hospitalClass, i.scenarioLabel,
+          i.bpjsCovered, i.legalMaxCap, i.legalDiff, i.cobCovered, i.patientNet, i.absorbedByHospital, i.statusText
+        ]);
+
+        writeExcelWorkbook([header, ...data], "Riwayat_SimKelas_JKN", `Riwayat_SimKelas_JKN_${Date.now()}.xlsx`);
+        showToast("Seluruh riwayat berhasil diekspor ke Excel (.xlsx).");
+      } catch (err) {
+        showToast("Gagal mengekspor riwayat ke Excel.");
+      }
+    }
+
+    /* =========================================================================
+       9. LOCAL REGULATION REPOSITORY (INDEXEDDB — NO FABRICATED REGULATIONS)
+    ========================================================================= */
+    function toggleRegForm(show, reset = true) {
+      const box = document.getElementById("regFormContainer");
+      box.style.display = show ? "block" : "none";
+      if (reset) {
+        document.getElementById("regEditId").value = "";
+        document.getElementById("regFormHeading").textContent = "Tambah Sumber Regulasi Valid";
+        document.getElementById("regNumber").value = "";
+        document.getElementById("regYear").value = "";
+        document.getElementById("regTitle").value = "";
+        document.getElementById("regArticles").value = "";
+        document.getElementById("regContent").value = "";
+        document.getElementById("regSourceNote").value = "";
+      }
+    }
+
+    async function submitRegulationForm() {
+      const editId = document.getElementById("regEditId").value.trim();
+      const regNumber = document.getElementById("regNumber").value.trim();
+      const regYear = document.getElementById("regYear").value.trim();
+      const regTitle = document.getElementById("regTitle").value.trim();
+      const regArticles = document.getElementById("regArticles").value.trim();
+      const regContent = document.getElementById("regContent").value.trim();
+      const regSourceNote = document.getElementById("regSourceNote").value.trim();
+
+      if (!regNumber || !regYear || !regTitle || !regContent) {
+        showToast("Harap isi Nomor Peraturan, Tahun/Status, Judul, dan Isi Ketentuan.");
+        return;
+      }
+
+      try {
+        const existing = editId ? await DBManager.getById("regulations", editId) : null;
+        const record = {
+          id: editId || ("reg_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6)),
+          regNumber,
+          regYear,
+          regTitle,
+          regArticles,
+          regContent,
+          regSourceNote,
+          createdAt: existing ? existing.createdAt : Date.now(),
+          updatedAt: Date.now()
+        };
+
+        await DBManager.putItem("regulations", record);
+        toggleRegForm(false, true);
+        await renderRegulations();
+        showToast(editId ? "Regulasi lokal diperbarui." : "Sumber regulasi disimpan ke penyimpanan lokal.");
+      } catch (err) {
+        showToast("Gagal menyimpan regulasi: " + (err.message || "Kesalahan database."));
+      }
+    }
+
+    async function editRegulationItem(id) {
+      try {
+        const reg = await DBManager.getById("regulations", id);
+        if (!reg) return;
+        toggleRegForm(true, false);
+        document.getElementById("regEditId").value = reg.id;
+        document.getElementById("regFormHeading").textContent = "Perbarui Sumber Regulasi Lokal";
+        document.getElementById("regNumber").value = reg.regNumber || "";
+        document.getElementById("regYear").value = reg.regYear || "";
+        document.getElementById("regTitle").value = reg.regTitle || "";
+        document.getElementById("regArticles").value = reg.regArticles || "";
+        document.getElementById("regContent").value = reg.regContent || "";
+        document.getElementById("regSourceNote").value = reg.regSourceNote || "";
+        document.getElementById("regFormContainer").scrollIntoView({ behavior: "smooth" });
+      } catch (err) {
+        showToast("Gagal membuka form edit regulasi.");
+      }
+    }
+
+    async function deleteRegulationItem(id) {
+      if (!confirm("Hapus sumber regulasi ini dari penyimpanan lokal?")) return;
+      try {
+        await DBManager.deleteById("regulations", id);
+        await renderRegulations();
+        showToast("Sumber regulasi dihapus.");
+      } catch (err) {
+        showToast("Gagal menghapus regulasi.");
+      }
+    }
+
+    async function openRegDetailModal(id) {
+      try {
+        const reg = await DBManager.getById("regulations", id);
+        if (!reg) return;
+
+        document.getElementById("regModalTitle").textContent = reg.regNumber;
+        document.getElementById("regModalBody").innerHTML = `
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+            <span class="legal-chip">${escapeHtml(reg.regYear)}</span>
+            ${reg.regArticles ? `<span class="legal-chip">${escapeHtml(reg.regArticles)}</span>` : ""}
+          </div>
+          <h4 style="font-size:15px; color:var(--primary-dark); margin-bottom:10px;">${escapeHtml(reg.regTitle)}</h4>
+          <div style="background:#F8FAFC; border:1px solid var(--border); border-radius:8px; padding:12px; white-space:pre-wrap; font-size:13px; color:var(--text-main);">${escapeHtml(reg.regContent)}</div>
+          ${reg.regSourceNote ? `<p style="margin-top:10px; font-size:12px; color:var(--text-muted);"><strong>Sumber Dokumen:</strong> ${escapeHtml(reg.regSourceNote)}</p>` : ""}
+          <p style="margin-top:6px; font-size:11.5px; color:var(--text-muted);">Terakhir diperbarui lokal: ${new Date(reg.updatedAt || Date.now()).toLocaleString("id-ID")}</p>
+        `;
+        document.getElementById("regDetailModal").classList.add("open");
+      } catch (err) {
+        showToast("Gagal menampilkan detail regulasi.");
+      }
+    }
+
+    function closeRegDetailModal() {
+      document.getElementById("regDetailModal").classList.remove("open");
+    }
+
+    async function renderRegulations() {
+      const box = document.getElementById("regListContainer");
+      const query = (document.getElementById("regSearchInput").value || "").trim().toLowerCase();
+
+      try {
+        let list = await DBManager.getAll("regulations");
+        list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+
+        if (!list.length) {
+          box.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-title">Belum Ada Sumber Regulasi Tersimpan</div>
+              <p class="empty-state-desc">
+                Repositori regulasi lokal saat ini kosong karena belum ada dokumen regulasi valid yang diinput atau diimpor. Aplikasi tidak mengisi nomor peraturan atau isi pasal secara otomatis tanpa sumber terverifikasi.
+              </p>
+              <button type="button" class="btn btn-primary btn-sm" onclick="toggleRegForm(true)">+ Tambah Sumber Regulasi Pertama</button>
+            </div>`;
+          return;
+        }
+
+        const filtered = list.filter((r) => {
+          const hay = `${r.regNumber} ${r.regYear} ${r.regTitle} ${r.regArticles || ""} ${r.regContent}`.toLowerCase();
+          return !query || hay.includes(query);
+        });
+
+        if (!filtered.length) {
+          box.innerHTML = `
+            <div class="empty-state">
+              <div class="empty-state-title">Regulasi Tidak Ditemukan</div>
+              <p class="empty-state-desc">Tidak ada regulasi lokal yang sesuai dengan kata kunci pencarian Anda.</p>
+            </div>`;
+          return;
+        }
+
+        box.innerHTML = `<div class="reg-card-list">` + filtered.map((r) => `
+          <article class="reg-doc-card">
+            <div class="reg-doc-main">
+              <div class="reg-doc-meta">
+                <span class="legal-chip">${escapeHtml(r.regNumber)}</span>
+                <span class="legal-chip">${escapeHtml(r.regYear)}</span>
+                ${r.regArticles ? `<span class="legal-chip">${escapeHtml(r.regArticles)}</span>` : ""}
+              </div>
+              <div class="reg-doc-title">${escapeHtml(r.regTitle)}</div>
+              <div class="reg-doc-excerpt">${escapeHtml(r.regContent)}</div>
+            </div>
+            <div class="reg-doc-actions">
+              <button type="button" class="btn btn-primary btn-sm" onclick="openRegDetailModal('${escapeHtml(r.id)}')">Detail</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="editRegulationItem('${escapeHtml(r.id)}')">Edit</button>
+              <button type="button" class="btn btn-danger-outline btn-sm" onclick="deleteRegulationItem('${escapeHtml(r.id)}')">Hapus</button>
+            </div>
+          </article>
+        `).join("") + `</div>`;
+      } catch (err) {
+        box.innerHTML = `<div class="alert alert-danger">Gagal memuat regulasi dari IndexedDB: ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    async function exportRegulationsJson() {
+      try {
+        const list = await DBManager.getAll("regulations");
+        if (!list.length) {
+          showToast("Belum ada sumber regulasi lokal untuk diekspor.");
+          return;
+        }
+        const payload = {
+          app: "SimKelas JKN",
+          exportedAt: new Date().toISOString(),
+          regulations: list
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Regulasi_SimKelas_JKN_${Date.now()}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        showToast("Cadangan regulasi JSON berhasil diunduh.");
+      } catch (err) {
+        showToast("Gagal mengekspor regulasi JSON.");
+      }
+    }
+
+    async function importRegulationsJson(event) {
+      const file = event.target.files && event.target.files[0];
+      event.target.value = "";
+      if (!file) return;
+
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        const items = Array.isArray(parsed) ? parsed : (Array.isArray(parsed.regulations) ? parsed.regulations : null);
+        if (!items || !items.length) {
+          showToast("Format file JSON tidak berisi daftar regulasi yang valid.");
+          return;
+        }
+
+        let importedCount = 0;
+        for (const raw of items) {
+          if (!raw || !raw.regNumber || !raw.regTitle || !raw.regContent) continue;
+          const record = {
+            id: raw.id ? String(raw.id) : ("reg_imp_" + Date.now() + "_" + importedCount),
+            regNumber: String(raw.regNumber).trim(),
+            regYear: String(raw.regYear || "-").trim(),
+            regTitle: String(raw.regTitle).trim(),
+            regArticles: String(raw.regArticles || "").trim(),
+            regContent: String(raw.regContent).trim(),
+            regSourceNote: String(raw.regSourceNote || "").trim(),
+            createdAt: Number(raw.createdAt) || Date.now(),
+            updatedAt: Date.now()
+          };
+          await DBManager.putItem("regulations", record);
+          importedCount++;
+        }
+
+        await renderRegulations();
+        showToast(`${importedCount} sumber regulasi berhasil diimpor ke penyimpanan lokal.`);
+      } catch (err) {
+        showToast("Gagal membaca berkas JSON regulasi.");
+      }
+    }
+
+    /* =========================================================================
+       10. SERVICE WORKER REGISTRATION & INITIALIZATION
+    ========================================================================= */
+    window.addEventListener("beforeprint", () => {
+      document.getElementById("printTimestamp").textContent = new Date().toLocaleString("id-ID");
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch((err) => {
+          console.warn("Registrasi Service Worker tidak aktif:", err);
+        });
+      });
+    }
+
+    (async function initApp() {
+      updateNetworkIndicator();
+      onScenarioChange();
+
+      try {
+        await DBManager.open();
+        await DBManager.migrateLegacyLocalStorage();
+        await updateHistoryCount();
+        await renderRegulations();
+      } catch (err) {
+        const banner = document.getElementById("dbErrorBanner");
+        banner.style.display = "block";
+        banner.innerHTML = `
+          <div class="alert alert-warning" style="margin-top:0;">
+            <span class="alert-title">Peringatan Penyimpanan Lokal (IndexedDB)</span>
+            Browser membatasi akses IndexedDB (${escapeHtml(err.message)}). Fitur perhitungan dan ekspor tetap berjalan normal selama sesi aktif.
+          </div>`;
+      }
+    })();
+  </script>
+</body>
+</html>
