@@ -1,0 +1,31 @@
+{
+  "name": "SimKelas JKN — Simulator Biaya Naik Kelas Perawatan BPJS Kesehatan",
+  "short_name": "SimKelas JKN",
+  "description": "Aplikasi PWA Offline untuk simulasi, audit kepatuhan, dan pengelolaan riwayat selisih biaya naik kelas perawatan BPJS Kesehatan.",
+  "start_url": "./SimhitungBPJS.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#042F2E",
+  "theme_color": "#042F2E",
+  "lang": "id-ID",
+  "categories": [
+    "medical",
+    "finance",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
