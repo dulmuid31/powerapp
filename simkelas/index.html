@@ -23,6 +23,7 @@
       --primary-soft: #CCFBF1;
       --primary-tint: #F0FDFA;
       --gold-display: #FACC15;
+      --gold-hover: #EAB308;
       --bg-canvas: #F2F5F4;
       --bg-card: #FFFFFF;
       --border: #D8E2DF;
@@ -156,37 +157,32 @@
       margin-top: 1px;
     }
 
-    /* NETWORK STATUS INDICATOR */
-    .net-indicator {
+    /* APP INFO BADGE (REPLACES ONLINE INDICATOR) */
+    .info-badge-btn {
+      appearance: none;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
+      padding: 5px 11px;
       border-radius: 999px;
+      font-family: inherit;
       font-size: 11.5px;
       font-weight: 700;
       flex-shrink: 0;
-      border: 1px solid;
-      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      color: #FFFFFF;
+      cursor: pointer;
+      transition: all 0.18s ease;
     }
 
-    .net-indicator.is-online {
-      background: rgba(16, 185, 129, 0.16);
-      border-color: rgba(110, 231, 183, 0.4);
-      color: #A7F3D0;
+    .info-badge-btn:hover {
+      background: rgba(255, 255, 255, 0.24);
+      border-color: rgba(255, 255, 255, 0.55);
     }
 
-    .net-indicator.is-offline {
-      background: rgba(245, 158, 11, 0.22);
-      border-color: rgba(253, 224, 71, 0.55);
-      color: #FDE68A;
-    }
-
-    .net-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: currentColor;
+    .info-badge-btn:active {
+      transform: scale(0.96);
     }
 
     /* BOTTOM NAVIGATION */
@@ -328,6 +324,20 @@
       background: #0F766E;
     }
 
+    .btn-gold {
+      background: var(--gold-display);
+      color: #042F2E;
+      border-color: #EAB308;
+      font-weight: 800;
+      box-shadow: 0 2px 6px rgba(234, 179, 8, 0.28);
+    }
+
+    .btn-gold:hover:not(:disabled) {
+      background: var(--gold-hover);
+      border-color: #CA8A04;
+      color: #042F2E;
+    }
+
     .btn-outline {
       background: #FFFFFF;
       color: var(--text-main);
@@ -405,6 +415,12 @@
       background: #FEF2F2;
       color: #991B1B;
       border-color: #FECACA;
+    }
+
+    .calc-status-pill.pending-scenario {
+      background: #FFFBEB;
+      color: #92400E;
+      border-color: #FDE68A;
     }
 
     /* Permanent Expression Preview Bar */
@@ -560,19 +576,6 @@
     .calc-result-main {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .calc-result-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.14);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: #FFFFFF;
     }
 
     .calc-result-info {
@@ -842,7 +845,7 @@
       }
     }
 
-    /* CARDS & SHARED COMPONENTS (AUDIT, REGULASI, RIWAYAT) */
+    /* CARDS & SHARED COMPONENTS (AUDIT, REGULASI, SETTING) */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -880,6 +883,162 @@
       border: 1px solid var(--primary-soft);
       padding: 3px 8px;
       border-radius: 6px;
+    }
+
+    /* SETTING KEYPAD CONTROLS */
+    .setting-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #F8FAFC;
+    }
+
+    .setting-row-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .setting-row-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .setting-row-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .switch-toggle {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .switch-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #CBD5E1;
+      border-radius: 999px;
+      transition: 0.2s;
+    }
+
+    .switch-slider::before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #FFFFFF;
+      border-radius: 50%;
+      transition: 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    }
+
+    .switch-toggle input:checked + .switch-slider {
+      background-color: var(--brand-green);
+    }
+
+    .switch-toggle input:checked + .switch-slider::before {
+      transform: translateX(20px);
+    }
+
+    /* APP INFO MODAL (MATCHING SCREENSHOT REFERENCE) */
+    .app-info-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      max-width: 430px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+    }
+
+    .app-info-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .app-info-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      object-fit: cover;
+      background: #063B12;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .app-info-pill {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #065F46;
+      background: #DCFCE7;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 4px;
+    }
+
+    .app-info-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .app-info-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .app-info-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.55;
+      display: grid;
+      gap: 10px;
+    }
+
+    .app-info-footnote {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      line-height: 1.45;
+    }
+
+    .app-info-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 16px;
     }
 
     /* FORM ELEMENTS */
@@ -1274,6 +1433,10 @@
       gap: 10px;
     }
 
+    .modal-head.warn-head {
+      background: #92400E;
+    }
+
     .modal-head h3 {
       font-size: 15px;
       font-weight: 700;
@@ -1347,7 +1510,7 @@
       .no-print,
       #tab-hitung,
       #tab-regulasi,
-      #tab-riwayat,
+      #tab-setting,
       .modal-backdrop,
       .toast {
         display: none !important;
@@ -1399,10 +1562,21 @@
           <div class="brand-sub">Simulator &amp; Audit Selisih Biaya Naik Kelas Perawatan</div>
         </div>
       </div>
-      <div id="networkStatusBadge" class="net-indicator is-online" role="status" aria-live="polite">
-        <span class="net-dot" aria-hidden="true"></span>
-        <span id="networkStatusText">Online</span>
-      </div>
+      <button
+        type="button"
+        id="infoAppBadge"
+        class="info-badge-btn"
+        aria-haspopup="dialog"
+        aria-controls="appInfoModal"
+        onclick="openAppInfoModal()"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>Informasi</span>
+      </button>
     </div>
   </header>
 
@@ -1433,37 +1607,37 @@
               </svg>
               <span>Hasil Perhitungan</span>
             </div>
-            <span class="calc-status-pill" id="calcHeroBadge">Menunggu Input Tarif</span>
+            <span class="calc-status-pill pending-scenario" id="calcHeroBadge">Pilih Skenario</span>
           </div>
 
           <!-- BARIS EKSPRESI / INPUT AKTIF (PERMANEN) -->
           <div class="calc-expr-bar">
-            <span class="calc-expr-target" id="calcActiveFieldBadge">Input: INA-CBG Kelas 1</span>
-            <span class="calc-expr-text mono" id="calcExpressionLine">0</span>
+            <span class="calc-expr-target" id="calcActiveFieldBadge">Skenario Belum Dipilih</span>
+            <span class="calc-expr-text mono" id="calcExpressionLine">&mdash;</span>
           </div>
 
           <!-- SLOT INPUT TARIF YANG SELALU TAMPIL (AKTIF / NONAKTIF SESUAI SKENARIO) -->
           <div class="calc-slots-grid" id="calcSlotsContainer">
             <!-- Slot 1 -->
-            <button type="button" id="calcSlot1Card" class="calc-slot active-slot" onclick="selectCalcField(0)">
+            <button type="button" id="calcSlot1Card" class="calc-slot is-disabled" disabled aria-disabled="true" onclick="selectCalcField(0)">
               <div class="calc-slot-label">
-                <span id="calcSlot1Label">Tarif INA-CBG Kelas 1</span>
+                <span id="calcSlot1Label">Tarif Hak Kelas (Slot 1)</span>
                 <span class="calc-slot-edit-tag">Aktif</span>
                 <span class="calc-slot-state-tag">Nonaktif</span>
               </div>
-              <div class="calc-slot-value mono" id="calcSlot1Value">Rp 0</div>
-              <div class="calc-slot-sub" id="calcSlot1Sub">Hak Jaminan BPJS</div>
+              <div class="calc-slot-value mono" id="calcSlot1Value">&mdash;</div>
+              <div class="calc-slot-sub" id="calcSlot1Sub">Pilih skenario naik kelas</div>
             </button>
 
             <!-- Slot 2 -->
-            <button type="button" id="calcSlot2Card" class="calc-slot" onclick="selectCalcField(1)">
+            <button type="button" id="calcSlot2Card" class="calc-slot is-disabled" disabled aria-disabled="true" onclick="selectCalcField(1)">
               <div class="calc-slot-label">
-                <span id="calcSlot2Label">Tarif Riil RS (VIP)</span>
+                <span id="calcSlot2Label">Tarif Tujuan / Riil (Slot 2)</span>
                 <span class="calc-slot-edit-tag">Aktif</span>
                 <span class="calc-slot-state-tag">Nonaktif</span>
               </div>
-              <div class="calc-slot-value mono" id="calcSlot2Value">Rp 0</div>
-              <div class="calc-slot-sub" id="calcSlot2Sub">Total tagihan episode</div>
+              <div class="calc-slot-value mono" id="calcSlot2Value">&mdash;</div>
+              <div class="calc-slot-sub" id="calcSlot2Sub">Pilih skenario naik kelas</div>
             </button>
 
             <!-- Slot 3 (Permanen tampil; aktif saat Kelas 2 -> VIP, nonaktif pada skenario lain) -->
@@ -1473,32 +1647,21 @@
                 <span class="calc-slot-edit-tag">Aktif</span>
                 <span class="calc-slot-state-tag">Nonaktif</span>
               </div>
-              <div class="calc-slot-value mono" id="calcSlot3Value">—</div>
+              <div class="calc-slot-value mono" id="calcSlot3Value">&mdash;</div>
               <div class="calc-slot-sub" id="calcSlot3Sub">Tidak aktif pada skenario ini</div>
             </button>
           </div>
 
-          <!-- BLOK HASIL HIJAU TUA DENGAN NOMINAL KUNING EMAS -->
+          <!-- BLOK HASIL HIJAU TUA DENGAN NOMINAL KUNING EMAS (TANPA IKON SAMPING) -->
           <div class="calc-result-banner">
             <div class="calc-result-main">
-              <div class="calc-result-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="4" y="2" width="16" height="20" rx="2"></rect>
-                  <line x1="8" y1="6" x2="16" y2="6"></line>
-                  <line x1="8" y1="10" x2="10" y2="10"></line>
-                  <line x1="14" y1="10" x2="16" y2="10"></line>
-                  <line x1="8" y1="14" x2="10" y2="14"></line>
-                  <line x1="14" y1="14" x2="16" y2="14"></line>
-                  <line x1="8" y1="18" x2="16" y2="18"></line>
-                </svg>
-              </div>
               <div class="calc-result-info">
                 <div class="calc-result-label">Selisih Biaya Sah Wajib Dibayar</div>
                 <div class="calc-result-amount-row">
                   <div class="calc-result-amount mono" id="calcHeroTotal">Rp 0</div>
                   <div class="calc-result-unit" id="calcCapChip">Plafon: Rp 0</div>
                 </div>
-                <div class="calc-result-sub" id="calcHeroSub">Hak Kelas 1 naik ke VIP / Di Atas Kelas 1</div>
+                <div class="calc-result-sub" id="calcHeroSub">Silakan pilih skenario naik kelas terlebih dahulu</div>
               </div>
             </div>
 
@@ -1550,18 +1713,18 @@
           <button type="button" class="key-btn key-eq" aria-label="Sama dengan" onclick="keypadEvaluate()">=</button>
         </div>
 
-        <!-- TOMBOL AKSI: DROPDOWN MODAL SKENARIO & SIMPAN RIWAYAT -->
+        <!-- TOMBOL AKSI: PILIH SKENARIO (WARNA GOLD) & SIMPAN RIWAYAT -->
         <div class="calc-bottom-actions">
           <button
             type="button"
             id="scenarioDropdownBtn"
-            class="btn btn-outline calc-scenario-trigger"
+            class="btn btn-gold calc-scenario-trigger"
             aria-haspopup="dialog"
             aria-expanded="false"
             aria-controls="scenarioPickerModal"
             onclick="openScenarioModal()"
           >
-            <span class="calc-scenario-trigger-text" id="scenarioDropdownLabel">Kelas 1 &rarr; VIP</span>
+            <span class="calc-scenario-trigger-text" id="scenarioDropdownLabel">Pilih Skenario Naik Kelas</span>
             <span aria-hidden="true">&#9662;</span>
           </button>
           <button type="button" class="btn btn-primary" onclick="saveToHistory()">+ Simpan Riwayat</button>
@@ -1597,7 +1760,7 @@
       <div class="card">
         <div class="card-header">
           <div class="card-title">Ringkasan Kasus &amp; Status Verifikasi</div>
-          <span class="legal-chip" id="auditStatusChip">Menunggu Input</span>
+          <span class="legal-chip" id="auditStatusChip">Pilih Skenario</span>
         </div>
         <div class="meta-grid">
           <div class="meta-item">
@@ -1800,9 +1963,58 @@
     </section>
 
     <!-- =========================================================
-         TAB 4: RIWAYAT
+         TAB 4: SETTING (PENGATURAN KEYPAD & RIWAYAT)
     ========================================================== -->
-    <section id="tab-riwayat" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-riwayat">
+    <section id="tab-setting" class="tab-panel" role="tabpanel" aria-labelledby="nav-btn-setting">
+
+      <!-- BAGIAN 1: PENGATURAN KEYPAD (GETAR & NADA) -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Pengaturan Keypad Kalkulator</div>
+          <span class="legal-chip">Tersimpan Lokal</span>
+        </div>
+
+        <div class="setting-list">
+          <div class="setting-row">
+            <div class="setting-row-info">
+              <div class="setting-row-title">Feedback Getar Tombol Keypad</div>
+              <div class="setting-row-desc">Memberikan getaran singkat saat tombol keypad atau kendali cepat ditekan (pada perangkat yang mendukung).</div>
+            </div>
+            <label class="switch-toggle" aria-label="Aktifkan feedback getar keypad">
+              <input type="checkbox" id="settingVibrateToggle" checked onchange="handleKeypadSettingChange()" />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div class="setting-row-info">
+              <div class="setting-row-title">Nada Sentuh Keypad</div>
+              <div class="setting-row-desc">Memutar efek nada sintetis ringan secara offline ketika menekan tombol keypad.</div>
+            </div>
+            <label class="switch-toggle" aria-label="Aktifkan nada keypad">
+              <input type="checkbox" id="settingSoundToggle" checked onchange="handleKeypadSettingChange()" />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row" style="flex-wrap:wrap;">
+            <div class="setting-row-info">
+              <div class="setting-row-title">Jenis Nada Keypad</div>
+              <div class="setting-row-desc">Pilih karakter bunyi tombol angka, operator, dan tombol hasil (=).</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; width:100%; max-width:300px;">
+              <select id="settingTonePreset" aria-label="Pilih jenis nada keypad" onchange="handleKeypadSettingChange()" style="flex:1; min-width:160px;">
+                <option value="soft">Lembut (Soft Sine)</option>
+                <option value="crisp">Klik Tegas (Crisp)</option>
+                <option value="bell">Nada Tinggi (Bell)</option>
+              </select>
+              <button type="button" class="btn btn-outline btn-sm" onclick="testKeypadFeedback()">Uji Coba</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAGIAN 2: RIWAYAT PERHITUNGAN TERSIMPAN -->
       <div class="card">
         <div class="card-header">
           <div class="card-title">Riwayat Perhitungan Tersimpan (IndexedDB Lokal)</div>
@@ -1865,16 +2077,92 @@
         <span>Regulasi</span>
       </button>
 
-      <button type="button" id="nav-btn-riwayat" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-riwayat" data-tab="riwayat" onclick="switchTab('riwayat')">
+      <button type="button" id="nav-btn-setting" class="bnav-item" role="tab" aria-selected="false" aria-controls="tab-setting" data-tab="setting" onclick="switchTab('setting')">
         <span class="bnav-badge" id="histCount">0</span>
         <svg class="bnav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
         </svg>
-        <span>Riwayat</span>
+        <span>Setting</span>
       </button>
     </div>
   </nav>
+
+  <!-- MODAL INFORMASI APLIKASI & PENGEMBANG (SESUAI REFERENSI TANGKAP LAYAR) -->
+  <div
+    id="appInfoModal"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="appInfoModalTitle"
+    onclick="if (event.target === this) closeAppInfoModal()"
+  >
+    <div class="app-info-card">
+      <div class="app-info-top">
+        <img
+          src="./icon-192.png"
+          alt="Ikon Aplikasi SimKelas JKN"
+          class="app-info-icon"
+          onerror="this.onerror=null;this.src='./icon-512.png';"
+        />
+        <div>
+          <span class="app-info-pill">INFORMASI PENGEMBANG</span>
+          <h3 class="app-info-name" id="appInfoModalTitle">SimKelas JKN</h3>
+          <div class="app-info-sub">Simulator &amp; Audit Naik Kelas JKN &bull; v3.1</div>
+        </div>
+      </div>
+
+      <div class="app-info-box">
+        <div>
+          <strong>Dirancang &amp; Dikembangkan oleh:</strong><br />
+          Dul Muid (Bang Dul)
+        </div>
+        <div>
+          <strong>Domisili:</strong> Brebes, Jawa Tengah
+        </div>
+        <div>
+          <strong>Cakupan Sistem:</strong> Perhitungan selisih biaya naik kelas rawat inap JKN (Kelas 2 &rarr; Kelas 1, Kelas 1 &rarr; VIP, Kelas 2 &rarr; VIP), Rawat Jalan Eksekutif, audit kepatuhan plafon maksimal 75%, serta arsip riwayat dan regulasi lokal offline.
+        </div>
+      </div>
+
+      <p class="app-info-footnote">
+        *Hasil simulasi mengacu pada Permenkes No. 3 Tahun 2023 Pasal 48 dan Perpres No. 59 Tahun 2024 Pasal 51 sebagai alat bantu hitung administratif yang beroperasi penuh secara offline.
+      </p>
+
+      <div class="app-info-actions">
+        <button type="button" class="btn btn-outline" onclick="closeAppInfoModal()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PERINGATAN: WAJIB PILIH SKENARIO SEBELUM MENGGUNAKAN KEYPAD -->
+  <div
+    id="scenarioWarningModal"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="scenarioWarningTitle"
+    onclick="if (event.target === this) closeScenarioWarningModal()"
+  >
+    <div class="modal-box" style="max-width:420px;">
+      <div class="modal-head warn-head">
+        <h3 id="scenarioWarningTitle">Pilih Skenario Naik Kelas Terlebih Dahulu</h3>
+        <button type="button" class="modal-close" aria-label="Tutup modal peringatan" onclick="closeScenarioWarningModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:10px; color:var(--text-main); font-weight:600;">
+          Tombol keypad belum dapat digunakan sebelum Anda menentukan skenario naik kelas perawatan.
+        </p>
+        <p style="font-size:12.5px; color:var(--text-secondary);">
+          Silakan pilih salah satu skenario naik kelas (misalnya <strong>Kelas 1 &rarr; VIP</strong>, <strong>Kelas 2 &rarr; Kelas 1</strong>, <strong>Kelas 2 &rarr; VIP</strong>, atau <strong>Rawat Jalan &rarr; Poli Eksekutif</strong>) agar kolom tarif aktif sesuai rumus yang berlaku.
+        </p>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeScenarioWarningModal()">Tutup</button>
+        <button type="button" class="btn btn-gold btn-sm" onclick="closeScenarioWarningModal(); openScenarioModal();">Pilih Skenario Sekarang</button>
+      </div>
+    </div>
+  </div>
 
   <!-- CUSTOM SCENARIO DROPDOWN MODAL -->
   <div
@@ -1892,7 +2180,7 @@
       </div>
       <div class="modal-body">
         <div class="scenario-option-list" role="listbox" aria-label="Daftar skenario naik kelas perawatan">
-          <button type="button" class="scenario-option-btn selected" data-scenario="k1_vip" onclick="selectScenarioFromModal('k1_vip')">
+          <button type="button" class="scenario-option-btn" data-scenario="k1_vip" onclick="selectScenarioFromModal('k1_vip')">
             <div>
               <div class="scenario-option-title">Kelas 1 &rarr; VIP / Di Atas Kelas 1</div>
               <div class="scenario-option-desc">Plafon maksimal 75% &times; Tarif INA-CBG Kelas 1 (Pasal 48 ayat 3 huruf c)</div>
@@ -2006,39 +2294,177 @@
     setTimeout(hideSplashScreen, 2000);
 
     /* =========================================================================
-       3. NETWORK MONITOR (OFFLINE / ONLINE INDICATOR)
+       3. NETWORK EVENT HANDLER (BACKGROUND TOAST ONLY)
     ========================================================================= */
-    function updateNetworkIndicator() {
-      const badge = document.getElementById("networkStatusBadge");
-      const text = document.getElementById("networkStatusText");
-      if (!badge || !text) return;
-
-      const online = navigator.onLine;
-      if (online) {
-        badge.classList.remove("is-offline");
-        badge.classList.add("is-online");
-        text.textContent = "Online";
-        badge.title = "Perangkat terhubung ke jaringan. Database lokal tetap aktif.";
-      } else {
-        badge.classList.remove("is-online");
-        badge.classList.add("is-offline");
-        text.textContent = "Offline";
-        badge.title = "Mode Offline aktif. Seluruh perhitungan dan penyimpanan lokal berjalan mandiri.";
-      }
-    }
-
     window.addEventListener("online", () => {
-      updateNetworkIndicator();
       showToast("Koneksi jaringan kembali online.");
     });
 
     window.addEventListener("offline", () => {
-      updateNetworkIndicator();
       showToast("Mode Offline aktif — aplikasi tetap berjalan penuh secara lokal.");
     });
 
     /* =========================================================================
-       4. INDEXEDDB DATABASE ENGINE & SAFE MIGRATION
+       4. APP INFO & WARNING MODALS
+    ========================================================================= */
+    function openAppInfoModal() {
+      const modal = document.getElementById("appInfoModal");
+      if (!modal) return;
+      modal.classList.add("open");
+    }
+
+    function closeAppInfoModal() {
+      const modal = document.getElementById("appInfoModal");
+      if (!modal) return;
+      modal.classList.remove("open");
+    }
+
+    function openScenarioWarningModal() {
+      const modal = document.getElementById("scenarioWarningModal");
+      if (!modal) return;
+      modal.classList.add("open");
+    }
+
+    function closeScenarioWarningModal() {
+      const modal = document.getElementById("scenarioWarningModal");
+      if (!modal) return;
+      modal.classList.remove("open");
+    }
+
+    /* =========================================================================
+       5. KEYPAD HAPTIC VIBRATION & WEB AUDIO TONE ENGINE (OFFLINE)
+    ========================================================================= */
+    const keypadSettings = {
+      vibrate: true,
+      sound: true,
+      tonePreset: "soft"
+    };
+
+    const KeypadFeedbackEngine = {
+      audioCtx: null,
+
+      getContext() {
+        if (!this.audioCtx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) {
+            this.audioCtx = new AudioCtx();
+          }
+        }
+        if (this.audioCtx && this.audioCtx.state === "suspended") {
+          this.audioCtx.resume().catch(() => {});
+        }
+        return this.audioCtx;
+      },
+
+      trigger(kind = "digit") {
+        if (keypadSettings.vibrate && typeof navigator !== "undefined" && "vibrate" in navigator) {
+          try {
+            const duration = kind === "warn" ? [35, 35, 35] : (kind === "eq" ? 28 : 16);
+            navigator.vibrate(duration);
+          } catch (e) {
+            // Abaikan jika perangkat memblokir getar
+          }
+        }
+
+        if (!keypadSettings.sound) return;
+        const ctx = this.getContext();
+        if (!ctx) return;
+
+        try {
+          const now = ctx.currentTime;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          let freq = 520;
+          let type = "sine";
+          let dur = 0.055;
+          let peakGain = 0.08;
+
+          if (keypadSettings.tonePreset === "crisp") {
+            type = "triangle";
+            freq = kind === "op" ? 640 : (kind === "eq" ? 780 : (kind === "warn" ? 300 : 540));
+            dur = 0.045;
+            peakGain = 0.09;
+          } else if (keypadSettings.tonePreset === "bell") {
+            type = "sine";
+            freq = kind === "op" ? 880 : (kind === "eq" ? 1046 : (kind === "warn" ? 320 : 740));
+            dur = 0.085;
+            peakGain = 0.075;
+          } else {
+            // soft
+            type = "sine";
+            freq = kind === "op" ? 580 : (kind === "eq" ? 698 : (kind === "warn" ? 280 : 480));
+            dur = 0.055;
+            peakGain = 0.08;
+          }
+
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.exponentialRampToValueAtTime(peakGain, now + 0.008);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + dur + 0.01);
+        } catch (e) {
+          // Abaikan kesalahan audio jika konteks belum siap
+        }
+      }
+    };
+
+    function syncKeypadSettingsUI() {
+      const vibEl = document.getElementById("settingVibrateToggle");
+      const sndEl = document.getElementById("settingSoundToggle");
+      const presetEl = document.getElementById("settingTonePreset");
+      if (vibEl) vibEl.checked = Boolean(keypadSettings.vibrate);
+      if (sndEl) sndEl.checked = Boolean(keypadSettings.sound);
+      if (presetEl) presetEl.value = keypadSettings.tonePreset || "soft";
+    }
+
+    async function loadKeypadSettingsFromDB() {
+      try {
+        const saved = await DBManager.getMeta("keypad_settings");
+        if (saved && typeof saved === "object") {
+          keypadSettings.vibrate = saved.vibrate !== undefined ? Boolean(saved.vibrate) : true;
+          keypadSettings.sound = saved.sound !== undefined ? Boolean(saved.sound) : true;
+          keypadSettings.tonePreset = ["soft", "crisp", "bell"].includes(saved.tonePreset) ? saved.tonePreset : "soft";
+        }
+      } catch (e) {
+        // Gunakan nilai bawaan jika database belum siap
+      }
+      syncKeypadSettingsUI();
+    }
+
+    async function handleKeypadSettingChange() {
+      const vibEl = document.getElementById("settingVibrateToggle");
+      const sndEl = document.getElementById("settingSoundToggle");
+      const presetEl = document.getElementById("settingTonePreset");
+
+      keypadSettings.vibrate = vibEl ? vibEl.checked : true;
+      keypadSettings.sound = sndEl ? sndEl.checked : true;
+      keypadSettings.tonePreset = presetEl ? presetEl.value : "soft";
+
+      KeypadFeedbackEngine.trigger("digit");
+
+      try {
+        await DBManager.setMeta("keypad_settings", { ...keypadSettings });
+        showToast("Pengaturan keypad disimpan.");
+      } catch (err) {
+        showToast("Pengaturan diterapkan untuk sesi ini.");
+      }
+    }
+
+    function testKeypadFeedback() {
+      KeypadFeedbackEngine.trigger("eq");
+      showToast("Uji getar & nada keypad dijalankan.");
+    }
+
+    /* =========================================================================
+       6. INDEXEDDB DATABASE ENGINE & SAFE MIGRATION
     ========================================================================= */
     const DB_NAME = "SimKelasJKN_DB";
     const DB_VERSION = 1;
@@ -2203,7 +2629,7 @@
     };
 
     /* =========================================================================
-       5. PURE LOCAL OFFLINE .XLSX (OPENXML) GENERATOR (ZERO CDN DEPENDENCY)
+       7. PURE LOCAL OFFLINE .XLSX (OPENXML) GENERATOR (ZERO CDN DEPENDENCY)
     ========================================================================= */
     const OfflineXlsxBuilder = (() => {
       const crcTable = new Uint32Array(256);
@@ -2393,38 +2819,39 @@
     })();
 
     /* =========================================================================
-       6. NAVIGATION & TAB MANAGEMENT
+       8. NAVIGATION & TAB MANAGEMENT
     ========================================================================= */
     let activeTabId = "hitung";
     let lastCalculation = null;
 
     function switchTab(tabId) {
-      const validTabs = ["hitung", "audit", "regulasi", "riwayat"];
-      if (!validTabs.includes(tabId)) return;
-      activeTabId = tabId;
+      const normalizedTab = tabId === "riwayat" ? "setting" : tabId;
+      const validTabs = ["hitung", "audit", "regulasi", "setting"];
+      if (!validTabs.includes(normalizedTab)) return;
+      activeTabId = normalizedTab;
 
       document.querySelectorAll(".tab-panel").forEach((panel) => {
         panel.classList.remove("active");
       });
       document.querySelectorAll(".bnav-item").forEach((btn) => {
-        const isActive = btn.dataset.tab === tabId;
+        const isActive = btn.dataset.tab === normalizedTab;
         btn.classList.toggle("active", isActive);
         btn.setAttribute("aria-selected", isActive ? "true" : "false");
       });
 
-      const targetPanel = document.getElementById("tab-" + tabId);
+      const targetPanel = document.getElementById("tab-" + normalizedTab);
       if (targetPanel) targetPanel.classList.add("active");
 
-      if (tabId === "riwayat") renderHistory();
-      if (tabId === "regulasi") renderRegulations();
+      if (normalizedTab === "setting") renderHistory();
+      if (normalizedTab === "regulasi") renderRegulations();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     /* =========================================================================
-       7. CALCULATOR KEYPAD & STATE ENGINE
+       9. CALCULATOR KEYPAD & MANDATORY SCENARIO GUARD ENGINE
     ========================================================================= */
     const calcState = {
-      scenario: "k1_vip",
+      scenario: null,
       activeField: "inaK1",
       values: {
         inaK2: 0,
@@ -2457,8 +2884,17 @@
       rajal: "Rajal → Eksekutif"
     };
 
+    function ensureScenarioSelected() {
+      if (!calcState.scenario) {
+        openScenarioWarningModal();
+        return false;
+      }
+      return true;
+    }
+
     function getVisibleFieldKeys() {
       const sc = calcState.scenario;
+      if (!sc) return [];
       if (sc === "k2_k1") return ["inaK2", "inaK1"];
       if (sc === "k1_vip") return ["inaK1", "realVip"];
       if (sc === "k2_vip") return ["inaK2", "inaK1", "realVip"];
@@ -2512,14 +2948,39 @@
 
     function syncCalculatorDisplaySlots() {
       const sc = calcState.scenario;
+      const slot1Card = document.getElementById("calcSlot1Card");
+      const slot2Card = document.getElementById("calcSlot2Card");
+      const slot3Card = document.getElementById("calcSlot3Card");
+
+      if (!sc) {
+        [slot1Card, slot2Card, slot3Card].forEach((card) => {
+          card.disabled = true;
+          card.classList.add("is-disabled");
+          card.classList.remove("active-slot");
+          card.setAttribute("aria-disabled", "true");
+        });
+
+        document.getElementById("calcSlot1Label").textContent = "Tarif Hak Kelas (Slot 1)";
+        document.getElementById("calcSlot1Sub").textContent = "Pilih skenario naik kelas";
+        document.getElementById("calcSlot1Value").textContent = "—";
+
+        document.getElementById("calcSlot2Label").textContent = "Tarif Tujuan / Riil (Slot 2)";
+        document.getElementById("calcSlot2Sub").textContent = "Pilih skenario naik kelas";
+        document.getElementById("calcSlot2Value").textContent = "—";
+
+        document.getElementById("calcSlot3Label").textContent = "Tarif Tambahan (Slot 3)";
+        document.getElementById("calcSlot3Sub").textContent = "Pilih skenario naik kelas";
+        document.getElementById("calcSlot3Value").textContent = "—";
+
+        document.getElementById("calcActiveFieldBadge").textContent = "Skenario Belum Dipilih";
+        document.getElementById("calcExpressionLine").textContent = "—";
+        return;
+      }
+
       const keys = getVisibleFieldKeys();
       if (!keys.includes(calcState.activeField)) {
         calcState.activeField = keys[0];
       }
-
-      const slot1Card = document.getElementById("calcSlot1Card");
-      const slot2Card = document.getElementById("calcSlot2Card");
-      const slot3Card = document.getElementById("calcSlot3Card");
 
       slot1Card.disabled = false;
       slot1Card.classList.remove("is-disabled");
@@ -2563,7 +3024,6 @@
         document.getElementById("calcSlot2Value").textContent = formatRupiah(calcState.values.realRajal);
       }
 
-      // Slot 3 tetap ditampilkan permanen; aktif hanya pada skenario Kelas 2 -> VIP
       if (sc === "k2_vip") {
         slot3Card.disabled = false;
         slot3Card.classList.remove("is-disabled");
@@ -2590,14 +3050,24 @@
     }
 
     function selectCalcField(slotIndex) {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
       const keys = getVisibleFieldKeys();
       if (typeof slotIndex === "number" && keys[slotIndex]) {
+        KeypadFeedbackEngine.trigger("digit");
         calcState.activeField = keys[slotIndex];
         syncCalculatorDisplaySlots();
       }
     }
 
     function cycleActiveCalcField() {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
+      KeypadFeedbackEngine.trigger("op");
       const keys = getVisibleFieldKeys();
       const idx = keys.indexOf(calcState.activeField);
       const nextIdx = (idx + 1) % keys.length;
@@ -2617,6 +3087,12 @@
     }
 
     function keypadPressDigit(digit) {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
+      KeypadFeedbackEngine.trigger("digit");
+
       const key = calcState.activeField;
       let expr = calcState.expressions[key] || "0";
       const lastNumMatch = expr.match(/(\d+)$/);
@@ -2638,6 +3114,12 @@
     }
 
     function keypadPressThousands() {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
+      KeypadFeedbackEngine.trigger("digit");
+
       const key = calcState.activeField;
       let expr = calcState.expressions[key] || "0";
       const lastNumMatch = expr.match(/(\d+)$/);
@@ -2653,6 +3135,12 @@
     }
 
     function keypadPressOperator(op) {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
+      KeypadFeedbackEngine.trigger("op");
+
       const key = calcState.activeField;
       let expr = calcState.expressions[key] || "0";
       if (/[+\-*/]$/.test(expr)) {
@@ -2665,6 +3153,12 @@
     }
 
     function keypadBackspace() {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
+      KeypadFeedbackEngine.trigger("op");
+
       const key = calcState.activeField;
       let expr = calcState.expressions[key] || "0";
       if (expr.length <= 1) {
@@ -2678,6 +3172,12 @@
     }
 
     function keypadClearField() {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
+      KeypadFeedbackEngine.trigger("op");
+
       const key = calcState.activeField;
       calcState.expressions[key] = "0";
       calcState.values[key] = 0;
@@ -2685,6 +3185,12 @@
     }
 
     function keypadEvaluate() {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
+      KeypadFeedbackEngine.trigger("eq");
+
       commitExpressionToActiveField(true);
       const keys = getVisibleFieldKeys();
       const idx = keys.indexOf(calcState.activeField);
@@ -2695,7 +3201,7 @@
     }
 
     /* =========================================================================
-       8. CUSTOM SCENARIO DROPDOWN MODAL SYNC
+       10. CUSTOM SCENARIO DROPDOWN MODAL SYNC
     ========================================================================= */
     function openScenarioModal() {
       const modal = document.getElementById("scenarioPickerModal");
@@ -2714,24 +3220,27 @@
     }
 
     function selectScenarioFromModal(sc) {
+      KeypadFeedbackEngine.trigger("digit");
       setScenarioFromCode(sc, true);
       closeScenarioModal();
     }
 
     function setScenarioFromCode(sc, moveToFirstField = true) {
       const valid = ["k2_k1", "k1_vip", "k2_vip", "rajal"];
-      calcState.scenario = valid.includes(sc) ? sc : "k1_vip";
+      calcState.scenario = valid.includes(sc) ? sc : null;
 
       const dropdownLabel = document.getElementById("scenarioDropdownLabel");
       if (dropdownLabel) {
-        dropdownLabel.textContent = SCENARIO_SHORT_LABELS[calcState.scenario] || "Kelas 1 → VIP";
+        dropdownLabel.textContent = calcState.scenario
+          ? (SCENARIO_SHORT_LABELS[calcState.scenario] || "Pilih Skenario Naik Kelas")
+          : "Pilih Skenario Naik Kelas";
       }
 
       document.querySelectorAll("#scenarioPickerModal .scenario-option-btn").forEach((btn) => {
-        btn.classList.toggle("selected", btn.dataset.scenario === calcState.scenario);
+        btn.classList.toggle("selected", Boolean(calcState.scenario) && btn.dataset.scenario === calcState.scenario);
       });
 
-      if (moveToFirstField) {
+      if (moveToFirstField && calcState.scenario) {
         const keys = getVisibleFieldKeys();
         calcState.activeField = keys[0];
       }
@@ -2739,17 +3248,18 @@
     }
 
     function resetCalculatorForm() {
+      KeypadFeedbackEngine.trigger("op");
       Object.keys(calcState.values).forEach((k) => {
         calcState.values[k] = 0;
         calcState.expressions[k] = "0";
       });
 
-      setScenarioFromCode("k1_vip", true);
-      showToast("Kalkulator diatur ulang ke 0.");
+      setScenarioFromCode(null, true);
+      showToast("Kalkulator diatur ulang. Silakan pilih skenario naik kelas.");
     }
 
     /* =========================================================================
-       9. CORE CALCULATION & AUDIT ENGINE
+       11. CORE CALCULATION & AUDIT ENGINE
     ========================================================================= */
     function recalculate() {
       const segment = "allowed_ppu";
@@ -2771,19 +3281,29 @@
       let legalMaxCap = 0;
       let legalDiff = 0;
       let absorbedByHospital = 0;
-      let scenarioLabel = "";
-      let statusText = "Menunggu Input Tarif";
+      let scenarioLabel = "Skenario naik kelas belum dipilih";
+      let statusText = scenario ? "Menunggu Input Tarif" : "Pilih Skenario";
       let auditRows = [];
 
-      const hasAnyTariff = (scenario === "rajal")
-        ? (inaRajal > 0 || realRajal > 0)
-        : (inaK2 > 0 || inaK1 > 0 || realVip > 0);
+      const hasAnyTariff = Boolean(scenario) && (
+        (scenario === "rajal")
+          ? (inaRajal > 0 || realRajal > 0)
+          : (inaK2 > 0 || inaK1 > 0 || realVip > 0)
+      );
 
-      if (hasAnyTariff) {
+      if (scenario && hasAnyTariff) {
         statusText = "Sesuai Selisih Riil";
       }
 
-      if (scenario === "k2_k1") {
+      if (!scenario) {
+        auditRows = [
+          {
+            label: "Skenario Naik Kelas Belum Dipilih",
+            note: "Tekan tombol Pilih Skenario Naik Kelas pada tab Hitung untuk memulai perhitungan",
+            val: 0
+          }
+        ];
+      } else if (scenario === "k2_k1") {
         scenarioLabel = "Hak Kelas 2 naik ke Kelas 1 (Pasal 48 ayat 3 huruf b)";
         bpjsCovered = inaK2;
         rawDiff = Math.max(0, inaK1 - inaK2);
@@ -2899,10 +3419,12 @@
 
       // Update Layar Hasil Kalkulator
       document.getElementById("calcHeroTotal").textContent = formatRupiah(legalDiff);
-      document.getElementById("calcHeroSub").textContent = scenarioLabel;
+      document.getElementById("calcHeroSub").textContent = scenario
+        ? scenarioLabel
+        : "Silakan pilih skenario naik kelas terlebih dahulu";
       const badge = document.getElementById("calcHeroBadge");
       badge.textContent = statusText;
-      badge.className = "calc-status-pill";
+      badge.className = scenario ? "calc-status-pill" : "calc-status-pill pending-scenario";
 
       document.getElementById("calcHeroBpjs").textContent = formatRupiah(bpjsCovered);
       document.getElementById("calcHeroCob").textContent = formatRupiah(cobCovered);
@@ -2992,12 +3514,24 @@
     }
 
     /* =========================================================================
-       10. KEYBOARD SUPPORT FOR DESKTOP CALCULATOR & MODALS
+       12. KEYBOARD SUPPORT FOR DESKTOP CALCULATOR & MODALS
     ========================================================================= */
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
+        const infoModal = document.getElementById("appInfoModal");
+        const warnModal = document.getElementById("scenarioWarningModal");
         const scenarioModal = document.getElementById("scenarioPickerModal");
         const regModal = document.getElementById("regDetailModal");
+        if (infoModal && infoModal.classList.contains("open")) {
+          event.preventDefault();
+          closeAppInfoModal();
+          return;
+        }
+        if (warnModal && warnModal.classList.contains("open")) {
+          event.preventDefault();
+          closeScenarioWarningModal();
+          return;
+        }
         if (scenarioModal && scenarioModal.classList.contains("open")) {
           event.preventDefault();
           closeScenarioModal();
@@ -3033,7 +3567,7 @@
     });
 
     /* =========================================================================
-       11. HISTORY MANAGEMENT (INDEXEDDB)
+       13. HISTORY MANAGEMENT (INDEXEDDB)
     ========================================================================= */
     async function updateHistoryCount() {
       try {
@@ -3045,6 +3579,10 @@
     }
 
     async function saveToHistory() {
+      if (!ensureScenarioSelected()) {
+        KeypadFeedbackEngine.trigger("warn");
+        return;
+      }
       commitExpressionToActiveField(true);
       if (!lastCalculation) return;
       if (!lastCalculation.hasAnyTariff) {
@@ -3068,6 +3606,7 @@
 
     async function renderHistory() {
       const box = document.getElementById("historyContainer");
+      if (!box) return;
       const query = (document.getElementById("histSearchInput").value || "").trim().toLowerCase();
       const filterSc = document.getElementById("histScenarioFilter").value;
 
@@ -3194,7 +3733,7 @@
     }
 
     /* =========================================================================
-       12. EXCEL EXPORT (100% OFFLINE LOCAL BUILDER)
+       14. EXCEL EXPORT (100% OFFLINE LOCAL BUILDER)
     ========================================================================= */
     function writeExcelWorkbook(aoaRows, sheetName, fileName) {
       OfflineXlsxBuilder.downloadAoA(aoaRows, sheetName, fileName);
@@ -3256,7 +3795,7 @@
     }
 
     /* =========================================================================
-       13. LOCAL REGULATION REPOSITORY (INDEXEDDB — NO FABRICATED REGULATIONS)
+       15. LOCAL REGULATION REPOSITORY (INDEXEDDB — NO FABRICATED REGULATIONS)
     ========================================================================= */
     function toggleRegForm(show, reset = true) {
       const box = document.getElementById("regFormContainer");
@@ -3490,7 +4029,7 @@
     }
 
     /* =========================================================================
-       14. SERVICE WORKER REGISTRATION & APP INITIALIZATION
+       16. SERVICE WORKER REGISTRATION & APP INITIALIZATION
     ========================================================================= */
     window.addEventListener("beforeprint", () => {
       document.getElementById("printTimestamp").textContent = new Date().toLocaleString("id-ID");
@@ -3520,12 +4059,13 @@
 
     (async function initApp() {
       const splashStart = Date.now();
-      updateNetworkIndicator();
-      setScenarioFromCode("k1_vip", true);
+      setScenarioFromCode(null, true);
+      syncKeypadSettingsUI();
 
       try {
         await DBManager.open();
         await DBManager.migrateLegacyLocalStorage();
+        await loadKeypadSettingsFromDB();
         await updateHistoryCount();
         await renderRegulations();
       } catch (err) {
