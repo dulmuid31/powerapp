@@ -15,10 +15,14 @@
     :root {
       --primary-dark: #042F2E;
       --brand-green: #063B12;
+      --brand-green-mid: #0B5322;
+      --brand-green-soft: #DCFCE7;
+      --brand-green-tint: #ECFDF5;
       --primary: #0F766E;
       --primary-accent: #0D9488;
       --primary-soft: #CCFBF1;
       --primary-tint: #F0FDFA;
+      --gold-display: #FACC15;
       --bg-canvas: #F2F5F4;
       --bg-card: #FFFFFF;
       --border: #D8E2DF;
@@ -35,11 +39,11 @@
       --success: #047857;
       --success-bg: #ECFDF5;
       --success-border: #A7F3D0;
-      --radius-lg: 14px;
-      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
       --radius-sm: 8px;
       --shadow-sm: 0 1px 3px rgba(4, 47, 46, 0.06), 0 1px 2px rgba(4, 47, 46, 0.04);
-      --shadow-md: 0 8px 24px -4px rgba(4, 47, 46, 0.08);
+      --shadow-md: 0 8px 24px -4px rgba(4, 47, 46, 0.09);
       --bottom-nav-height: 68px;
     }
 
@@ -62,7 +66,7 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* SPLASH SCREEN (HIJAU TUA SENADA LOGO, TANPA TEKS JUDUL) */
+    /* SPLASH SCREEN */
     .app-splash {
       position: fixed;
       inset: 0;
@@ -93,9 +97,9 @@
       -webkit-user-drag: none;
     }
 
-    /* MINIMALIST STICKY HEADER */
+    /* STICKY TOP HEADER */
     .topbar {
-      background: linear-gradient(135deg, #063B12 0%, #042F2E 100%);
+      background: linear-gradient(135deg, #063B12 0%, #084C24 100%);
       color: #FFFFFF;
       padding: 10px 16px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.14);
@@ -105,7 +109,7 @@
     }
 
     .topbar-inner {
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -152,7 +156,7 @@
       margin-top: 1px;
     }
 
-    /* OFFLINE / ONLINE STATUS INDICATOR */
+    /* NETWORK STATUS INDICATOR */
     .net-indicator {
       display: inline-flex;
       align-items: center;
@@ -227,18 +231,24 @@
     }
 
     .bnav-item:hover {
-      background: var(--primary-tint);
-      color: var(--primary-dark);
+      background: var(--brand-green-tint);
+      color: var(--brand-green);
     }
 
     .bnav-item.active {
-      color: var(--primary-dark);
-      background: var(--primary-tint);
+      color: var(--brand-green);
+      background: var(--brand-green-tint);
       font-weight: 700;
     }
 
-    .bnav-item.active .bnav-icon {
-      color: var(--primary);
+    .bnav-item.active::after {
+      content: "";
+      position: absolute;
+      bottom: 1px;
+      width: 34px;
+      height: 2.5px;
+      border-radius: 999px;
+      background: var(--brand-green);
     }
 
     .bnav-icon {
@@ -251,7 +261,7 @@
       position: absolute;
       top: 3px;
       right: calc(50% - 20px);
-      background: var(--primary-dark);
+      background: var(--brand-green);
       color: #FFFFFF;
       font-size: 10px;
       font-weight: 700;
@@ -264,9 +274,9 @@
 
     /* MAIN CONTAINER */
     .container {
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 18px 16px calc(var(--bottom-nav-height) + 32px + env(safe-area-inset-bottom));
+      padding: 14px 14px calc(var(--bottom-nav-height) + 32px + env(safe-area-inset-bottom));
     }
 
     .tab-panel {
@@ -300,12 +310,12 @@
     }
 
     .btn-primary {
-      background: var(--primary-dark);
+      background: var(--brand-green);
       color: #FFFFFF;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background: var(--primary);
+      background: var(--brand-green-mid);
     }
 
     .btn-accent {
@@ -325,9 +335,9 @@
     }
 
     .btn-outline:hover:not(:disabled) {
-      background: var(--primary-tint);
-      border-color: var(--primary);
-      color: var(--primary-dark);
+      background: var(--brand-green-tint);
+      border-color: var(--brand-green);
+      color: var(--brand-green);
     }
 
     .btn-danger-outline {
@@ -345,59 +355,494 @@
       font-size: 12px;
     }
 
-    /* PRESET BAR */
-    .preset-strip {
+    /* =========================================================================
+       CALCULATOR UI/UX (TAB 1: HITUNG)
+    ========================================================================= */
+    .calc-shell {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Calculator Display Screen */
+    .calc-screen {
       background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      margin-bottom: 16px;
+      border: 1.5px solid #CBD5E1;
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .calc-screen-head {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      box-shadow: var(--shadow-sm);
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
     }
 
-    .preset-label {
-      font-size: 12px;
+    .calc-screen-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #063B12;
+    }
+
+    .calc-status-pill {
+      font-size: 11px;
       font-weight: 700;
-      color: var(--primary-dark);
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #ECFDF5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
     }
 
-    .preset-buttons {
+    .calc-status-pill.blocked {
+      background: #FEF2F2;
+      color: #991B1B;
+      border-color: #FECACA;
+    }
+
+    /* Permanent Expression Preview Bar */
+    .calc-expr-bar {
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 6px 10px;
+      margin-bottom: 10px;
       display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 32px;
+    }
+
+    .calc-expr-target {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #063B12;
+      background: #DCFCE7;
+      padding: 2px 7px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    .calc-expr-text {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #334155;
+      text-align: right;
+      overflow-x: auto;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    /* Interactive Input Slots inside Calculator Display (Always Visible) */
+    .calc-slots-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .calc-slot {
+      border: 1.5px solid #E2E8F0;
+      border-radius: 11px;
+      padding: 8px 10px;
+      background: #F8FAFC;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+      text-align: left;
+      display: block;
+      width: 100%;
+    }
+
+    .calc-slot:hover:not(:disabled):not(.is-disabled) {
+      border-color: #6EE7B7;
+      background: #F0FDF4;
+    }
+
+    .calc-slot.active-slot:not(:disabled):not(.is-disabled) {
+      border-color: #063B12;
+      background: #F0FDF4;
+      box-shadow: 0 0 0 2px rgba(6, 59, 18, 0.15);
+    }
+
+    .calc-slot.full-span {
+      grid-column: 1 / -1;
+    }
+
+    .calc-slot:disabled,
+    .calc-slot.is-disabled {
+      opacity: 0.52;
+      background: #F1F5F9;
+      border-color: #E2E8F0;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .calc-slot:disabled .calc-slot-value,
+    .calc-slot.is-disabled .calc-slot-value {
+      color: #64748B;
+    }
+
+    .calc-slot-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .calc-slot.active-slot .calc-slot-label {
+      color: #063B12;
+    }
+
+    .calc-slot-edit-tag {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: #063B12;
+      color: #FFFFFF;
+      display: none;
+    }
+
+    .calc-slot.active-slot:not(:disabled):not(.is-disabled) .calc-slot-edit-tag {
+      display: inline-block;
+    }
+
+    .calc-slot-state-tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: #E2E8F0;
+      color: #475569;
+      display: none;
+    }
+
+    .calc-slot:disabled .calc-slot-state-tag,
+    .calc-slot.is-disabled .calc-slot-state-tag {
+      display: inline-block;
+    }
+
+    .calc-slot-value {
+      font-size: 15.5px;
+      font-weight: 800;
+      color: #063B12;
+      margin-top: 2px;
+      word-break: break-all;
+    }
+
+    .calc-slot-sub {
+      font-size: 10.5px;
+      color: #64748B;
+      margin-top: 1px;
+    }
+
+    /* Dark Green Result Strip inside Display */
+    .calc-result-banner {
+      background: linear-gradient(135deg, #063B12 0%, #094D1C 100%);
+      border-radius: 13px;
+      padding: 13px 14px;
+      color: #FFFFFF;
+    }
+
+    .calc-result-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .calc-result-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #FFFFFF;
+    }
+
+    .calc-result-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .calc-result-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #D1FAE5;
+    }
+
+    .calc-result-amount-row {
+      display: flex;
+      align-items: baseline;
       flex-wrap: wrap;
       gap: 6px;
+      margin-top: 2px;
     }
 
-    /* WORKSPACE GRID */
-    .workspace-grid {
+    .calc-result-amount {
+      font-size: 25px;
+      font-weight: 900;
+      color: var(--gold-display);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .calc-result-unit {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #E2E8F0;
+    }
+
+    .calc-result-sub {
+      font-size: 11px;
+      color: #A7F3D0;
+      margin-top: 4px;
+    }
+
+    .calc-mini-kpis {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 18px;
-      align-items: start;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
     }
 
-    @media (max-width: 920px) {
-      .workspace-grid {
+    .calc-mini-kpi {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 6px 8px;
+    }
+
+    .calc-mini-kpi span {
+      display: block;
+      font-size: 10px;
+      color: #A7F3D0;
+      font-weight: 600;
+    }
+
+    .calc-mini-kpi strong {
+      display: block;
+      font-size: 12px;
+      color: #FFFFFF;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    /* Calculator Keypad Controls & 4x4 Grid */
+    .calc-pad-tools {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .calc-tool-btn {
+      appearance: none;
+      border: 1px solid #CBD5E1;
+      background: #FFFFFF;
+      color: #1E293B;
+      border-radius: 10px;
+      padding: 8px 6px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+
+    .calc-tool-btn:hover {
+      background: #F1F5F9;
+      border-color: #94A3B8;
+    }
+
+    .calc-tool-btn:active {
+      transform: scale(0.96);
+    }
+
+    .calc-tool-btn.warn {
+      color: #B91C1C;
+      border-color: #FECACA;
+      background: #FEF2F2;
+    }
+
+    .calc-keypad {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .key-btn {
+      appearance: none;
+      border: none;
+      border-radius: 13px;
+      min-height: 54px;
+      font-family: inherit;
+      font-size: 22px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      transition: transform 0.08s ease, filter 0.12s ease;
+      box-shadow: 0 2px 5px rgba(15, 23, 42, 0.1);
+    }
+
+    .key-btn:active {
+      transform: scale(0.95);
+    }
+
+    .key-num {
+      background: #063B12;
+      color: #FFFFFF;
+    }
+
+    .key-num:hover {
+      background: #0A4F1A;
+    }
+
+    .key-num.key-thousands {
+      font-size: 18px;
+      letter-spacing: 0.02em;
+    }
+
+    .key-op {
+      background: #CBD5E1;
+      color: #1E293B;
+      font-size: 24px;
+    }
+
+    .key-op:hover {
+      background: #B8C4D4;
+    }
+
+    .key-eq {
+      background: #059669;
+      color: #FFFFFF;
+      font-size: 26px;
+    }
+
+    .key-eq:hover {
+      background: #047857;
+    }
+
+    .calc-bottom-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .calc-scenario-trigger {
+      justify-content: space-between;
+      text-align: left;
+      padding: 9px 12px;
+      min-width: 0;
+    }
+
+    .calc-scenario-trigger-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    /* CUSTOM SCENARIO DROPDOWN MODAL OPTIONS */
+    .scenario-option-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .scenario-option-btn {
+      appearance: none;
+      width: 100%;
+      text-align: left;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .scenario-option-btn:hover {
+      border-color: #6EE7B7;
+      background: #F0FDF4;
+    }
+
+    .scenario-option-btn.selected {
+      border-color: var(--brand-green);
+      background: var(--brand-green-tint);
+      box-shadow: 0 0 0 2px rgba(6, 59, 18, 0.12);
+    }
+
+    .scenario-option-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--brand-green);
+      line-height: 1.3;
+    }
+
+    .scenario-option-desc {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+
+    .scenario-option-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #E2E8F0;
+      color: #334155;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .scenario-option-btn.selected .scenario-option-badge {
+      background: var(--brand-green);
+      color: #FFFFFF;
+    }
+
+    @media (max-width: 420px) {
+      .calc-slots-grid {
         grid-template-columns: 1fr;
       }
-    }
-
-    .sticky-summary {
-      position: sticky;
-      top: 66px;
-    }
-
-    @media (max-width: 920px) {
-      .sticky-summary {
-        position: static;
+      .calc-mini-kpis {
+        grid-template-columns: 1fr;
+      }
+      .key-btn {
+        min-height: 49px;
+        font-size: 20px;
+      }
+      .calc-result-amount {
+        font-size: 22px;
       }
     }
 
-    /* CARDS */
+    /* CARDS & SHARED COMPONENTS (AUDIT, REGULASI, RIWAYAT) */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -427,20 +872,6 @@
       gap: 8px;
     }
 
-    .step-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      background: var(--primary-dark);
-      color: #FFFFFF;
-      font-size: 11.5px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
     .legal-chip {
       font-size: 11px;
       font-weight: 600;
@@ -465,7 +896,7 @@
     }
 
     .form-group {
-      margin-bottom: 13px;
+      margin-bottom: 12px;
     }
 
     .form-group:last-child {
@@ -517,87 +948,12 @@
       box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
     }
 
-    .input-currency-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .currency-prefix {
-      position: absolute;
-      left: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
-      pointer-events: none;
-    }
-
-    .input-currency {
-      padding-left: 38px !important;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
-      font-weight: 600;
-      font-size: 14px !important;
-    }
-
-    /* SCENARIO RADIO CARDS */
-    .scenario-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    @media (max-width: 600px) {
-      .scenario-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .scenario-option {
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      background: #FFFFFF;
-      position: relative;
-    }
-
-    .scenario-option:hover {
-      border-color: var(--primary-accent);
-      background: var(--primary-tint);
-    }
-
-    .scenario-option.selected {
-      border-color: var(--primary-dark);
-      background: var(--primary-tint);
-      box-shadow: 0 0 0 1px var(--primary-dark);
-    }
-
-    .scenario-option input {
-      position: absolute;
-      opacity: 0;
-    }
-
-    .scenario-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary-dark);
-      display: block;
-    }
-
-    .scenario-desc {
-      font-size: 11.5px;
-      color: var(--text-secondary);
-      margin-top: 2px;
-      display: block;
-    }
-
     /* ALERTS */
     .alert {
       padding: 11px 13px;
       border-radius: var(--radius-md);
       font-size: 12.5px;
-      margin-top: 12px;
+      margin-bottom: 12px;
       border: 1px solid;
       line-height: 1.5;
     }
@@ -620,106 +976,10 @@
       color: #064E3B;
     }
 
-    .alert-info {
-      background: var(--primary-tint);
-      border-color: var(--primary-soft);
-      color: var(--primary-dark);
-    }
-
     .alert-title {
       font-weight: 700;
       display: block;
       margin-bottom: 3px;
-    }
-
-    /* HERO RESULT CARD */
-    .hero-card {
-      background: linear-gradient(145deg, #063B12 0%, #042F2E 52%, #065F46 100%);
-      color: #FFFFFF;
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      box-shadow: var(--shadow-md);
-      margin-bottom: 14px;
-    }
-
-    .hero-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .hero-label {
-      font-size: 11.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #A7F3D0;
-      font-weight: 700;
-    }
-
-    .hero-status {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.14);
-      color: #FFFFFF;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-    }
-
-    .hero-status.blocked {
-      background: #991B1B;
-      border-color: #FCA5A5;
-      color: #FEE2E2;
-    }
-
-    .hero-amount {
-      font-size: 28px;
-      font-weight: 800;
-      margin: 8px 0 4px;
-      letter-spacing: -0.02em;
-      color: #FFFFFF;
-    }
-
-    .hero-sub {
-      font-size: 12px;
-      color: #D1FAE5;
-    }
-
-    .kpi-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    @media (max-width: 560px) {
-      .kpi-row {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .kpi-box {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: var(--radius-sm);
-      padding: 9px 11px;
-    }
-
-    .kpi-box-label {
-      font-size: 10.5px;
-      color: #A7F3D0;
-      font-weight: 600;
-    }
-
-    .kpi-box-val {
-      font-size: 14px;
-      font-weight: 700;
-      margin-top: 2px;
-      color: #FFFFFF;
     }
 
     /* STACKED PROPORTION BAR */
@@ -1105,23 +1365,17 @@
         padding-bottom: 10px;
         margin-bottom: 14px;
       }
-      .card,
-      .hero-card {
+      .card {
         box-shadow: none;
         border: 1px solid #CBD5E1;
         break-inside: avoid;
-      }
-      .hero-card {
-        background: #042F2E !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- SPLASH SCREEN: LATAR HIJAU TUA SENADA LOGO, TANPA TEKS JUDUL -->
+  <!-- SPLASH SCREEN -->
   <div id="appSplashScreen" class="app-splash" role="status" aria-label="Memuat aplikasi">
     <img
       src="./icon-512.png"
@@ -1131,7 +1385,7 @@
     />
   </div>
 
-  <!-- MINIMALIST HEADER -->
+  <!-- HEADER -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
@@ -1163,222 +1417,156 @@
     <div id="dbErrorBanner" style="display:none; margin-bottom:14px;"></div>
 
     <!-- =========================================================
-         TAB 1: HITUNG
+         TAB 1: HITUNG (ANTARMUKA KALKULATOR)
     ========================================================== -->
     <section id="tab-hitung" class="tab-panel active" role="tabpanel" aria-labelledby="nav-btn-hitung">
+      <div class="calc-shell">
 
-      <!-- PRESET STRIP -->
-      <div class="preset-strip no-print">
-        <div class="preset-label">Simulasi Cepat Skenario:</div>
-        <div class="preset-buttons">
-          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k2_k1')">Kelas 2 &rarr; Kelas 1</button>
-          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k1_vip_under')">Kelas 1 &rarr; VIP (&lt; Plafon 75%)</button>
-          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k1_vip_cap')">Kelas 1 &rarr; VIP (Plafon 75%)</button>
-          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('k2_vip_cob')">Kelas 2 &rarr; VIP + COB</button>
-          <button type="button" class="btn btn-outline btn-sm" onclick="applyPreset('rajal_eks')">Poli Eksekutif</button>
-          <button type="button" class="btn btn-outline btn-sm" onclick="resetCalculatorForm()">Reset (0)</button>
-        </div>
-      </div>
-
-      <div class="workspace-grid">
-        <!-- INPUT STEPS -->
-        <div>
-          <!-- STEP 1 -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><span class="step-pill">1</span> Identitas &amp; Eligibilitas Peserta</div>
-              <span class="legal-chip">Perpres 59/2024 Psl 51</span>
+        <!-- LAYAR DISPLAY KALKULATOR -->
+        <div class="calc-screen">
+          <div class="calc-screen-head">
+            <div class="calc-screen-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                <circle cx="12" cy="12" r="2"></circle>
+                <path d="M6 12h.01M18 12h.01"></path>
+              </svg>
+              <span>Hasil Perhitungan</span>
             </div>
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="patientName">Nama Pasien / Kode Kasus <span class="label-hint">Opsional (untuk catatan &amp; cetak)</span></label>
-                <input type="text" id="patientName" placeholder="Masukkan nama atau nomor SEP" oninput="recalculate()" />
-              </div>
-              <div class="form-group">
-                <label for="hospitalClass">Tipe / Kelas RS &amp; Regional <span class="label-hint">Opsional (keterangan administrasi)</span></label>
-                <input type="text" id="hospitalClass" placeholder="Contoh: RS Tipe B - Regional 1" oninput="recalculate()" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="memberSegment">Segmen &amp; Status Kepesertaan BPJS Kesehatan</label>
-              <select id="memberSegment" onchange="recalculate()">
-                <option value="allowed_ppu">PPU Aktif (Pegawai Swasta / ASN / TNI / Polri / BUMN) — Hak Kelas 1 atau 2</option>
-                <option value="allowed_pbpu">PBPU Mandiri Aktif (Iuran Sendiri) — Hak Kelas 1 atau 2</option>
-                <option value="allowed_bp">BP Bukan Pekerja (Pensiunan / Veteran / Investor) — Hak Kelas 1 atau 2</option>
-                <option value="blocked_pbi">PBI Jaminan Kesehatan (Bantuan Iuran Pemerintah) — Dilarang Naik Kelas</option>
-                <option value="blocked_k3">PBPU / BP dengan Hak Manfaat Ruang Kelas 3 — Dilarang Naik Kelas</option>
-                <option value="blocked_phk">PPU Terdampak PHK &amp; Keluarga (Masa Jaminan 6 Bulan) — Dilarang Naik Kelas</option>
-                <option value="blocked_pemda">Peserta yang Didaftarkan Pemerintah Daerah (PBPU/BP Pemda) — Dilarang Naik Kelas</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="upgradeTrigger">Dasar Penempatan Kamar</label>
-              <select id="upgradeTrigger" onchange="recalculate()">
-                <option value="aps">Atas Permintaan Sendiri (APS) — Pasien/Keluarga Memilih Naik Kelas</option>
-                <option value="full_room">Kamar Sesuai Hak Penuh (Dititipkan RS 1 Tingkat di Atasnya &le; 3 Hari)</option>
-              </select>
-            </div>
-
-            <div id="eligibilityAlert"></div>
+            <span class="calc-status-pill" id="calcHeroBadge">Menunggu Input Tarif</span>
           </div>
 
-          <!-- STEP 2 -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><span class="step-pill">2</span> Jenis Layanan &amp; Kenaikan Kelas</div>
-              <span class="legal-chip">Permenkes 3/2023 Psl 48(3)</span>
-            </div>
-
-            <div class="scenario-grid" id="scenarioCards">
-              <label class="scenario-option" id="opt_k2_k1">
-                <input type="radio" name="scenario" value="k2_k1" onchange="onScenarioChange()" />
-                <span class="scenario-title">Kelas 2 &rarr; Kelas 1</span>
-                <span class="scenario-desc">Selisih tarif INA-CBG Kelas 1 dengan Kelas 2</span>
-              </label>
-
-              <label class="scenario-option selected" id="opt_k1_vip">
-                <input type="radio" name="scenario" value="k1_vip" checked onchange="onScenarioChange()" />
-                <span class="scenario-title">Kelas 1 &rarr; VIP / VVIP</span>
-                <span class="scenario-desc">Selisih riil, maksimal 75% INA-CBG Kelas 1</span>
-              </label>
-
-              <label class="scenario-option" id="opt_k2_vip">
-                <input type="radio" name="scenario" value="k2_vip" onchange="onScenarioChange()" />
-                <span class="scenario-title">Kelas 2 &rarr; VIP / VVIP</span>
-                <span class="scenario-desc">Selisih Kls 2–1 + maks 75% INA-CBG Kelas 1</span>
-              </label>
-
-              <label class="scenario-option" id="opt_rajal">
-                <input type="radio" name="scenario" value="rajal" onchange="onScenarioChange()" />
-                <span class="scenario-title">Rawat Jalan Eksekutif</span>
-                <span class="scenario-desc">Selisih paket poli, maks Rp400.000/episode</span>
-              </label>
-            </div>
+          <!-- BARIS EKSPRESI / INPUT AKTIF (PERMANEN) -->
+          <div class="calc-expr-bar">
+            <span class="calc-expr-target" id="calcActiveFieldBadge">Input: INA-CBG Kelas 1</span>
+            <span class="calc-expr-text mono" id="calcExpressionLine">0</span>
           </div>
 
-          <!-- STEP 3 -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><span class="step-pill">3</span> Komponen Tarif INA-CBG &amp; Tarif Riil RS</div>
-              <span class="legal-chip">Satuan Rupiah (IDR)</span>
-            </div>
+          <!-- SLOT INPUT TARIF YANG SELALU TAMPIL (AKTIF / NONAKTIF SESUAI SKENARIO) -->
+          <div class="calc-slots-grid" id="calcSlotsContainer">
+            <!-- Slot 1 -->
+            <button type="button" id="calcSlot1Card" class="calc-slot active-slot" onclick="selectCalcField(0)">
+              <div class="calc-slot-label">
+                <span id="calcSlot1Label">Tarif INA-CBG Kelas 1</span>
+                <span class="calc-slot-edit-tag">Aktif</span>
+                <span class="calc-slot-state-tag">Nonaktif</span>
+              </div>
+              <div class="calc-slot-value mono" id="calcSlot1Value">Rp 0</div>
+              <div class="calc-slot-sub" id="calcSlot1Sub">Hak Jaminan BPJS</div>
+            </button>
 
-            <div id="inpatientInputs">
-              <div class="form-group" id="groupInaK2" style="display:none;">
-                <label for="inaK2">Tarif Paket INA-CBG Kelas 2 (Hak Peserta)</label>
-                <div class="input-currency-wrap">
-                  <span class="currency-prefix">Rp</span>
-                  <input type="text" inputmode="numeric" id="inaK2" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
-                </div>
+            <!-- Slot 2 -->
+            <button type="button" id="calcSlot2Card" class="calc-slot" onclick="selectCalcField(1)">
+              <div class="calc-slot-label">
+                <span id="calcSlot2Label">Tarif Riil RS (VIP)</span>
+                <span class="calc-slot-edit-tag">Aktif</span>
+                <span class="calc-slot-state-tag">Nonaktif</span>
               </div>
+              <div class="calc-slot-value mono" id="calcSlot2Value">Rp 0</div>
+              <div class="calc-slot-sub" id="calcSlot2Sub">Total tagihan episode</div>
+            </button>
 
-              <div class="form-group" id="groupInaK1">
-                <label for="inaK1">Tarif Paket INA-CBG Kelas 1 <span class="label-hint">Dasar acuan perhitungan &amp; plafon 75%</span></label>
-                <div class="input-currency-wrap">
-                  <span class="currency-prefix">Rp</span>
-                  <input type="text" inputmode="numeric" id="inaK1" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
-                </div>
+            <!-- Slot 3 (Permanen tampil; aktif saat Kelas 2 -> VIP, nonaktif pada skenario lain) -->
+            <button type="button" id="calcSlot3Card" class="calc-slot full-span is-disabled" disabled aria-disabled="true" onclick="selectCalcField(2)">
+              <div class="calc-slot-label">
+                <span id="calcSlot3Label">Tarif Tambahan (Slot 3)</span>
+                <span class="calc-slot-edit-tag">Aktif</span>
+                <span class="calc-slot-state-tag">Nonaktif</span>
               </div>
-
-              <div class="form-group" id="groupRealVip">
-                <label for="realVip">Total Tarif Riil RS (Kelas VIP / VVIP / Tujuan) <span class="label-hint">Total tagihan seluruh episode rawat inap di kamar tujuan</span></label>
-                <div class="input-currency-wrap">
-                  <span class="currency-prefix">Rp</span>
-                  <input type="text" inputmode="numeric" id="realVip" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
-                </div>
-              </div>
-            </div>
-
-            <div id="outpatientInputs" style="display:none;">
-              <div class="form-group">
-                <label for="inaRajal">Tarif Paket INA-CBG Rawat Jalan Reguler <span class="label-hint">Porsi yang dijamin BPJS Kesehatan</span></label>
-                <div class="input-currency-wrap">
-                  <span class="currency-prefix">Rp</span>
-                  <input type="text" inputmode="numeric" id="inaRajal" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="realRajal">Total Tarif Paket Poli Eksekutif RS <span class="label-hint">Total tagihan paket rawat jalan eksekutif sebelum dikurangi INA-CBG</span></label>
-                <div class="input-currency-wrap">
-                  <span class="currency-prefix">Rp</span>
-                  <input type="text" inputmode="numeric" id="realRajal" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
-                </div>
-              </div>
-            </div>
+              <div class="calc-slot-value mono" id="calcSlot3Value">—</div>
+              <div class="calc-slot-sub" id="calcSlot3Sub">Tidak aktif pada skenario ini</div>
+            </button>
           </div>
 
-          <!-- STEP 4 -->
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title"><span class="step-pill">4</span> Skema Pembayar Selisih / COB (Opsional)</div>
-              <span class="legal-chip">Permenkes 3/2023 Psl 48(5)</span>
+          <!-- BLOK HASIL HIJAU TUA DENGAN NOMINAL KUNING EMAS -->
+          <div class="calc-result-banner">
+            <div class="calc-result-main">
+              <div class="calc-result-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                  <line x1="8" y1="6" x2="16" y2="6"></line>
+                  <line x1="8" y1="10" x2="10" y2="10"></line>
+                  <line x1="14" y1="10" x2="16" y2="10"></line>
+                  <line x1="8" y1="14" x2="10" y2="14"></line>
+                  <line x1="14" y1="14" x2="16" y2="14"></line>
+                  <line x1="8" y1="18" x2="16" y2="18"></line>
+                </svg>
+              </div>
+              <div class="calc-result-info">
+                <div class="calc-result-label">Selisih Biaya Sah Wajib Dibayar</div>
+                <div class="calc-result-amount-row">
+                  <div class="calc-result-amount mono" id="calcHeroTotal">Rp 0</div>
+                  <div class="calc-result-unit" id="calcCapChip">Plafon: Rp 0</div>
+                </div>
+                <div class="calc-result-sub" id="calcHeroSub">Hak Kelas 1 naik ke VIP / Di Atas Kelas 1</div>
+              </div>
             </div>
 
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="payerType">Pihak Penanggung Selisih</label>
-                <select id="payerType" onchange="recalculate()">
-                  <option value="self">Peserta Sendiri / Keluarga (100% Mandiri)</option>
-                  <option value="cob">Asuransi Kesehatan Tambahan (COB)</option>
-                  <option value="employer">Pemberi Kerja / Perusahaan</option>
-                </select>
+            <div class="calc-mini-kpis">
+              <div class="calc-mini-kpi">
+                <span>Dijamin BPJS</span>
+                <strong class="mono" id="calcHeroBpjs">Rp 0</strong>
               </div>
-              <div class="form-group" id="groupCobLimit" style="display:none;">
-                <label for="cobLimit">Plafon Tanggungan COB / Perusahaan <span class="label-hint">Batas jaminan selisih kelas</span></label>
-                <div class="input-currency-wrap">
-                  <span class="currency-prefix">Rp</span>
-                  <input type="text" inputmode="numeric" id="cobLimit" class="input-currency" value="0" placeholder="0" oninput="formatCurrencyInput(this); recalculate()" />
-                </div>
+              <div class="calc-mini-kpi">
+                <span>Ditanggung COB</span>
+                <strong class="mono" id="calcHeroCob">Rp 0</strong>
+              </div>
+              <div class="calc-mini-kpi">
+                <span>Neto Pasien</span>
+                <strong class="mono" id="calcHeroPatient">Rp 0</strong>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- QUICK RESULT PANEL -->
-        <div class="sticky-summary">
-          <div class="hero-card">
-            <div class="hero-top">
-              <div>
-                <div class="hero-label">Total Selisih Biaya Sah Wajib Dibayar</div>
-                <div class="hero-amount mono" id="calcHeroTotal">Rp 0</div>
-                <div class="hero-sub" id="calcHeroSub">Skenario: Hak Kelas 1 naik ke VIP / Di Atas Kelas 1</div>
-              </div>
-              <span class="hero-status" id="calcHeroBadge">Menunggu Input</span>
-            </div>
-
-            <div class="kpi-row">
-              <div class="kpi-box">
-                <div class="kpi-box-label">Dijamin BPJS (INA-CBG)</div>
-                <div class="kpi-box-val mono" id="calcHeroBpjs">Rp 0</div>
-              </div>
-              <div class="kpi-box">
-                <div class="kpi-box-label">Ditanggung COB / PT</div>
-                <div class="kpi-box-val mono" id="calcHeroCob">Rp 0</div>
-              </div>
-              <div class="kpi-box">
-                <div class="kpi-box-label">Neto Dibayar Pasien</div>
-                <div class="kpi-box-val mono" id="calcHeroPatient">Rp 0</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-header">
-              <div class="card-title">Tindakan Perhitungan</div>
-              <span class="legal-chip" id="calcCapChip">Plafon: Rp 0</span>
-            </div>
-            <p style="font-size:12.5px; color:var(--text-secondary); margin-bottom:12px;">
-              Simpan hasil ke database lokal (IndexedDB) atau buka tab <strong>Audit</strong> untuk memeriksa rincian rumus pasal, cetak slip PDF, dan ekspor Excel.
-            </p>
-            <div style="display:flex; flex-wrap:wrap; gap:8px;">
-              <button type="button" class="btn btn-primary" onclick="saveToHistory()">+ Simpan ke Riwayat</button>
-              <button type="button" class="btn btn-outline" onclick="switchTab('audit')">Lihat Rincian Audit &rarr;</button>
-            </div>
-          </div>
+        <!-- BILAH KENDALI CEPAT KEYPAD -->
+        <div class="calc-pad-tools">
+          <button type="button" class="calc-tool-btn" onclick="cycleActiveCalcField()">Kolom &#8644;</button>
+          <button type="button" class="calc-tool-btn" onclick="keypadBackspace()">&#9003; Hapus</button>
+          <button type="button" class="calc-tool-btn warn" onclick="keypadClearField()">C (Kolom)</button>
+          <button type="button" class="calc-tool-btn warn" onclick="resetCalculatorForm()">AC (Reset)</button>
         </div>
+
+        <!-- KEYPAD KALKULATOR 4x4 -->
+        <div class="calc-keypad" role="group" aria-label="Tombol Keypad Kalkulator">
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('7')">7</button>
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('8')">8</button>
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('9')">9</button>
+          <button type="button" class="key-btn key-op" aria-label="Bagi" onclick="keypadPressOperator('/')">&#247;</button>
+
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('4')">4</button>
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('5')">5</button>
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('6')">6</button>
+          <button type="button" class="key-btn key-op" aria-label="Kali" onclick="keypadPressOperator('*')">&#215;</button>
+
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('1')">1</button>
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('2')">2</button>
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('3')">3</button>
+          <button type="button" class="key-btn key-op" aria-label="Kurang" onclick="keypadPressOperator('-')">&#8722;</button>
+
+          <button type="button" class="key-btn key-num" onclick="keypadPressDigit('0')">0</button>
+          <button type="button" class="key-btn key-num key-thousands" title="Tambah tiga nol ribuan (000)" onclick="keypadPressThousands()">000</button>
+          <button type="button" class="key-btn key-op" aria-label="Tambah" onclick="keypadPressOperator('+')">+</button>
+          <button type="button" class="key-btn key-eq" aria-label="Sama dengan" onclick="keypadEvaluate()">=</button>
+        </div>
+
+        <!-- TOMBOL AKSI: DROPDOWN MODAL SKENARIO & SIMPAN RIWAYAT -->
+        <div class="calc-bottom-actions">
+          <button
+            type="button"
+            id="scenarioDropdownBtn"
+            class="btn btn-outline calc-scenario-trigger"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="scenarioPickerModal"
+            onclick="openScenarioModal()"
+          >
+            <span class="calc-scenario-trigger-text" id="scenarioDropdownLabel">Kelas 1 &rarr; VIP</span>
+            <span aria-hidden="true">&#9662;</span>
+          </button>
+          <button type="button" class="btn btn-primary" onclick="saveToHistory()">+ Simpan Riwayat</button>
+        </div>
+
       </div>
     </section>
 
@@ -1399,7 +1587,7 @@
             Cetak Slip / PDF
           </button>
           <button type="button" class="btn btn-accent" onclick="exportCurrentExcel()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             Ekspor Excel (.xlsx)
           </button>
         </div>
@@ -1592,7 +1780,7 @@
               </tr>
               <tr>
                 <td><strong>Hak Kelas 2 &rarr; VIP / Di Atas Kelas 1</strong><br><span class="formula-note">Permenkes 3/2023 Psl 48(3)(d)</span></td>
-                <td class="mono" style="font-size:12px;">(INA-CBG Kls 1 &minus; INA-CBG Kls 2) + MIN(Riil VIP &minus; INA-CBG Kls 1, 75% &times; INA-CBG Kls 1)</td>
+                <td class="mono" style="font-size:12px;">(INA-CBG Kls 1 &minus; INA-CBG Kls 2) + MIN(Riil VIP &minus; INA-CBG Kls 1, 75% &times; INA-CBG Kelas 1)</td>
                 <td>Gabungan selisih Kelas 2 ke Kelas 1 ditambah maksimal 75% tarif INA-CBG Kelas 1.</td>
               </tr>
               <tr>
@@ -1688,8 +1876,70 @@
     </div>
   </nav>
 
+  <!-- CUSTOM SCENARIO DROPDOWN MODAL -->
+  <div
+    id="scenarioPickerModal"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="scenarioModalTitle"
+    onclick="if (event.target === this) closeScenarioModal()"
+  >
+    <div class="modal-box" style="max-width:480px;">
+      <div class="modal-head">
+        <h3 id="scenarioModalTitle">Pilih Skenario Naik Kelas Perawatan</h3>
+        <button type="button" class="modal-close" aria-label="Tutup modal skenario" onclick="closeScenarioModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="scenario-option-list" role="listbox" aria-label="Daftar skenario naik kelas perawatan">
+          <button type="button" class="scenario-option-btn selected" data-scenario="k1_vip" onclick="selectScenarioFromModal('k1_vip')">
+            <div>
+              <div class="scenario-option-title">Kelas 1 &rarr; VIP / Di Atas Kelas 1</div>
+              <div class="scenario-option-desc">Plafon maksimal 75% &times; Tarif INA-CBG Kelas 1 (Pasal 48 ayat 3 huruf c)</div>
+            </div>
+            <span class="scenario-option-badge">2 Kolom</span>
+          </button>
+
+          <button type="button" class="scenario-option-btn" data-scenario="k2_k1" onclick="selectScenarioFromModal('k2_k1')">
+            <div>
+              <div class="scenario-option-title">Kelas 2 &rarr; Kelas 1</div>
+              <div class="scenario-option-desc">Selisih langsung INA-CBG Kelas 1 &minus; INA-CBG Kelas 2 (Pasal 48 ayat 3 huruf b)</div>
+            </div>
+            <span class="scenario-option-badge">2 Kolom</span>
+          </button>
+
+          <button type="button" class="scenario-option-btn" data-scenario="k2_vip" onclick="selectScenarioFromModal('k2_vip')">
+            <div>
+              <div class="scenario-option-title">Kelas 2 &rarr; VIP / Di Atas Kelas 1</div>
+              <div class="scenario-option-desc">(INA-CBG Kls 1 &minus; Kls 2) + maks. 75% INA-CBG Kls 1 (Pasal 48 ayat 3 huruf d)</div>
+            </div>
+            <span class="scenario-option-badge">3 Kolom</span>
+          </button>
+
+          <button type="button" class="scenario-option-btn" data-scenario="rajal" onclick="selectScenarioFromModal('rajal')">
+            <div>
+              <div class="scenario-option-title">Rawat Jalan &rarr; Poli Eksekutif</div>
+              <div class="scenario-option-desc">Selisih Paket Poli Eksekutif maks. Rp400.000/episode (Pasal 48 ayat 3 huruf a)</div>
+            </div>
+            <span class="scenario-option-badge">2 Kolom</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeScenarioModal()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
   <!-- REGULATION DETAIL MODAL -->
-  <div id="regDetailModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="regModalTitle">
+  <div
+    id="regDetailModal"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="regModalTitle"
+    onclick="if (event.target === this) closeRegDetailModal()"
+  >
     <div class="modal-box">
       <div class="modal-head">
         <h3 id="regModalTitle">Detail Regulasi</h3>
@@ -1721,19 +1971,8 @@
     }
 
     function formatRupiah(num) {
-      const clean = Math.round(Number(num) || 0);
+      const clean = Math.max(0, Math.round(Number(num) || 0));
       return "Rp " + clean.toLocaleString("id-ID");
-    }
-
-    function parseRupiah(str) {
-      if (typeof str === "number") return Math.max(0, Math.round(str));
-      const digits = String(str || "").replace(/[^\d]/g, "");
-      return digits ? parseInt(digits, 10) : 0;
-    }
-
-    function formatCurrencyInput(el) {
-      const val = parseRupiah(el.value);
-      el.value = val ? val.toLocaleString("id-ID") : "0";
     }
 
     let toastTimer = null;
@@ -1764,7 +2003,6 @@
       }, 400);
     }
 
-    // Pengaman batas waktu maksimum agar aplikasi tidak pernah tertahan di splash screen
     setTimeout(hideSplashScreen, 2000);
 
     /* =========================================================================
@@ -2157,11 +2395,13 @@
     /* =========================================================================
        6. NAVIGATION & TAB MANAGEMENT
     ========================================================================= */
+    let activeTabId = "hitung";
     let lastCalculation = null;
 
     function switchTab(tabId) {
       const validTabs = ["hitung", "audit", "regulasi", "riwayat"];
       if (!validTabs.includes(tabId)) return;
+      activeTabId = tabId;
 
       document.querySelectorAll(".tab-panel").forEach((panel) => {
         panel.classList.remove("active");
@@ -2181,138 +2421,350 @@
     }
 
     /* =========================================================================
-       7. CALCULATOR & AUDIT ENGINE
+       7. CALCULATOR KEYPAD & STATE ENGINE
     ========================================================================= */
-    function getSelectedScenario() {
-      const checked = document.querySelector('input[name="scenario"]:checked');
-      return checked ? checked.value : "k1_vip";
+    const calcState = {
+      scenario: "k1_vip",
+      activeField: "inaK1",
+      values: {
+        inaK2: 0,
+        inaK1: 0,
+        realVip: 0,
+        inaRajal: 0,
+        realRajal: 0
+      },
+      expressions: {
+        inaK2: "0",
+        inaK1: "0",
+        realVip: "0",
+        inaRajal: "0",
+        realRajal: "0"
+      }
+    };
+
+    const FIELD_META = {
+      inaK2: "INA-CBG Kelas 2",
+      inaK1: "INA-CBG Kelas 1",
+      realVip: "Tarif Riil RS (VIP)",
+      inaRajal: "INA-CBG Rawat Jalan",
+      realRajal: "Tarif Poli Eksekutif"
+    };
+
+    const SCENARIO_SHORT_LABELS = {
+      k1_vip: "Kelas 1 → VIP",
+      k2_k1: "Kelas 2 → Kelas 1",
+      k2_vip: "Kelas 2 → VIP",
+      rajal: "Rajal → Eksekutif"
+    };
+
+    function getVisibleFieldKeys() {
+      const sc = calcState.scenario;
+      if (sc === "k2_k1") return ["inaK2", "inaK1"];
+      if (sc === "k1_vip") return ["inaK1", "realVip"];
+      if (sc === "k2_vip") return ["inaK2", "inaK1", "realVip"];
+      if (sc === "rajal") return ["inaRajal", "realRajal"];
+      return ["inaK1", "realVip"];
     }
 
-    function onScenarioChange() {
-      const sc = getSelectedScenario();
-      document.querySelectorAll(".scenario-option").forEach((el) => el.classList.remove("selected"));
-      const activeCard = document.getElementById("opt_" + sc);
-      if (activeCard) activeCard.classList.add("selected");
+    function evaluateSafeArithmetic(exprStr) {
+      const sanitized = String(exprStr || "0").replace(/\s+/g, "");
+      const tokens = sanitized.match(/\d+|[+\-*/]/g);
+      if (!tokens || tokens.length === 0) return 0;
 
-      const inpatientInputs = document.getElementById("inpatientInputs");
-      const outpatientInputs = document.getElementById("outpatientInputs");
-      const groupInaK2 = document.getElementById("groupInaK2");
-      const groupInaK1 = document.getElementById("groupInaK1");
-      const groupRealVip = document.getElementById("groupRealVip");
+      while (tokens.length > 0 && /^[+\-*/]$/.test(tokens[tokens.length - 1])) {
+        tokens.pop();
+      }
+      if (tokens.length === 0) return 0;
 
-      if (sc === "rajal") {
-        inpatientInputs.style.display = "none";
-        outpatientInputs.style.display = "block";
-      } else {
-        inpatientInputs.style.display = "block";
-        outpatientInputs.style.display = "none";
-        groupInaK2.style.display = (sc === "k2_k1" || sc === "k2_vip") ? "block" : "none";
-        groupInaK1.style.display = "block";
-        groupRealVip.style.display = (sc === "k1_vip" || sc === "k2_vip") ? "block" : "none";
+      const pass1 = [Number(tokens[0]) || 0];
+      for (let i = 1; i < tokens.length; i += 2) {
+        const op = tokens[i];
+        const nextVal = Number(tokens[i + 1]) || 0;
+        if (op === "*") {
+          pass1[pass1.length - 1] = pass1[pass1.length - 1] * nextVal;
+        } else if (op === "/") {
+          pass1[pass1.length - 1] = nextVal === 0 ? 0 : pass1[pass1.length - 1] / nextVal;
+        } else {
+          pass1.push(op, nextVal);
+        }
       }
 
+      let result = pass1[0];
+      for (let i = 1; i < pass1.length; i += 2) {
+        const op = pass1[i];
+        const nextVal = pass1[i + 1];
+        if (op === "+") result += nextVal;
+        else if (op === "-") result -= nextVal;
+      }
+
+      if (!Number.isFinite(result) || result <= 0) return 0;
+      return Math.round(result);
+    }
+
+    function formatExpressionDisplay(exprStr) {
+      return String(exprStr || "0")
+        .replace(/\*/g, " × ")
+        .replace(/\//g, " ÷ ")
+        .replace(/\+/g, " + ")
+        .replace(/-/g, " − ")
+        .replace(/\d+/g, (num) => Number(num).toLocaleString("id-ID"));
+    }
+
+    function syncCalculatorDisplaySlots() {
+      const sc = calcState.scenario;
+      const keys = getVisibleFieldKeys();
+      if (!keys.includes(calcState.activeField)) {
+        calcState.activeField = keys[0];
+      }
+
+      const slot1Card = document.getElementById("calcSlot1Card");
+      const slot2Card = document.getElementById("calcSlot2Card");
+      const slot3Card = document.getElementById("calcSlot3Card");
+
+      slot1Card.disabled = false;
+      slot1Card.classList.remove("is-disabled");
+      slot1Card.setAttribute("aria-disabled", "false");
+
+      slot2Card.disabled = false;
+      slot2Card.classList.remove("is-disabled");
+      slot2Card.setAttribute("aria-disabled", "false");
+
+      if (sc === "k2_k1") {
+        document.getElementById("calcSlot1Label").textContent = "Tarif INA-CBG Kelas 2";
+        document.getElementById("calcSlot1Sub").textContent = "Hak peserta (BPJS)";
+        document.getElementById("calcSlot1Value").textContent = formatRupiah(calcState.values.inaK2);
+
+        document.getElementById("calcSlot2Label").textContent = "Tarif INA-CBG Kelas 1";
+        document.getElementById("calcSlot2Sub").textContent = "Paket kelas tujuan";
+        document.getElementById("calcSlot2Value").textContent = formatRupiah(calcState.values.inaK1);
+      } else if (sc === "k1_vip") {
+        document.getElementById("calcSlot1Label").textContent = "Tarif INA-CBG Kelas 1";
+        document.getElementById("calcSlot1Sub").textContent = "Hak peserta & dasar 75%";
+        document.getElementById("calcSlot1Value").textContent = formatRupiah(calcState.values.inaK1);
+
+        document.getElementById("calcSlot2Label").textContent = "Tarif Riil RS (VIP)";
+        document.getElementById("calcSlot2Sub").textContent = "Total tagihan episode";
+        document.getElementById("calcSlot2Value").textContent = formatRupiah(calcState.values.realVip);
+      } else if (sc === "k2_vip") {
+        document.getElementById("calcSlot1Label").textContent = "INA-CBG Kelas 2";
+        document.getElementById("calcSlot1Sub").textContent = "Hak peserta (BPJS)";
+        document.getElementById("calcSlot1Value").textContent = formatRupiah(calcState.values.inaK2);
+
+        document.getElementById("calcSlot2Label").textContent = "INA-CBG Kelas 1";
+        document.getElementById("calcSlot2Sub").textContent = "Dasar selisih & plafon 75%";
+        document.getElementById("calcSlot2Value").textContent = formatRupiah(calcState.values.inaK1);
+      } else if (sc === "rajal") {
+        document.getElementById("calcSlot1Label").textContent = "INA-CBG Rawat Jalan";
+        document.getElementById("calcSlot1Sub").textContent = "Dijamin BPJS Kesehatan";
+        document.getElementById("calcSlot1Value").textContent = formatRupiah(calcState.values.inaRajal);
+
+        document.getElementById("calcSlot2Label").textContent = "Tarif Poli Eksekutif";
+        document.getElementById("calcSlot2Sub").textContent = "Total paket poli eksekutif";
+        document.getElementById("calcSlot2Value").textContent = formatRupiah(calcState.values.realRajal);
+      }
+
+      // Slot 3 tetap ditampilkan permanen; aktif hanya pada skenario Kelas 2 -> VIP
+      if (sc === "k2_vip") {
+        slot3Card.disabled = false;
+        slot3Card.classList.remove("is-disabled");
+        slot3Card.setAttribute("aria-disabled", "false");
+        document.getElementById("calcSlot3Label").textContent = "Total Tarif Riil RS (VIP)";
+        document.getElementById("calcSlot3Sub").textContent = "Total tagihan episode rawat inap VIP";
+        document.getElementById("calcSlot3Value").textContent = formatRupiah(calcState.values.realVip);
+      } else {
+        slot3Card.disabled = true;
+        slot3Card.classList.add("is-disabled");
+        slot3Card.classList.remove("active-slot");
+        slot3Card.setAttribute("aria-disabled", "true");
+        document.getElementById("calcSlot3Label").textContent = "Tarif Tambahan (Slot 3)";
+        document.getElementById("calcSlot3Sub").textContent = "Tidak aktif pada skenario ini";
+        document.getElementById("calcSlot3Value").textContent = "—";
+      }
+
+      slot1Card.classList.toggle("active-slot", calcState.activeField === keys[0]);
+      slot2Card.classList.toggle("active-slot", calcState.activeField === keys[1]);
+      slot3Card.classList.toggle("active-slot", sc === "k2_vip" && calcState.activeField === "realVip");
+
+      document.getElementById("calcActiveFieldBadge").textContent = "Input: " + (FIELD_META[calcState.activeField] || "");
+      document.getElementById("calcExpressionLine").textContent = formatExpressionDisplay(calcState.expressions[calcState.activeField] || "0");
+    }
+
+    function selectCalcField(slotIndex) {
+      const keys = getVisibleFieldKeys();
+      if (typeof slotIndex === "number" && keys[slotIndex]) {
+        calcState.activeField = keys[slotIndex];
+        syncCalculatorDisplaySlots();
+      }
+    }
+
+    function cycleActiveCalcField() {
+      const keys = getVisibleFieldKeys();
+      const idx = keys.indexOf(calcState.activeField);
+      const nextIdx = (idx + 1) % keys.length;
+      calcState.activeField = keys[nextIdx];
+      syncCalculatorDisplaySlots();
+    }
+
+    function commitExpressionToActiveField(evalAndNormalize) {
+      const key = calcState.activeField;
+      const expr = calcState.expressions[key] || "0";
+      const val = evaluateSafeArithmetic(expr);
+      calcState.values[key] = val;
+      if (evalAndNormalize) {
+        calcState.expressions[key] = String(val);
+      }
+      recalculate();
+    }
+
+    function keypadPressDigit(digit) {
+      const key = calcState.activeField;
+      let expr = calcState.expressions[key] || "0";
+      const lastNumMatch = expr.match(/(\d+)$/);
+
+      if (lastNumMatch) {
+        const currentDigits = lastNumMatch[1];
+        if (currentDigits.length >= 12) return;
+        if (currentDigits === "0") {
+          expr = expr.slice(0, -1) + digit;
+        } else {
+          expr += digit;
+        }
+      } else {
+        expr += digit;
+      }
+
+      calcState.expressions[key] = expr;
+      commitExpressionToActiveField(false);
+    }
+
+    function keypadPressThousands() {
+      const key = calcState.activeField;
+      let expr = calcState.expressions[key] || "0";
+      const lastNumMatch = expr.match(/(\d+)$/);
+
+      if (!lastNumMatch || lastNumMatch[1] === "0") {
+        return;
+      }
+      if (lastNumMatch[1].length >= 10) return;
+
+      expr += "000";
+      calcState.expressions[key] = expr;
+      commitExpressionToActiveField(false);
+    }
+
+    function keypadPressOperator(op) {
+      const key = calcState.activeField;
+      let expr = calcState.expressions[key] || "0";
+      if (/[+\-*/]$/.test(expr)) {
+        expr = expr.slice(0, -1) + op;
+      } else {
+        expr += op;
+      }
+      calcState.expressions[key] = expr;
+      syncCalculatorDisplaySlots();
+    }
+
+    function keypadBackspace() {
+      const key = calcState.activeField;
+      let expr = calcState.expressions[key] || "0";
+      if (expr.length <= 1) {
+        expr = "0";
+      } else {
+        expr = expr.slice(0, -1);
+        if (!expr) expr = "0";
+      }
+      calcState.expressions[key] = expr;
+      commitExpressionToActiveField(false);
+    }
+
+    function keypadClearField() {
+      const key = calcState.activeField;
+      calcState.expressions[key] = "0";
+      calcState.values[key] = 0;
+      recalculate();
+    }
+
+    function keypadEvaluate() {
+      commitExpressionToActiveField(true);
+      const keys = getVisibleFieldKeys();
+      const idx = keys.indexOf(calcState.activeField);
+      if (idx >= 0 && idx < keys.length - 1) {
+        calcState.activeField = keys[idx + 1];
+        syncCalculatorDisplaySlots();
+      }
+    }
+
+    /* =========================================================================
+       8. CUSTOM SCENARIO DROPDOWN MODAL SYNC
+    ========================================================================= */
+    function openScenarioModal() {
+      const modal = document.getElementById("scenarioPickerModal");
+      const triggerBtn = document.getElementById("scenarioDropdownBtn");
+      if (!modal) return;
+      modal.classList.add("open");
+      if (triggerBtn) triggerBtn.setAttribute("aria-expanded", "true");
+    }
+
+    function closeScenarioModal() {
+      const modal = document.getElementById("scenarioPickerModal");
+      const triggerBtn = document.getElementById("scenarioDropdownBtn");
+      if (!modal) return;
+      modal.classList.remove("open");
+      if (triggerBtn) triggerBtn.setAttribute("aria-expanded", "false");
+    }
+
+    function selectScenarioFromModal(sc) {
+      setScenarioFromCode(sc, true);
+      closeScenarioModal();
+    }
+
+    function setScenarioFromCode(sc, moveToFirstField = true) {
+      const valid = ["k2_k1", "k1_vip", "k2_vip", "rajal"];
+      calcState.scenario = valid.includes(sc) ? sc : "k1_vip";
+
+      const dropdownLabel = document.getElementById("scenarioDropdownLabel");
+      if (dropdownLabel) {
+        dropdownLabel.textContent = SCENARIO_SHORT_LABELS[calcState.scenario] || "Kelas 1 → VIP";
+      }
+
+      document.querySelectorAll("#scenarioPickerModal .scenario-option-btn").forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.scenario === calcState.scenario);
+      });
+
+      if (moveToFirstField) {
+        const keys = getVisibleFieldKeys();
+        calcState.activeField = keys[0];
+      }
       recalculate();
     }
 
     function resetCalculatorForm() {
-      document.getElementById("patientName").value = "";
-      document.getElementById("hospitalClass").value = "";
-      document.getElementById("memberSegment").value = "allowed_ppu";
-      document.getElementById("upgradeTrigger").value = "aps";
-      document.getElementById("payerType").value = "self";
-      document.getElementById("inaK2").value = "0";
-      document.getElementById("inaK1").value = "0";
-      document.getElementById("realVip").value = "0";
-      document.getElementById("inaRajal").value = "0";
-      document.getElementById("realRajal").value = "0";
-      document.getElementById("cobLimit").value = "0";
-      document.querySelector('input[name="scenario"][value="k1_vip"]').checked = true;
-      onScenarioChange();
-      showToast("Formulir kalkulator diatur ulang ke 0.");
+      Object.keys(calcState.values).forEach((k) => {
+        calcState.values[k] = 0;
+        calcState.expressions[k] = "0";
+      });
+
+      setScenarioFromCode("k1_vip", true);
+      showToast("Kalkulator diatur ulang ke 0.");
     }
 
-    function applyPreset(key) {
-      document.getElementById("memberSegment").value = "allowed_ppu";
-      document.getElementById("upgradeTrigger").value = "aps";
-      document.getElementById("payerType").value = "self";
-      document.getElementById("cobLimit").value = "0";
-
-      if (key === "k2_k1") {
-        document.getElementById("patientName").value = "Skenario Uji — Hak Kelas 2 ke Kelas 1";
-        document.querySelector('input[value="k2_k1"]').checked = true;
-        document.getElementById("inaK2").value = "4.800.000";
-        document.getElementById("inaK1").value = "6.100.000";
-      } else if (key === "k1_vip_under") {
-        document.getElementById("patientName").value = "Skenario Uji — Kelas 1 ke VIP (< Plafon 75%)";
-        document.querySelector('input[value="k1_vip"]').checked = true;
-        document.getElementById("inaK1").value = "6.000.000";
-        document.getElementById("realVip").value = "9.200.000";
-      } else if (key === "k1_vip_cap") {
-        document.getElementById("patientName").value = "Skenario Uji — Kelas 1 ke VIP (Plafon 75%)";
-        document.querySelector('input[value="k1_vip"]').checked = true;
-        document.getElementById("inaK1").value = "6.000.000";
-        document.getElementById("realVip").value = "12.500.000";
-      } else if (key === "k2_vip_cob") {
-        document.getElementById("patientName").value = "Skenario Uji — Kelas 2 ke VIP + COB";
-        document.querySelector('input[value="k2_vip"]').checked = true;
-        document.getElementById("inaK2").value = "5.000.000";
-        document.getElementById("inaK1").value = "6.500.000";
-        document.getElementById("realVip").value = "11.000.000";
-        document.getElementById("payerType").value = "cob";
-        document.getElementById("cobLimit").value = "4.000.000";
-      } else if (key === "rajal_eks") {
-        document.getElementById("patientName").value = "Skenario Uji — Poli Rawat Jalan Eksekutif";
-        document.querySelector('input[value="rajal"]').checked = true;
-        document.getElementById("inaRajal").value = "320.000";
-        document.getElementById("realRajal").value = "850.000";
-      }
-
-      onScenarioChange();
-    }
-
+    /* =========================================================================
+       9. CORE CALCULATION & AUDIT ENGINE
+    ========================================================================= */
     function recalculate() {
-      const segment = document.getElementById("memberSegment").value;
-      const trigger = document.getElementById("upgradeTrigger").value;
-      const scenario = getSelectedScenario();
-      const payerType = document.getElementById("payerType").value;
+      const segment = "allowed_ppu";
+      const trigger = "aps";
+      const scenario = calcState.scenario;
+      const payerType = "self";
+      const cobLimit = 0;
 
-      document.getElementById("groupCobLimit").style.display =
-        (payerType === "cob" || payerType === "employer") ? "block" : "none";
+      syncCalculatorDisplaySlots();
 
-      const isBlockedSegment = segment.startsWith("blocked_");
-      const isFullRoom = trigger === "full_room";
-
-      const eligAlert = document.getElementById("eligibilityAlert");
-      if (isBlockedSegment) {
-        const reasonMap = {
-          blocked_pbi: "Peserta PBI Jaminan Kesehatan dilarang naik kelas perawatan (Pasal 51 ayat 3 huruf a Perpres 59/2024).",
-          blocked_k3: "Peserta PBPU (Mandiri) dan BP dengan hak Kelas 3 tidak diperkenankan naik kelas perawatan (Pasal 51 ayat 3 huruf b & c Perpres 59/2024).",
-          blocked_phk: "Peserta PPU terdampak PHK beserta keluarga (jaminan 6 bulan) tidak diperkenankan naik kelas perawatan (Pasal 51 ayat 3 huruf d Perpres 59/2024).",
-          blocked_pemda: "Peserta yang didaftarkan oleh Pemerintah Daerah tidak diperkenankan naik kelas perawatan (Pasal 51 ayat 3 huruf e Perpres 59/2024)."
-        };
-        eligAlert.innerHTML = `
-          <div class="alert alert-danger">
-            <span class="alert-title">TIDAK DIPERKENANKAN NAIK KELAS PERAWATAN</span>
-            ${reasonMap[segment]} Jika tetap memilih kamar lebih tinggi, seluruh biaya perawatan gugur dari penjaminan JKN dan menjadi tagihan pasien umum penuh.
-          </div>`;
-      } else if (isFullRoom) {
-        eligAlert.innerHTML = `
-          <div class="alert alert-success">
-            <span class="alert-title">BEBAS SELISIH BIAYA (KAMAR SESUAI HAK PENUH)</span>
-            Apabila ruang perawatan sesuai hak peserta penuh dan RS menitipkan pasien di kelas satu tingkat lebih tinggi (maksimal 3 hari), peserta <strong>tidak dikenakan selisih biaya</strong>.
-          </div>`;
-      } else {
-        eligAlert.innerHTML = "";
-      }
-
-      const inaK2 = parseRupiah(document.getElementById("inaK2").value);
-      const inaK1 = parseRupiah(document.getElementById("inaK1").value);
-      const realVip = parseRupiah(document.getElementById("realVip").value);
-      const inaRajal = parseRupiah(document.getElementById("inaRajal").value);
-      const realRajal = parseRupiah(document.getElementById("realRajal").value);
-      const cobLimit = (payerType === "cob" || payerType === "employer")
-        ? parseRupiah(document.getElementById("cobLimit").value)
-        : 0;
+      const inaK2 = calcState.values.inaK2;
+      const inaK1 = calcState.values.inaK1;
+      const realVip = calcState.values.realVip;
+      const inaRajal = calcState.values.inaRajal;
+      const realRajal = calcState.values.realRajal;
 
       let bpjsCovered = 0;
       let rawDiff = 0;
@@ -2321,7 +2773,6 @@
       let absorbedByHospital = 0;
       let scenarioLabel = "";
       let statusText = "Menunggu Input Tarif";
-      let statusBlocked = false;
       let auditRows = [];
 
       const hasAnyTariff = (scenario === "rajal")
@@ -2443,35 +2894,26 @@
         }
       }
 
-      if (isBlockedSegment) {
-        legalDiff = 0;
-        absorbedByHospital = 0;
-        statusText = "Dilarang Naik Kelas (Perpres 59/2024)";
-        statusBlocked = true;
-      } else if (isFullRoom) {
-        legalDiff = 0;
-        absorbedByHospital = 0;
-        statusText = "Bebas Biaya (Kamar Hak Penuh)";
-      }
-
-      const cobCovered = (!isBlockedSegment && !isFullRoom) ? Math.min(legalDiff, cobLimit) : 0;
+      const cobCovered = Math.min(legalDiff, cobLimit);
       const patientNet = Math.max(0, legalDiff - cobCovered);
 
-      document.getElementById("calcHeroTotal").textContent = isBlockedSegment ? "Tidak Berlaku (Non-JKN)" : formatRupiah(legalDiff);
-      document.getElementById("calcHeroSub").textContent = "Skenario: " + scenarioLabel;
+      // Update Layar Hasil Kalkulator
+      document.getElementById("calcHeroTotal").textContent = formatRupiah(legalDiff);
+      document.getElementById("calcHeroSub").textContent = scenarioLabel;
       const badge = document.getElementById("calcHeroBadge");
       badge.textContent = statusText;
-      badge.className = "hero-status" + (statusBlocked ? " blocked" : "");
+      badge.className = "calc-status-pill";
 
       document.getElementById("calcHeroBpjs").textContent = formatRupiah(bpjsCovered);
       document.getElementById("calcHeroCob").textContent = formatRupiah(cobCovered);
-      document.getElementById("calcHeroPatient").textContent = isBlockedSegment ? "Pasien Umum" : formatRupiah(patientNet);
+      document.getElementById("calcHeroPatient").textContent = formatRupiah(patientNet);
       document.getElementById("calcCapChip").textContent = "Plafon: " + formatRupiah(legalMaxCap);
 
-      const patientNameVal = document.getElementById("patientName").value.trim() || "Belum diisi";
-      const hospitalClassVal = document.getElementById("hospitalClass").value.trim() || "-";
-      const segmentTextVal = document.getElementById("memberSegment").selectedOptions[0].text;
-      const triggerTextVal = document.getElementById("upgradeTrigger").selectedOptions[0].text;
+      // Update Tab Audit
+      const patientNameVal = "Peserta JKN";
+      const hospitalClassVal = "-";
+      const segmentTextVal = "Peserta JKN Aktif (Hak Kelas 1 atau 2)";
+      const triggerTextVal = "Atas Permintaan Sendiri (APS)";
 
       document.getElementById("auditStatusChip").textContent = statusText;
       document.getElementById("auditMetaPatient").textContent = patientNameVal;
@@ -2479,14 +2921,12 @@
       document.getElementById("auditMetaSegment").textContent = segmentTextVal;
       document.getElementById("auditMetaTrigger").textContent = triggerTextVal;
       document.getElementById("auditMetaScenario").textContent = scenarioLabel;
-      document.getElementById("auditMetaAmounts").textContent = isBlockedSegment
-        ? "Non-JKN / Pasien Umum"
-        : `${formatRupiah(legalDiff)} / ${formatRupiah(patientNet)}`;
+      document.getElementById("auditMetaAmounts").textContent = `${formatRupiah(legalDiff)} / ${formatRupiah(patientNet)}`;
 
       document.getElementById("resCapRatio").textContent = "Batas Plafon Hukum: " + formatRupiah(legalMaxCap);
       document.getElementById("lblBpjs").textContent = formatRupiah(bpjsCovered);
       document.getElementById("lblCob").textContent = formatRupiah(cobCovered);
-      document.getElementById("lblPatient").textContent = isBlockedSegment ? "Pasien Umum" : formatRupiah(patientNet);
+      document.getElementById("lblPatient").textContent = formatRupiah(patientNet);
       document.getElementById("lblAbsorbed").textContent = formatRupiah(absorbedByHospital);
 
       const rawEpisode = bpjsCovered + cobCovered + patientNet + absorbedByHospital;
@@ -2503,7 +2943,7 @@
       }
 
       const overAlert = document.getElementById("overchargeAlert");
-      if (!isBlockedSegment && !isFullRoom && absorbedByHospital > 0) {
+      if (absorbedByHospital > 0) {
         overAlert.innerHTML = `
           <div class="alert alert-warning">
             <span class="alert-title">Deteksi Selisih di Atas Plafon Hukum: ${formatRupiah(absorbedByHospital)}</span>
@@ -2525,14 +2965,14 @@
 
       lastCalculation = {
         timestamp: new Date().toLocaleString("id-ID"),
-        patientName: document.getElementById("patientName").value.trim() || "Peserta JKN",
-        hospitalClass: document.getElementById("hospitalClass").value.trim() || "-",
+        patientName: patientNameVal,
+        hospitalClass: hospitalClassVal,
         segment,
         segmentText: segmentTextVal,
         trigger,
         triggerText: triggerTextVal,
         payerType,
-        inputs: { inaK2, inaK1, realVip, inaRajal, realRajal, cobLimit },
+        inputs: { inaK2, inaK1, realVip, inaRajal, realRajal, cobLimit: 0 },
         scenario,
         scenarioLabel,
         bpjsCovered,
@@ -2552,7 +2992,48 @@
     }
 
     /* =========================================================================
-       8. HISTORY MANAGEMENT (INDEXEDDB)
+       10. KEYBOARD SUPPORT FOR DESKTOP CALCULATOR & MODALS
+    ========================================================================= */
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        const scenarioModal = document.getElementById("scenarioPickerModal");
+        const regModal = document.getElementById("regDetailModal");
+        if (scenarioModal && scenarioModal.classList.contains("open")) {
+          event.preventDefault();
+          closeScenarioModal();
+          return;
+        }
+        if (regModal && regModal.classList.contains("open")) {
+          event.preventDefault();
+          closeRegDetailModal();
+          return;
+        }
+      }
+
+      if (activeTabId !== "hitung") return;
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+      if (tag === "input" || tag === "textarea" || tag === "select") return;
+
+      if (/^[0-9]$/.test(event.key)) {
+        event.preventDefault();
+        keypadPressDigit(event.key);
+      } else if (event.key === "+" || event.key === "-" || event.key === "*" || event.key === "/") {
+        event.preventDefault();
+        keypadPressOperator(event.key);
+      } else if (event.key === "Enter" || event.key === "=") {
+        event.preventDefault();
+        keypadEvaluate();
+      } else if (event.key === "Backspace") {
+        event.preventDefault();
+        keypadBackspace();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        keypadClearField();
+      }
+    });
+
+    /* =========================================================================
+       11. HISTORY MANAGEMENT (INDEXEDDB)
     ========================================================================= */
     async function updateHistoryCount() {
       try {
@@ -2564,8 +3045,9 @@
     }
 
     async function saveToHistory() {
+      commitExpressionToActiveField(true);
       if (!lastCalculation) return;
-      if (!lastCalculation.hasAnyTariff && !lastCalculation.segment.startsWith("blocked_")) {
+      if (!lastCalculation.hasAnyTariff) {
         showToast("Masukkan nominal tarif terlebih dahulu sebelum menyimpan ke riwayat.");
         return;
       }
@@ -2604,7 +3086,7 @@
           box.innerHTML = `
             <div class="empty-state">
               <div class="empty-state-title">Belum Ada Data Riwayat Simulasi</div>
-              <p class="empty-state-desc">Database lokal masih kosong. Lakukan perhitungan pada tab Hitung lalu tekan <strong>"+ Simpan ke Riwayat"</strong> untuk menyimpan arsip secara offline.</p>
+              <p class="empty-state-desc">Database lokal masih kosong. Lakukan perhitungan pada tab Hitung lalu tekan <strong>"+ Simpan Riwayat"</strong> untuk menyimpan arsip secara offline.</p>
               <button type="button" class="btn btn-primary btn-sm" onclick="switchTab('hitung')">Mulai Hitung Sekarang</button>
             </div>`;
           return;
@@ -2666,25 +3148,16 @@
           showToast("Data riwayat tidak ditemukan.");
           return;
         }
-        document.getElementById("patientName").value = item.patientName === "Peserta JKN" ? "" : (item.patientName || "");
-        document.getElementById("hospitalClass").value = item.hospitalClass === "-" ? "" : (item.hospitalClass || "");
-        if (item.segment) document.getElementById("memberSegment").value = item.segment;
-        if (item.trigger) document.getElementById("upgradeTrigger").value = item.trigger;
-        if (item.payerType) document.getElementById("payerType").value = item.payerType;
 
         if (item.inputs) {
-          document.getElementById("inaK2").value = (item.inputs.inaK2 || 0).toLocaleString("id-ID");
-          document.getElementById("inaK1").value = (item.inputs.inaK1 || 0).toLocaleString("id-ID");
-          document.getElementById("realVip").value = (item.inputs.realVip || 0).toLocaleString("id-ID");
-          document.getElementById("inaRajal").value = (item.inputs.inaRajal || 0).toLocaleString("id-ID");
-          document.getElementById("realRajal").value = (item.inputs.realRajal || 0).toLocaleString("id-ID");
-          document.getElementById("cobLimit").value = (item.inputs.cobLimit || 0).toLocaleString("id-ID");
+          ["inaK2", "inaK1", "realVip", "inaRajal", "realRajal"].forEach((k) => {
+            const val = Number(item.inputs[k]) || 0;
+            calcState.values[k] = val;
+            calcState.expressions[k] = String(val);
+          });
         }
 
-        const radio = document.querySelector(`input[name="scenario"][value="${item.scenario}"]`);
-        if (radio) radio.checked = true;
-
-        onScenarioChange();
+        setScenarioFromCode(item.scenario || "k1_vip", true);
         switchTab(targetTab || "hitung");
         showToast("Data simulasi dimuat kembali.");
       } catch (err) {
@@ -2721,7 +3194,7 @@
     }
 
     /* =========================================================================
-       9. EXCEL EXPORT (100% OFFLINE LOCAL BUILDER)
+       12. EXCEL EXPORT (100% OFFLINE LOCAL BUILDER)
     ========================================================================= */
     function writeExcelWorkbook(aoaRows, sheetName, fileName) {
       OfflineXlsxBuilder.downloadAoA(aoaRows, sheetName, fileName);
@@ -2783,7 +3256,7 @@
     }
 
     /* =========================================================================
-       10. LOCAL REGULATION REPOSITORY (INDEXEDDB — NO FABRICATED REGULATIONS)
+       13. LOCAL REGULATION REPOSITORY (INDEXEDDB — NO FABRICATED REGULATIONS)
     ========================================================================= */
     function toggleRegForm(show, reset = true) {
       const box = document.getElementById("regFormContainer");
@@ -3017,7 +3490,7 @@
     }
 
     /* =========================================================================
-       11. SERVICE WORKER REGISTRATION & APP INITIALIZATION
+       14. SERVICE WORKER REGISTRATION & APP INITIALIZATION
     ========================================================================= */
     window.addEventListener("beforeprint", () => {
       document.getElementById("printTimestamp").textContent = new Date().toLocaleString("id-ID");
@@ -3048,7 +3521,7 @@
     (async function initApp() {
       const splashStart = Date.now();
       updateNetworkIndicator();
-      onScenarioChange();
+      setScenarioFromCode("k1_vip", true);
 
       try {
         await DBManager.open();
