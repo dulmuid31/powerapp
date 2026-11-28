@@ -617,36 +617,6 @@
       margin-top: 4px;
     }
 
-    .calc-mini-kpis {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.16);
-    }
-
-    .calc-mini-kpi {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      padding: 6px 8px;
-    }
-
-    .calc-mini-kpi span {
-      display: block;
-      font-size: 10px;
-      color: #A7F3D0;
-      font-weight: 600;
-    }
-
-    .calc-mini-kpi strong {
-      display: block;
-      font-size: 12px;
-      color: #FFFFFF;
-      font-weight: 700;
-      margin-top: 1px;
-    }
-
     /* Calculator Keypad Controls & 4x4 Grid */
     .calc-pad-tools {
       display: grid;
@@ -831,9 +801,6 @@
 
     @media (max-width: 420px) {
       .calc-slots-grid {
-        grid-template-columns: 1fr;
-      }
-      .calc-mini-kpis {
         grid-template-columns: 1fr;
       }
       .key-btn {
@@ -1652,7 +1619,7 @@
             </button>
           </div>
 
-          <!-- BLOK HASIL HIJAU TUA DENGAN NOMINAL KUNING EMAS (TANPA IKON SAMPING) -->
+          <!-- BLOK HASIL HIJAU TUA DENGAN NOMINAL KUNING EMAS -->
           <div class="calc-result-banner">
             <div class="calc-result-main">
               <div class="calc-result-info">
@@ -1662,21 +1629,6 @@
                   <div class="calc-result-unit" id="calcCapChip">Plafon: Rp 0</div>
                 </div>
                 <div class="calc-result-sub" id="calcHeroSub">Silakan pilih skenario naik kelas terlebih dahulu</div>
-              </div>
-            </div>
-
-            <div class="calc-mini-kpis">
-              <div class="calc-mini-kpi">
-                <span>Dijamin BPJS</span>
-                <strong class="mono" id="calcHeroBpjs">Rp 0</strong>
-              </div>
-              <div class="calc-mini-kpi">
-                <span>Ditanggung COB</span>
-                <strong class="mono" id="calcHeroCob">Rp 0</strong>
-              </div>
-              <div class="calc-mini-kpi">
-                <span>Neto Pasien</span>
-                <strong class="mono" id="calcHeroPatient">Rp 0</strong>
               </div>
             </div>
           </div>
@@ -3426,9 +3378,6 @@
       badge.textContent = statusText;
       badge.className = scenario ? "calc-status-pill" : "calc-status-pill pending-scenario";
 
-      document.getElementById("calcHeroBpjs").textContent = formatRupiah(bpjsCovered);
-      document.getElementById("calcHeroCob").textContent = formatRupiah(cobCovered);
-      document.getElementById("calcHeroPatient").textContent = formatRupiah(patientNet);
       document.getElementById("calcCapChip").textContent = "Plafon: " + formatRupiah(legalMaxCap);
 
       // Update Tab Audit
